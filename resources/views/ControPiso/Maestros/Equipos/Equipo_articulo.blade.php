@@ -27,7 +27,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-              <form  role="search" action="" method="GET" >
+              <form  role="search" action="{{url('guardar_articulo')}}" method="GET" >
                 <label>CODIGO ARTICULO----DESCRIPCION</label>
                 
                 {!! Form::text('search_text',null,array('placeholder'=>'Buscar Articulo','class'=>'form-control','id'=>'search_text'))!!}
@@ -124,6 +124,7 @@
           <!-- /.box -->
 
         </div>
+ 
 
         <!-- /.col (right) -->
       </div>

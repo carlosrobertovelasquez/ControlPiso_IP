@@ -24,6 +24,10 @@
 
 
 
+
+
+
+
 <script src="{{  asset('/plugins/fullcalendar/lib/moment.min.js') }}"  ></script>
 <script src="{{  asset('/plugins/fullcalendar/fullcalendar.min.js') }}"  ></script>
 <script src="{{  asset('/plugins/EasyAutocomplete/jquery.easy-autocomplete.min.js')}}"></script>
