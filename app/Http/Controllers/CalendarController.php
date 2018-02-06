@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modelos\ControlPiso\CP_DETALLEPLANIFICACION;
+use App\Modelos\ControlPiso\CP_ENCABEZADOPLANIFICACION;
 use App\Modelos\ControlPiso\CP_EQUIPOARTICULO;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\Builder;
@@ -19,12 +20,12 @@ class CalendarController extends Controller
      if($request->id_centrocosto==null or $request->id_centrocosto==0 ){
 
       $maquina=0;
-      $data=CP_DETALLEPLANIFICACION::all();
+      $data=CP_ENCABEZADOPLANIFICACION::all();
 
     
      }else{
 
-     $data=CP_DETALLEPLANIFICACION::where('MAQUINA','=',$request->id_centrocosto)->get();
+     $data=CP_ENCABEZADOPLANIFICACION::where('centrocosto','=',$request->id_centrocosto)->get();
      $maquina=$request->id_centrocosto;
      }
 
@@ -34,10 +35,10 @@ class CalendarController extends Controller
       if($data->count()){
         foreach ($data as $key=> $value) {
             $events[]=Calendar::event(
-                 $value->MAQUINA,
+                 $value->centrocosto,
                  false,
-                 new \DateTime($value->FECHAINICIO),
-                 new \DateTime($value->FECHAFIN),
+                 new \DateTime($value->fhoraini),
+                 new \DateTime($value->fhorafin),
                  null,
 
                    [

@@ -9,6 +9,7 @@ use App\Modelos\ControlPiso\CP_EQUIPOARTICULO;
 use App\Modelos\ControlPiso\CP_CALENDARIO_PLANIFICADOR;
 use App\Modelos\ControlPiso\CP_ENCABEZADOPLANIFICACION;
 use App\Modelos\ControlPiso\CP_DETALLEPLANIFICACION;
+use App\Modelos\ControlPiso\CP_PLANIFICACION;
 use Illuminate\Support\Facades\DB;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
@@ -22,10 +23,12 @@ class PlanificarController extends Controller
     	Carbon::setlocale('es');
     }	
    public function index(){
-         $OrdenProduccion=CP_ENCABEZADOPLANIFICACION::wherein('ESTADO' , ['P','A','B'])->get();
+         $OrdenProduccion=CP_PLANIFICACION::wherein('estado' , ['P','A','B'])->get();
          //->whereIn('ESTADO', ['P', 'A', 'B','C'])->get();
+     
         return view('ControPiso.Transacciones.Planificador.index')
                ->with('OrdenProduccion',$OrdenProduccion);
+
 
    }
 
@@ -34,7 +37,7 @@ class PlanificarController extends Controller
 
     $fechaSistema = Carbon::now()->format('m-d-Y H:i:s');
     
-       $planificar=CP_ENCABEZADOPLANIFICACION::where('ID',$id)->update(['ESTADO'=>'A']);
+       $planificar=CP_PLANIFICACION::where('id',$id)->update(['estado'=>'A']);
       
       
         
@@ -51,7 +54,7 @@ class PlanificarController extends Controller
 
        $fechaSistema = Carbon::now()->format('m-d-Y H:i:s');
     
-      $planificar=CP_ENCABEZADOPLANIFICACION::where('ID',$id)->update(['ESTADO'=>'B']);
+      $planificar=CP_PLANIFICACION::where('id',$id)->update(['estado'=>'B']);
       
       
         

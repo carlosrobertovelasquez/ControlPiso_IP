@@ -24,6 +24,7 @@
                     <thead>
                         <tr>
                           <th>ID</th>
+                          <th>Operacion</th>
                           <th>Ord.Prod</th>
                           <th>Articulo</th>
                           <th>Cantidad</th>
@@ -39,20 +40,21 @@
                       
                       @foreach($OrdenProduccion as $OrdenProduccion)
                         <tr>
-                                <td >{{ $OrdenProduccion->ID}}</td>
-                                <td >{{ $OrdenProduccion->ORDENPRODUCCION }}</td> 
-                                <td>{{ $OrdenProduccion->ARTICULO }}</td> 
-                                <td>{{ number_format($OrdenProduccion->CANTIDADAPRODUCIR ,2)}}</td>
-                                <td>{{$OrdenProduccion->PEDIDO}}</td>
-                                <td>{{$OrdenProduccion->MAQUINA}}</td>
-                                <td>{{$OrdenProduccion->ESTADO}}</td>
+                                <td >{{ $OrdenProduccion->id}}</td>
+                                <td >{{ $OrdenProduccion->operacion}}</td>
+                                <td >{{ $OrdenProduccion->ordenproduccion }}</td> 
+                                <td>{{ $OrdenProduccion->articulo }}</td> 
+                                <td>{{ number_format($OrdenProduccion->cantidad ,2)}}</td>
+                                <td>{{$OrdenProduccion->pedido}}</td>
+                                <td>{{$OrdenProduccion->centrocosto}}</td>
+                                <td>{{$OrdenProduccion->estado}}</td>
                                 <td>{{ Carbon\Carbon::parse($OrdenProduccion->FECHAPLANIFICADA)->format('d-m-Y') }}</td>
                                
                                
                                 <td>
-                                 <a href="{{route('registro.mo',[$OrdenProduccion->ID,$OrdenProduccion->ORDENPRODUCCION])}}" class="btn btn-primary">Mano Obra</a>
-                                <a href="{{route('registro.ma',[$OrdenProduccion->ID,$OrdenProduccion->ORDENPRODUCCION])}}" class="btn btn-primary">Materiales</a>
-                                <a href="{{route('registro.impresion',[$OrdenProduccion->ID,$OrdenProduccion->ORDENPRODUCCION])}}" class="btn btn-primary">Imprimir</a>             
+                                 <a href="{{route('registro.mo',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Mano Obra</a>
+                                <a href="{{route('registro.ma',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Materiales</a>
+                                <a href="{{route('registro.impresion',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Imprimir</a>             
                                 </td>
                         </tr>
                       @endforeach
@@ -60,6 +62,7 @@
                     <tfoot>
                       <tr>
                         <th>ID</th>
+                        <th>Operacion</th>
                         <th>Ord.Produ</th>
                         <th>Articulo</th>
                         <th>Cantidad</th>

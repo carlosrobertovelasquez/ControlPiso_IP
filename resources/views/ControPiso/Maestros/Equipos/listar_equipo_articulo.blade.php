@@ -7,6 +7,7 @@
 
 @section('main-content')
 
+
   <div class="row">
          <div class="col-xs-12">
          
@@ -17,6 +18,7 @@
 
                <a href=" {{url('Equipo')}}" ><span class="btn btn-primary" aria-hidden="true">Regresar</span></a>
             <!-- /.box-header -->
+              @include('flash::message')
             <div class="box-body">
                       <div class="form-group">
              
@@ -28,15 +30,14 @@
                   <th>Descripcion</th>
                   <th>Articulo</th>
                   <th>Piezas Por Hora</th>
-                  <th>NUM_CAVIDADES</th>
-               
+                  <th>NUM_CAVI</th>
+                  <th>OPERA</th>
+                  <th>TIE MOLDE</th>
                   <th>Selecionar</th>
                 </tr>
                 </thead>
                 <tbody>
-                   <?php
-                        $modal=0;
-                        ?>
+                   
                  {{csrf_field()}}       
                  @foreach($equipoarticulo as $equipoarticulo)
 				 		<tr>
@@ -45,23 +46,20 @@
                             <td>{{ $equipoarticulo->ARTICULO }}</td>
                             <td>{{ $equipoarticulo->PIEZASXHORAS }}</td>
                             <td>{{ $equipoarticulo->NUM_CAVIDADES }}</td> 
+                            <td>{{ $equipoarticulo->OPERACION }}</td>
+                            <td>{{ $equipoarticulo->TIEMPOMOLDE }}</td>
                             <td>
-                                <a href="{{route('agregar_articulo',$equipoarticulo->EQUIPO)}}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                             
                                 
-                                <a href="{{route('agregar_articulo',$equipoarticulo->EQUIPO)}}"
-                                           class="btn btn-success">
+                                <a href="{{route('listar_equipo_articulo2',$equipoarticulo->ID)}}"
+                                           class="btn btn-success" " >
                                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                  </a>
                                        
 
                              </td>                
-
-
-
-
-
-
-				 		
+          
+                  </tr>
 				 		@endforeach
                 </tbody>
                 <tfoot>
@@ -70,7 +68,9 @@
                   <th>Descripcion</th>
                   <th>Articulo</th>
                   <th>Piezas Por Hora</th>
-                     <th>NUM_CAVIDADES</th>
+                  <th>NUM_CAVI</th>
+                  <th>OPERA</th>
+                  <th>TIE MOLDE</th>
                   <th>Selecionar</th>
                 </tr>
                 </tfoot>

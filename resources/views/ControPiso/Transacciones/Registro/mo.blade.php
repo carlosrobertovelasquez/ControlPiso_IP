@@ -36,29 +36,25 @@
   	 		 	
   	 		 	 <div class="form-group">
                         <label>Centro Costo : </label>
-                        <input id="maquina" name="maquina" type="text" class="form-control" value="{{$encabezado->MAQUINA}}" readonly="readonly" >
+                        <input id="maquina" name="maquina" type="text" class="form-control" value="{{$encabezado->centrocosto}}" readonly="readonly" >
                       </div>
                  <div class="form-group">
                         <label>Orden Produccion : </label>
-                        <input id="norden" name="norden" type="text" class="form-control" value="{{$encabezado->ORDENPRODUCCION}}" readonly="readonly" >
+                        <input id="norden" name="norden" type="text" class="form-control" value="{{$encabezado->ordenproduccion}}" readonly="readonly" >
                       </div>     
 
                 	 		 </div>
              <div class="col-md-6">
              	 <div class="form-group">
                         <label>Articulo : </label>
-                        <input id="id_articulo" name="id_articulo" type="text" class="form-control" value="{{$encabezado->ARTICULO}}" readonly="readonly" >
+                        <input id="id_articulo" name="id_articulo" type="text" class="form-control" value="{{$encabezado->articulo}}" readonly="readonly" >
                       </div>     
                        <div class="form-group">
 
                            <label>Selecione el Operacion : </label>
-
-                          <select id="id_operacion" name="id_operacion" onchange="actualizar()" class="form-control select2" style="width: 100%;">  
+                        <input id="id_operacion" name="id_operacion" type="text" class="form-control" value="{{$encabezado->operacion}}" readonly="readonly" >
                              
-                                   @foreach($operacion as $operacion)
-                                   <option value="{{ $operacion->OPERACION }}">{{ $operacion->DESCRIPCION }} </option>
-                                   @endforeach
-                          </select>
+                        
 
 
                          </div>
@@ -71,7 +67,7 @@
                                 
                              
                                    @foreach($detalle as $detalle)
-                                   <option value="{{ $detalle->CALENDARIOPLANIFICADOR_ID }}">{{ number_format($detalle->TURNO)}} -- {{ $detalle->FECHAINICIO }} -- {{ $detalle->FECHAFIN }}</option>
+                                   <option value="{{ $detalle->id }}">{{ number_format($detalle->turno)}} -- {{ $detalle->thoraini }} -- {{ $detalle->thorafin }} ==({{ $detalle->fecha }})</option>
                                    @endforeach
                           </select>
 
@@ -104,7 +100,9 @@
        
               <div class="row">
         
-              
+             
+
+
                
                 <div class="col-xs-2">
                   <input type="text" name="hora1" class="timepicker" id="hora1" value=""  >

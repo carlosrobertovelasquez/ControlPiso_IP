@@ -33,17 +33,17 @@
                 <div class="col-lg-3 col-xs-6">
           
                 
-                      @if($OrdenProduccion->ESTADO=='P')
+                      @if($OrdenProduccion->estado=='P')
                        <div class="small-box bg-green">
                               
                              
 
         
-                      @elseif($OrdenProduccion->ESTADO=='A')
+                      @elseif($OrdenProduccion->estado=='A')
                         <div class="small-box bg-yellow">
                              
 
-                      @elseif($OrdenProduccion->ESTADO=='B')  
+                      @elseif($OrdenProduccion->estado=='B')  
                          <div class="small-box bg-red">
                              
                       @endif
@@ -56,7 +56,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         <h2 class="modal-title" id="myModalLabel">
                             REGISTRO DE MANO DE OBRA 
-                            ORDEN DE PRODUCCION:{{ $OrdenProduccion->ORDENPRODUCCION}}
+                            ORDEN DE PRODUCCION:{{ $OrdenProduccion->ordenproduccion}}
                         </h2>
             </div>
             <div class="modal-body">
@@ -69,7 +69,7 @@
                                <textarea name="id_factura" rows="1" class="form-control"></textarea>
                             
                             </div>
-                        <input type="hidden" name="id_flete" value="{{ $OrdenProduccion->ORDENPRODUCCION}}" />     
+                        <input type="hidden" name="id_flete" value="{{ $OrdenProduccion->ordenproduccion}}" />     
 
                         
                         </div>
@@ -104,15 +104,17 @@
                        </div>
                      
                         <div class="inner">
-                            <h1>ID :{{  number_format($OrdenProduccion->ID)}}</h1>
-                            <h4 class="center-block">ORDEN PRODUCCION</h4>
-                            <p>{{$OrdenProduccion->ORDENPRODUCCION}}</p>
-                            <h4 class="center-block">CENTRO COSTO</h4>
-                            <p>{{$OrdenProduccion->MAQUINA}}</p>
-                            <h4 class="center-block">Cantidad a Produccir</h4>
-                            <p>{{ number_format($OrdenProduccion->CANTIDADAPRODUCIR)}}</p>
-                            <h4 class="center-block">Articulo</h4>
-                            <p>{{$OrdenProduccion->ARTICULO}}</p>
+                            <h1>ID :{{  number_format($OrdenProduccion->id)}}</h1>
+                            <h4 class="center-block">OPERACION:</h4>
+                            <p>{{$OrdenProduccion->operacion}} </p>
+                            <h4 class="center-block">ORDEN PRODUCCION:</h4>
+                            <p>{{$OrdenProduccion->ordenproduccion}} </p>
+                            <h4 class="center-block">CENTRO COSTO:</h4>
+                            <p>{{$OrdenProduccion->centrocosto}}</p>
+                            <h4 class="center-block">Cantidad a Produccir:</h4>
+                            <p>{{ number_format($OrdenProduccion->cantidad)}}</p>
+                            <h4 class="center-block">Articulo :</h4>
+                            <p>{{$OrdenProduccion->articulo}}</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -122,17 +124,17 @@
                             <a href="#" class="btn btn-raised btn-primary">Consultar</a>
                           
 
-                            @if($OrdenProduccion->ESTADO=='P')
-                                     <a href="{{route('planificar.estadoP',$OrdenProduccion->ID)}}" class="btn btn-raised btn-warning">Planificado</a>
+                            @if($OrdenProduccion->estado=='P')
+                                     <a href="{{route('planificar.estadoP',$OrdenProduccion->id)}}" class="btn btn-raised btn-warning">Planificado</a>
                                    
-                            @elseif($OrdenProduccion->ESTADO=='A')
-                                <a href="{{route('planificar.estadoA',$OrdenProduccion->ID)}}" class="btn btn-raised btn-danger">En Produccion</a>
+                            @elseif($OrdenProduccion->estado=='A')
+                                <a href="{{route('planificar.estadoA',$OrdenProduccion->id)}}" class="btn btn-raised btn-danger">En Produccion</a>
 
                                 
 
-                            @elseif($OrdenProduccion->ESTADO=='B')
+                            @elseif($OrdenProduccion->estado=='B')
                                 
-                                  <a href="{{route('planificar.estadoB',$OrdenProduccion->ID)}}" class="btn btn-raised btn-info">Liquidado</a>
+                                  <a href="{{route('planificar.estadoB',$OrdenProduccion->id)}}" class="btn btn-raised btn-info">Liquidado</a>
 
                             @endif
                            

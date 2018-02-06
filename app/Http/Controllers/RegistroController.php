@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Modelos\ControlPiso\CP_ENCABEZADOPLANIFICACION;
 use App\Modelos\ControlPiso\CP_DETALLEPLANIFICACION;
+use App\Modelos\ControlPiso\CP_PLANIFICACION;
 use App\Modelos\ControlPiso\CP_CLAVE_MO;
 use App\Modelos\Softland\OP_OPERACION;
 use App\Modelos\ControlPiso\CP_REGISTROHORAS;
@@ -17,18 +18,19 @@ use Illuminate\Support\Facades\Input;
 class RegistroController extends Controller
 {
     public function index(){
-         $OrdenProduccion=CP_ENCABEZADOPLANIFICACION::wherein('ESTADO',['A','B'])->get();
+         $OrdenProduccion=CP_PLANIFICACION::wherein('ESTADO',['A','B'])->get();
         return view('ControPiso.Transacciones.Registro.index')
                ->with('OrdenProduccion',$OrdenProduccion);
     }
     public function mo($id,$id2)
     {
  
-        $encabezado=CP_ENCABEZADOPLANIFICACION::where('ID','=',$id)->get()->first();
-        $detalle=CP_DETALLEPLANIFICACION::where('ENCABEZADOPLANIFICADOR_ID','=',$id)->get();
+        $encabezado=CP_planificacion::where('id','=',$id)->get()->first();
+        $detalle=CP_ENCABEZADOPLANIFICACION::where('planificacion_id','=',$id)->get();
         $operacion=OP_OPERACION::where('ORDEN_PRODUCCION','=',$id2)->get();
         $clave_mo=CP_CLAVE_MO::all();
         $registrohoras=CP_REGISTROHORAS::all();
+
         
     	 return view('ControPiso.Transacciones.Registro.mo')
          ->with('operacion',$operacion)

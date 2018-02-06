@@ -19,7 +19,7 @@
  <div class="box box-default">
         <div class="box-header with-border">
           <h3 class="box-title">CENTRO COSTO: {{$Equipo->EQUIPO}}--{{$Equipo->DESCRIPCION}}</h3>
-
+            @include('flash::message')
          
         </div>
         <!-- /.box-header -->
@@ -54,6 +54,13 @@
                 <span class="input-group-addon">.00</span>
               </div>
               
+                <label>Proceso</label>
+            <div class="form-group">
+               <select name="operacion" id="operacion" class="form-control select2" style="width: 100%;">
+                  
+                </select>
+              </div>
+
             </div>
             <!-- /.col -->
             <div class="col-md-6">
@@ -78,6 +85,13 @@
                 <label>No. Operadores</label>
                 <div class="input-group">
                 <input type="number" class="form-control" name="numoperarios"  required="true">
+                <span class="input-group-addon">.00</span>
+              </div>
+              <br>
+              <div class="form-group">
+                <label>Tiempo Cambiar Molde</label>
+                <div class="input-group">
+                <input type="number" class="form-control" name="tiempoCambiarMolde"  required="true">
                 <span class="input-group-addon">.00</span>
               </div>
               <br>
@@ -143,10 +157,6 @@
 
 
 <script>
-  
-
- 
-
  $( function() {
     
     var urlraiz=$("#url_raiz_proyecto").val();
@@ -157,6 +167,27 @@
     });
   
   });
+ $("#search_text").change(function(event){
+   var id=document.getElementById("search_text").value
+   var urlraiz=$("#url_raiz_proyecto").val();
+   var miurl =urlraiz+"/opera_equipo/"+id+"";
+   
+    $.ajax({
+      url:miurl,
+      type:'get',
+    }).done(function(data){
+       $.each(data,function(key, registro) {
+         $("#operacion").append('<option value='+registro.DESCRIPCION+'>'+registro.DESCRIPCION+'</option>');
+       });
+       
+    });
+
+    
+
+
+
+ });
+
 
 
 

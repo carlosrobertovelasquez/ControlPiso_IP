@@ -18,7 +18,9 @@
         "laravelcollective/html": "^5.3.0",
         "laravelcollective/annotations": "^5.3.0",
         "nesbot/carbon": "^1.22",
-        "maddhatter/laravel-fullcalendar": "^1.3"
+        "maddhatter/laravel-fullcalendar": "^1.3",
+        "laracasts/flash": "^3.0",
+        "dhtmlx/connector-php": "^3.0"
 
     },
     "require-dev": {

@@ -50,17 +50,20 @@ Route::group(['middleware' => 'auth'], function () {
  Route::get('Equipo_agregar_articulo/{id}', ['uses'=>'EquipoController@agregar_articulo','as'=>'agregar_articulo']);
  Route::get('guardar_articulo', ['uses'=>'EquipoController@guardar_articulo','as'=>'guardar_articulo']);
  Route::get('listar_equipo_articulo/{id}', ['uses'=>'EquipoController@listar_equipo_articulo','as'=>'listar_equipo_articulo']);
- Route::get('listar_equipo_articulo2', ['uses'=>'EquipoController@listar_equipo_articulo2','as'=>'listar_equipo_articulo2']);
-  Route::get('autocomplete-ajaxequipo', ['uses'=>'EquipoController@autoComplete','as'=>'autocomplete.ajaxequipo']);
+ Route::get('listar_equipo_articulo2/{id}', ['uses'=>'EquipoController@listar_equipo_articulo2','as'=>'listar_equipo_articulo2']);
+ Route::get('autocomplete-ajaxequipo', ['uses'=>'EquipoController@autoComplete','as'=>'autocomplete.ajaxequipo']);
+ Route::get('opera_equipo/{id}', ['uses'=>'EquipoController@opera_equipo','as'=>'opera_equipo']);
+ Route::get('editarArticuloCentrocosto/{id}', ['uses'=>'EquipoController@editarArticuloCentrocosto','as'=>'editarArticuloCentrocosto']);
+ Route::get('ListarArticuloOperacion/{id1}/{id2}', ['uses'=>'EquipoController@ListarArticuloOperacion','as'=>'ListarArticuloOperacion']);
 
   Route::get('Produccion','OrdenProduccionController@index');
   //planificador
  Route::get('Planificacion/{id}', ['uses'=>'OrdenProduccionController@planificacion','as'=>'planificacion']);
-Route::get('planificar/{id}/{id4}/{id5}/{id6}', ['uses'=>'OrdenProduccionController@planificar','as'=>'planificar']);
+Route::get('planificar/{id}/{id4}/{id5}/{id6}/{id3}', ['uses'=>'OrdenProduccionController@planificar','as'=>'planificar']);
 Route::get('guardar_planificacion', ['uses'=>'OrdenProduccionController@guardar_planificacion','as'=>'guardar_planificacion']);
 
  Route::get('ConsultaPedidos/{id}',['uses'=>'OrdenProduccionController@ConsultaPedidos', 'as'=>'ConsultaPedidos']);
-Route::get('ConsultaMaquina/{id}/{id2}',['uses'=>'OrdenProduccionController@ConsultaMaquina', 'as'=>'ConsultaMaquina']);
+Route::get('ConsultaMaquina/{id}',['uses'=>'OrdenProduccionController@ConsultaMaquina', 'as'=>'ConsultaMaquina']);
 
 
 //Maestros/Claves
@@ -72,6 +75,7 @@ Route::get('ConsultaMaquina/{id}/{id2}',['uses'=>'OrdenProduccionController@Cons
  Route::get('planificador/estadop/{id}', ['uses'=>'PlanificarController@estadoP', 'as'=>'planificar.estadoP']) ;
  Route::get('planificador/estadoa/{id}', ['uses'=>'PlanificarController@estadoA', 'as'=>'planificar.estadoA']) ;
  Route::get('planificador/estadob/{id}', ['uses'=>'PlanificarController@estadoB', 'as'=>'planificar.estadoB']) ;
+ 
 
 
 
@@ -103,6 +107,17 @@ Route::post('eliminaEvento','CalendarController@delete');
 
 Route::get('invoice','InvoiceController@index');
 Route::get('invoice/add','InvoiceController@add');
+
+//Gantt
+//
+Route::get('gantt','GanttController@index');
+Route::get('gantt/data','GanttController@get');
+
+
+//Scheduler
+Route::get('scheduler','SchedulerController@index');
+Route::get('scheduler/data','SchedulerController@get');
+
 
 });
 
