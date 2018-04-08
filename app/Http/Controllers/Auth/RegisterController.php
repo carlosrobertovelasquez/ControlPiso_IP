@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/respuesta';
 
     /**
      * Create a new controller instance.
@@ -66,16 +67,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $data['confirmation_code']=str_random(25);
+        $user= User::create([
             'name' => $data['usuario'],
             'nombres' => $data['name'],
             'email' => $data['email'],
             'apellidos'=>$data['apellidos'],
              'telefono'=>$data['telefono'],
             'password' => bcrypt($data['password']),
+            'confirmation_code'=>$data['confirmation_code'],
            
         ]);
+         Mail::send('ControPiso.emails.confirmation_code', $data, function ($message) use($data) {
+             
+             $message->to($data['email'], $data['name']);
+             $message->subject('Bienvenido a la plataforma ControlPiso');
+             $message->from('no-repply@iberplastic.com','ControlPiso');
+           
+               
+         
+         });
+        return $user;
     }
+
+ 
 
 
 

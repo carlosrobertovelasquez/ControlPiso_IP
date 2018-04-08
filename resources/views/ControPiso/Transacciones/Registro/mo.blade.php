@@ -67,7 +67,7 @@
                                 
                              
                                    @foreach($detalle as $detalle)
-                                   <option value="{{ $detalle->id }}">{{ number_format($detalle->turno)}} -- {{ $detalle->thoraini }} -- {{ $detalle->thorafin }} ==({{ $detalle->fecha }})</option>
+                                   <option value="{{ $detalle->id }}">{{ number_format($detalle->turno)}} -- {{ $detalle->thoraini }} -- {{ $detalle->thorafin }} ==({{ $detalle->fecha }}) <> HORAS PLANIFICADAS ({{$detalle->horas}})</option>
                                    @endforeach
                           </select>
 
@@ -105,18 +105,18 @@
 
                
                 <div class="col-xs-2">
-                  <input type="text" name="hora1" class="timepicker" id="hora1" value=""  >
+                  <input  type="time" class="form-control" id="hora1"  name="hora1" style="width: 135px;height: 25px"   value="<?php echo date("H:i");?>">
                   
                 </div>
                 <div class="col-xs-2">
-                  <input type="text" name="hora2" class="timepicker" id="hora2" onblur="restarHoras();">
+                   <input  type="time" class="form-control" id="hora2" onblur="restarHoras();"  name="hora2" style="width: 135px;height: 25px"   value="<?php echo date("H:i");?>">
                 </div>
                 <div class="col-xs-2">
-                  <input type="text" name="horatotal" class="form-control" placeholder="Tiempo Minutos"  id="horatotal">
+                  <input type="text" readonly="readonly" name="horatotal" class="form-control" placeholder="Tiempo Minutos"  id="horatotal">
                 </div>
    
                 <div class="col-xs-2">
-                    <select id="id_clave" name="id_clave" class="form-control select2" style="width: 100%;">
+                    <select   id="id_clave" name="id_clave" class="form-control select2" style="width: 100%;">
                                        <option value="0">SELECIONES UNA OPERACION:</option>
                                  
                                        @foreach($clave_mo as $clave_mo)
@@ -132,10 +132,10 @@
 
                 
                 <div class="col-xs-2">
-                  <input type="text" name="comentarios" id="comentarios" class="form-control" placeholder="Comentarios">
+                  <input type="text" name="comentarios" " id="comentarios" class="form-control" placeholder="Comentarios">
                 </div>
                 <div class="col-xs-2">
-                  <button type="button" class="form-control" onclick="crear()" >Adicionar</button> 
+                  <button type="button"   id="btnadicionar" class="form-control" onclick="crear()" >Adicionar</button> 
                 </div>
                  
               </div>
@@ -151,15 +151,20 @@
                 <div class="row">
                 <div class="col-xs-2">
                   <label>HORAS DE TURNO</label>
-                  <input type="text" name="hturno" class="form-control" id="hturno" value=""  >   
+                        <input id="total_horas" name="total_horas" type="text" class="form-control"  readonly="readonly" >
+                     
                 </div>
                 <div class="col-xs-2">
                   <label>TIEMPO PERDIDO</label>
-                  <input type="text" name="tperdido" class="form-control" id="tperdido" value=""  >   
+                  <input type="text" name="horasPeridas" class="form-control" id="horasPerdidas" readonly="readonly"   >   
                 </div>
                 <div class="col-xs-2">
                   <label>TIEMPO TRABAJADO</label>
-                  <input type="text" name="ttrabajo" class="form-control" id="ttrabajo" value=""  >   
+                    <input type="text" name="horasTrabajadas" class="form-control" id="horasTrabajadas" readonly="readonly"   >   
+                </div>
+                <div class="col-xs-2">
+                  <label>HORAS PLANIFICADAS</label>
+                    <input type="text" name="horasPlanificadas" class="form-control" id="horasPlanificadas" readonly="readonly"   >   
                 </div>
               </div>
             </div>
@@ -175,15 +180,18 @@
           </div>
   	 	</div>
   	 	  <div class="box-body">
+         
+
+
+
+
               <div class="row">
-                <div class="col-xs-2">
+                <div class="col-xs-4">
                   <input type="text" class="form-control" name="searchempleado"  placeholder="Codigo o Nombre" id="searchempleado">
                 </div>
               
               
-                <div class="col-xs-4">
-                  <input type="text" id="nombre" name="nombre"  class="form-control" placeholder="Nombre">
-                </div>
+                
               <div class="col-xs-3">
                   <select id="id_rol" name="id_rol" class="form-control select2" style="width: 100%;">
                   <option selected="selected">Operario</option>
@@ -192,14 +200,79 @@
                   </select>
               </div>
 
+               <input type="hidden" name="id_empleado" id="id_empleado" value="" />
+                <input type="hidden" name="nombre" id="nombre" value="" />
+
               <div class="col-xs-2">
                   <button type="" class="form-control" onclick="crearemple()" >Adicionar</button> 
               </div>
             
                <div id="lista_empleados"></div>
       </div>
-    </div>
-  </div>
+
+    <div class="box box-default">
+      <div class="box-header with-border">
+        <h3 class="box-title">Registro de Produccion</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+           
+          </div>
+      </div>
+
+      <div class="box-body">
+         <div class="col-md-6">
+          <div class="form-group">
+                 <div class="form-group">
+                          <label > No.DE PIEZAS POR CICLO : </label>
+                          <input  type="number" class="form-control" id="piezasxhora"  name="piezasxhora" readonly="readonly"  value="{{$equipo->PIEZASXHORAS}}">      
+                         </div>
+                <!-- /.input group -->
+              </div>
+          
+           <div class="form-group">
+                        <label>PRODUCCION : </label>
+                        <input id="produccion" name="produccion" type="number" class="form-control"  value=0.0 onchange="produccion();" >
+                      </div>
+                 <div class="form-group">
+                        <label>DESPERDICIO RECUPERABLE : </label>
+                        <input id="desrecuperable" name="desrecuperable" type="number" class="form-control" value=0.0 >
+                      </div>     
+
+                  <div class="form-group">
+                        <label>DESPERDICIO NO RECUPERABLE : </label>
+                        <input id="desnorecuperable" name="desnorecuperable" type="number" class="form-control" value=0.0 >
+                      </div>
+
+                       </div>
+             <div class="col-md-6">
+               <div class="form-group">
+                        <label> META POR TURNO : </label>
+                        <input id="meta" name="meta" type="number" class="form-control"  readonly="readonly" >
+                      </div>     
+                       <div class="form-group">
+
+                           <label>%EFICIENCIA : </label>
+                        <input id="eficiencia" name="eficiencia" type="number" class="form-control"  readonly="readonly" >
+                             
+                         </div>
+                         <div class="form-group">
+                           <label>TOTAL : </label>
+                          <input id="total" name="total" type="number" class="form-control"  readonly="readonly" >
+                         </div>
+
+                           <div class="form-group ">                                  
+                                    <input type="button" onmouseover="this.backgroundColor='blue' "  style="width: 525px; height:40px ; display:none;" name="aprobar" id="aprobar"  value="Aprobar Produccion" onclick="yy()" >
+                            
+                          
+                           
+                         </div>
+                            
+             </div>
+
+      </div>
+
+     </div>   
  </form> 
 </section>
 
@@ -220,6 +293,11 @@
 
  $(document).ready(function(){
   listhoras();
+  totalHoras();
+  horasPerdidas();
+  horasTrabajadas();
+  horasplanificadas();
+  metaxTurno();
   listaempleados();
  
 
@@ -232,12 +310,152 @@
       autoFocus:true,
       select:function(e,ui){
       
-        $('#nombre').val(ui.item.id);
+        $('#nombre').val(ui.item.nombre);
+        $('#id_empleado').val(ui.item.id);
       }
+
+
+
 
   });
   
  });
+
+$('#produccion').on('change',function () 
+{
+  var meta= document.getElementById("meta").value;
+  var produccion=document.getElementById("produccion").value;
+
+  var eficiencia=(produccion/meta)*100;
+   var v04=eficiencia.toFixed(2) ;
+   $("#eficiencia").val(v04);
+   $("#total").val(produccion);
+  
+   if(produccion>0){
+    document.getElementById("aprobar").style.display='inline';
+   // aprobar.style.display='inline';
+   }else{
+    document.getElementById("aprobar").style.display='none';
+   }
+
+ 
+});
+
+$('#desrecuperable').on('change',function () 
+{
+  var desperdicio= document.getElementById("desrecuperable").value;
+  var produccion=document.getElementById("total").value;
+
+  var total=parseFloat(produccion)+parseFloat(desperdicio);
+   
+   $("#total").val(total);
+
+ 
+});
+
+$('#desnorecuperable').on('change',function () 
+{
+  var desperdicio= document.getElementById("desnorecuperable").value;
+  var produccion=document.getElementById("total").value;
+
+  var total=parseFloat(produccion)+parseFloat(desperdicio);
+   
+   $("#total").val(total);
+
+ 
+});
+
+
+
+function totalHoras()
+{
+var id= document.getElementById("norden").value;
+var id2= document.getElementById("id_turno").value;
+var id3= document.getElementById("id_operacion").value; 
+var urlraiz=$("#url_raiz_proyecto").val();
+var miurl =urlraiz+"/registro/totalhoras/"+id+"/"+id2+"/"+id3+"";
+
+$.ajax({
+  type:'get',
+  url:miurl,
+  success:function(resul){
+    
+    $('#total_horas').val(resul);
+  }
+ });
+}
+
+function horasPerdidas()
+{
+var id= document.getElementById("norden").value;
+var id2= document.getElementById("id_turno").value;
+var id3= document.getElementById("id_operacion").value; 
+var urlraiz=$("#url_raiz_proyecto").val();
+var miurl =urlraiz+"/registro/tiempoPerdido/"+id+"/"+id2+"/"+id3+"";
+
+$.ajax({
+  type:'get',
+  url:miurl,
+  success:function(resul){
+
+    $('#horasPerdidas').val(resul);
+  }
+ });
+}
+
+function horasTrabajadas()
+{
+var id= document.getElementById("norden").value;
+var id2= document.getElementById("id_turno").value;
+var id3= document.getElementById("id_operacion").value; 
+var urlraiz=$("#url_raiz_proyecto").val();
+var miurl =urlraiz+"/registro/horasTrabajadas/"+id+"/"+id2+"/"+id3+"";
+
+$.ajax({
+  type:'get',
+  url:miurl,
+  success:function(resul){
+
+    $('#horasTrabajadas').val(resul);
+
+  }
+ });
+}
+
+function metaxTurno()
+{
+var id= document.getElementById("norden").value;
+var id2= document.getElementById("id_turno").value;
+var id3= document.getElementById("id_operacion").value; 
+var urlraiz=$("#url_raiz_proyecto").val();
+var miurl =urlraiz+"/registro/metaxTurno/"+id+"/"+id2+"/"+id3+"";
+
+$.ajax({
+  type:'get',
+  url:miurl,
+  success:function(resul){
+    
+    $('#meta').val(resul);
+  }
+ });
+}
+
+function horasplanificadas()
+{
+var id= document.getElementById("norden").value;
+var id2= document.getElementById("id_turno").value;
+var id3= document.getElementById("id_operacion").value; 
+var urlraiz=$("#url_raiz_proyecto").val();
+var miurl =urlraiz+"/registro/horasplanificadas/"+id+"/"+id2+"/"+id3+"";
+
+$.ajax({
+  type:'get',
+  url:miurl,
+  success:function(resul){
+    $('#horasPlanificadas').val(resul);
+  }
+ });
+}
 
 
 
@@ -281,7 +499,16 @@ $.ajax({
 
 function actualizar(){
   listhoras();
+  totalHoras();
+  horasPerdidas();
+  horasTrabajadas();
+  horasplanificadas();
+   metaxTurno();
   listaempleados();
+  document.getElementById("btnadicionar").disabled=false;
+    document.getElementById("comentarios").disabled=false;
+    document.getElementById("id_clave").disabled=false;
+    document.getElementById("horatotal").disabled=false;
 }
  
   
@@ -289,6 +516,9 @@ function actualizar(){
   function restarHoras(){
    inicio=document.getElementById("hora1").value;
    fin=document.getElementById("hora2").value;
+   var id= document.getElementById("horasPlanificadas").value;
+   var horastrabajadas=document.getElementById("total_horas").value;
+   horast=parseInt(horastrabajadas.substr(0,2));
 
    inicioMinutos=parseInt(inicio.substr(3,2));
    inicioHoras=parseInt(inicio.substr(0,2));
@@ -305,7 +535,21 @@ function actualizar(){
    }
    horas=transcurridoHoras.toString();
    minutos=transcurridoMinutos.toString();
+   total01=horast+transcurridoHoras
 
+   if(total01>id){
+    document.getElementById("btnadicionar").disabled=true;
+    document.getElementById("comentarios").disabled=true;
+    document.getElementById("id_clave").disabled=true;
+    
+    alert('A superado la Cantidad de Horas Planificadas Solicitar Aumento de Horas....');
+
+   }else{
+
+     document.getElementById("btnadicionar").disabled=false;
+    document.getElementById("comentarios").disabled=false;
+    document.getElementById("id_clave").disabled=false;
+   
    if(horas.length<2){
     horas="0"+horas;
    }
@@ -315,10 +559,22 @@ function actualizar(){
    }
 
    document.getElementById("horatotal").value=horas+":"+minutos;
+    
+   }
+
+   
+   
+
   }
 
 
   function crear(){
+    var id=document.getElementById("horatotal").value;
+
+    if (id==""){
+      alert("Tiene que ingresar datos");
+    }else{
+
     var dataString=$('#form_registrohoras').serialize();
     var urlraiz=$("#url_raiz_proyecto").val();
      var miurl =urlraiz+"/registro/agregar/";
@@ -329,6 +585,9 @@ function actualizar(){
     data:dataString,
   }).done(function(data){
     listhoras();
+    totalHoras();
+    horasPerdidas();
+    horasTrabajadas();
     document.getElementById("hora1").value="";
     document.getElementById("hora2").value="";
     document.getElementById("horatotal").value="";
@@ -337,7 +596,47 @@ function actualizar(){
 
   });
 
+}
   }
+   function yy(){
+    //var id2= document.getElementById("id_turno").value;
+    //var dataString=$('#form_registrohoras').serialize();
+    //var urlraiz=$("#url_raiz_proyecto").val();  
+   //var miurl =urlraiz+"/registro/aprobar/"+id2+"";
+     
+  
+  //$.ajax({
+    // url:miurl,
+    //data:dataString,
+  //}).done(function(data){
+   
+
+ // });
+
+var dataString=$('#form_registrohoras').serialize();
+    var urlraiz=$("#url_raiz_proyecto").val();
+     var miurl =urlraiz+"/registro/agregarproduccion/";
+    
+    
+  $.ajax({
+     url:miurl,
+    data:dataString,
+  }).done(function(data){
+    //listaempleados();
+    //document.getElementById("searchempleado").value="";
+    //document.getElementById("nombre").value="";
+    
+
+
+  });
+
+
+
+
+
+  }
+
+
 
 
    function crearemple(){
@@ -345,7 +644,7 @@ function actualizar(){
     var urlraiz=$("#url_raiz_proyecto").val();
      var miurl =urlraiz+"/registro/agregaremple/";
     
-  
+    
   $.ajax({
      url:miurl,
     data:dataString,
@@ -377,7 +676,13 @@ function eliminar(id){
       url:miurl,
     }).done(function(data){
        listhoras();
+       totalHoras();
+       horasPerdidas();
+       horasTrabajadas();
     });
+      document.getElementById("btnadicionar").disabled=false;
+    document.getElementById("comentarios").disabled=false;
+    document.getElementById("id_clave").disabled=false;
 
 }
 
@@ -402,17 +707,7 @@ function eliminaremple(id){
 
 }
 
-$('.timepicker').pickatime({
-    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Clear', // text for clear-button
-    canceltext: 'Cancel', // Text for cancel-button
-    autoclose: false, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function(){} //Function for after opening timepicker
-  });
+
   
     
  

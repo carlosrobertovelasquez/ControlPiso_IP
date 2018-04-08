@@ -121,8 +121,8 @@
                         </div>
                         <div>
                            
-                            <a href="#" class="btn btn-raised btn-primary">Consultar</a>
-                          
+                            <a href="{{route('viajero',$OrdenProduccion->ordenproduccion)}}" class="btn btn-raised btn-primary">Viajero</a>
+                               <a href="#" class="btn btn-raised btn-primary">Ficha Tec</a>
 
                             @if($OrdenProduccion->estado=='P')
                                      <a href="{{route('planificar.estadoP',$OrdenProduccion->id)}}" class="btn btn-raised btn-warning">Planificado</a>
@@ -138,7 +138,7 @@
 
                             @endif
                            
-
+                            
                         </div>
 
                     </div>

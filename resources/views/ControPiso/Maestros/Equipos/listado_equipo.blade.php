@@ -35,13 +35,13 @@
                  {{csrf_field()}}       
                  @foreach($Equipo as $Equipo)
 				 		<tr>
-                            <td>{{ $Equipo->EQUIPO }}</td> 
-                            <td>{{ $Equipo->DESCRIPCION }}</td> 
+                            <td>{{ $Equipo->RUBRO }}</td> 
+                            <td>{{ $Equipo->DESCRIP_RUBRO }}</td> 
                             <td>
-                                <a href="{{route('listar_equipo_articulo',$Equipo->EQUIPO)}}" class="btn btn-warning"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                                <a href="{{route('listar_equipo_articulo',$Equipo->RUBRO)}}" class="btn btn-warning"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
                                 
                                 
-                                <a href="{{route('agregar_articulo',$Equipo->EQUIPO)}}"
+                                <a href="{{route('agregar_articulo',$Equipo->RUBRO)}}"
                                            class="btn btn-success">
                                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                  </a>

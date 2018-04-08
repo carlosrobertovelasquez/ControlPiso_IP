@@ -64,10 +64,35 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $data['confirmation_code']=str_random(25);
+        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_code'=>$data['confirmation_code']
         ]);
+
+         //Send confirmation  Code
+         
+         Mail::send('ControPiso.emails.confirmation_code', $data, function ($message) use($data) {
+             
+             $message->to($data['email'], $data['name']);
+             $message->subject('Por favor Confirma tu Correo');
+         
+         });
+        return $user;
+    }
+    public function verify($code)
+    {
+    $user=User::where('confirmation_code',$code)->first();
+    if(!$user)
+    {
+        return redirect('/');
+    }  
+
+     $user->confirmed=true;
+     $user->confirmation_code=null;
+     $user->save();
+     return redirect ('/login')->with('notification','Has confirmado correctamente tu correo');   
     }
 }

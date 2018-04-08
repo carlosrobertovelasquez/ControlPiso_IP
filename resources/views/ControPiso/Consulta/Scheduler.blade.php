@@ -15,15 +15,7 @@
   <link rel='stylesheet' href='dhtmlxScheduler/dhtmlxscheduler_flat.css'>
   <link rel='stylesheet' href='css/styles.css'>
  
-  <style type="text/css">
-        html, body{
-            height:100%;
-            padding:0px;
-            margin:0px;
-            overflow: hidden;
-        }
-
-    </style>
+  
 
 
 
@@ -33,7 +25,7 @@
 
 
 
-<div id="scheduler_here" class="dhx_cal_container" style="width:100%; height:100%;">
+<div id="scheduler_here" class="dhx_cal_container" style="width:96%; height:96%;">
     <div class="dhx_cal_navline">
           <div class="dhx_cal_prev_button">&nbsp;</div>
           <div class="dhx_cal_next_button">&nbsp;</div>
@@ -69,20 +61,24 @@ scheduler.createTimelineView({
   name: "timeline",
   x_unit: "minute",
   x_date: "%H:%i",
-  x_step: 60,
+  x_step: 30,
   x_size: 24,
- // x_start: 16,
+  x_start: 16,
   x_length: 48,
-  // y_unit:[
-  //      {key:503, label:"James Smith"},
-  //      {key:2, label:"John Williams"},
-  //      {key:3, label:"David Miller"},
-  //      {key:4, label:"Linda Brown"}
-  //  ],
+   y_unit:[
+        {key:1, label:"501"},
+        {key:2, label:"557"},
+        {key:3, label:"555"},
+        {key:4, label:"558"}
+    ],
 
- y_unit:sections,
+ //y_unit:sections,
   y_property: "type_id",
-  render:"bar"
+  render:"bar",
+  //days:7,
+ // event_dy: 48,
+  //  section_autoheight: false,
+   // round_position: true,
 });
 
 

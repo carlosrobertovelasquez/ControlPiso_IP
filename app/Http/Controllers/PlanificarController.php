@@ -13,6 +13,9 @@ use App\Modelos\ControlPiso\CP_PLANIFICACION;
 use Illuminate\Support\Facades\DB;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
+use App\Modelos\ControlPiso\CP_emails;
+use App\Mail\ComprasMail;
 
 
 class PlanificarController extends Controller
@@ -26,6 +29,9 @@ class PlanificarController extends Controller
          $OrdenProduccion=CP_PLANIFICACION::wherein('estado' , ['P','A','B'])->get();
          //->whereIn('ESTADO', ['P', 'A', 'B','C'])->get();
      
+          //envio correo aqui:
+          
+
         return view('ControPiso.Transacciones.Planificador.index')
                ->with('OrdenProduccion',$OrdenProduccion);
 
@@ -39,7 +45,8 @@ class PlanificarController extends Controller
     
        $planificar=CP_PLANIFICACION::where('id',$id)->update(['estado'=>'A']);
       
-      
+         $emails=CP_emails::where('email01','=','S')->select('email')->get();
+            Mail::to($emails)->send(new ComprasMail());
         
        
        return redirect()->route('planificador.index');
@@ -56,6 +63,8 @@ class PlanificarController extends Controller
     
       $planificar=CP_PLANIFICACION::where('id',$id)->update(['estado'=>'B']);
       
+
+           
       
         
        

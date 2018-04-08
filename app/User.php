@@ -19,7 +19,7 @@ class User extends Authenticatable
     //public $timestamps=false;
     protected $dateFormat='d-m-Y h:i:s';
     protected $fillable = [
-        'name', 'email', 'password','nombres','apellidos','telefono',
+        'name', 'email', 'password','nombres','apellidos','telefono','confirmation_code','confirmed',
     ];
 
     /**

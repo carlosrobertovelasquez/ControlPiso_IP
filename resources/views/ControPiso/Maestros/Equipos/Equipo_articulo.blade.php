@@ -18,7 +18,7 @@
   
  <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">CENTRO COSTO: {{$Equipo->EQUIPO}}--{{$Equipo->DESCRIPCION}}</h3>
+          <h3 class="box-title">CENTRO COSTO: {{$Equipo->RUBRO}}--{{$Equipo->DESCRIP_RUBRO}}</h3>
             @include('flash::message')
          
         </div>
@@ -38,9 +38,9 @@
 
 
 
-               
-                   <input type="hidden" name="id_equipo" value="{{$Equipo->EQUIPO}}" />
-                   <input type="hidden" name="desc_equipo" value="{{$Equipo->DESCRIPCION}}" />
+                    <input type="hidden" name="id_articulo" id="id_articulo" value="" />
+                   <input type="hidden" name="id_equipo" value="{{$Equipo->RUBRO}}" />
+                   <input type="hidden" name="desc_equipo" value="{{$Equipo->DESCRIP_RUBRO}}" />
                <br>
                <label>Piezas x Horas</label>
               <div class="input-group">
@@ -164,29 +164,31 @@
     
     $( "#search_text").autocomplete({
       source:miurl,
-    });
-  
-  });
- $("#search_text").change(function(event){
-   var id=document.getElementById("search_text").value
-   var urlraiz=$("#url_raiz_proyecto").val();
-   var miurl =urlraiz+"/opera_equipo/"+id+"";
-   
-    $.ajax({
+      change:function(event,ui){
+      var id=ui.item.id;
+      $("#id_articulo").val(id);
+      
+      var urlraiz=$("#url_raiz_proyecto").val();
+      var miurl =urlraiz+"/opera_equipo/";
+
+      $.ajax({
       url:miurl,
       type:'get',
+      data:{"id":id},
     }).done(function(data){
+
        $.each(data,function(key, registro) {
          $("#operacion").append('<option value='+registro.DESCRIPCION+'>'+registro.DESCRIPCION+'</option>');
        });
        
     });
 
-    
-
-
-
- });
+     
+      }
+    });
+  
+  });
+ 
 
 
 

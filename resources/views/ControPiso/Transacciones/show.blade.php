@@ -32,6 +32,16 @@
 			                    <label>Tiempo por Cambio Molde  </label>
 			                    <input type="number" id="idm_tiempocm" name="idm_tiempocm" class="form-control" >
 	                        </div>
+
+	                         <div class="form-group">
+                          <fieldset data-role="controlgroup" data-type="horizontal" >
+                            <legend>Tomar Fecha Actual </legend>
+                            <label for="normal">Tomar Fecha Actual</label>
+                            <input type="checkbox" name="tomarfecha" id="tomarfecha" value="normal" checked  >
+
+                          </fieldset>
+
+                         </div>
 	                       <div class="form-group">
                           <fieldset data-role="controlgroup" data-type="horizontal" >
                             <legend>Horario Normal </legend>

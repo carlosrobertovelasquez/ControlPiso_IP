@@ -17,9 +17,10 @@ class GanttController extends Controller
      public function get(){
 
       $tasks = new CP_tasks();
+      $tasks = CP_tasks::orderBy('id', 'desc')->get();
 
          return response()->json([
-            "data" => $tasks->all()
+            "data" => $tasks
         ]);	
      }
     

@@ -147,7 +147,7 @@
                           <select id="id_centrocosto" name="id_centrocosto" class="form-control select2" style="width: 100%;">
                                     <option value="0">SELECIONES UN CENTRO COSTO:</option>
                                    @foreach($centrocosto as $centrocosto)
-                                   <option value="{{ $centrocosto->EQUIPO }}">{{ $centrocosto->EQUIPO }}--{{ $centrocosto->DESC_EQUIPO }} </option>
+                                   <option value="{{ $centrocosto->ID}}">{{ $centrocosto->EQUIPO }}--{{ $centrocosto->DESC_EQUIPO }} </option>
                                    @endforeach
                           </select>
 
@@ -155,7 +155,7 @@
                       <!-- /.form-group -->
                       <div class="form-group">
                           <label > Cantidad de Piezas Por Hora </label>
-                          <input  type="text" class="form-control" id="piezaxhora" name="piezaxhora" onkeypress="return valida(event)" >
+                          <input  type="text" class="form-control" id="idm_cantidadxh" name="idm_cantidadxh" onkeypress="return valida(event)" >
                       </div>
 
                         <input type="hidden" name="color" id="color" />
@@ -164,8 +164,9 @@
 
                      
                          <div class="form-group">
-                          <label > Fecha Planificada </label>
-                          <input  type="date" class="form-control" id="id_fecha"  name="id_fecha" style="width: 300px;height: 40px"   value="<?php echo date("Y-m-d");?>">      
+                            <label>Tiempo por Cambio Molde  </label>
+                          <input type="number" id="idm_tiempocm" name="idm_tiempocm" class="form-control" >
+                                 
                          </div>
 
                           <div class="form-group">
@@ -184,19 +185,19 @@
                          <div class="form-group">
                           <fieldset data-role="controlgroup" data-type="horizontal" >
                             <legend>Dias de Trabajo </legend>
-                            <label for="lunes">Lunes</label>
+                            <label for="lunes">L</label>
                             <input type="checkbox" name="lunes" id="lunes" value=1  class="checar"  >
-                            <label for="martes">Martes</label>
+                            <label for="martes">M</label>
                             <input type="checkbox" name="martes" id="martes" value="2" class="checar"    >
-                            <label for="miercoles">Miercoles</label>
+                            <label for="miercoles">K</label>
                             <input type="checkbox" name="miercoles" id="miercoles" value="3" class="checar"  >
-                            <label for="red">Jueves</label>
+                            <label for="red">J</label>
                             <input type="checkbox" name="jueves" id="jueves" value="4" class="checar"  >
-                            <label for="red">Viernes</label>
+                            <label for="red">V</label>
                             <input type="checkbox" name="viernes" id="viernes" value="5"  class="checar"  >
-                            <label for="red">Sabado</label>
+                            <label for="red">S</label>
                             <input type="checkbox" name="sabado" id="sabado" value="6"  class="checar" >
-                            <label for="red">Domingo</label>
+                            <label for="red">D</label>
                             <input type="checkbox" name="domingo" id="domingo" value="7" class="checar"  >
 
                           </fieldset>
@@ -213,25 +214,27 @@
 
                     <!-- /.col -->
                     <div class="col-md-6">
-                      <div class="form-group">
-                          <label > Cantidad de Piezas Por Turno </label>
-                          <input  type="text" class="form-control" id="piezaxturno" name="piezaxturno" readonly="readonly">
-                      </div>
+                      
                       <!-- /.form-group -->
                       <div class="form-group">
-                          <label > Cantidad de Turnos </label>
-                          <input  type="text" class="form-control" id="cantidadturnos"  name="cantidadturnos"
-                            readonly="readonly">
+                          <label>Total Horas </label>
+                          <input type="text" id="idm_totalhoras" name="operacion" class="form-control" readonly="readonly" >
                       </div>
 
                       <div class="form-group">
-                          <label > Tipo de Turno </label>
-                          <select id="id_turno" name="id_turno" class="form-control select2" style="width: 100%;">
-                            <option value="1">Mañana (06:00 - 14:00) </option>
-                            <option value="2">Tarde  (14:00 - 21:00) </option>
-                            <option value="3">Noche  (21:00 - 06:00)</option>
-                          </select>  
+                            <label>Total de Turnos Estimados </label>
+                          <input type="text" id="idm_totalturnos" name="operacion" class="form-control" readonly="readonly" >  
                       </div>
+
+                      <div class="form-group">
+                         <label > Fecha : </label>
+                              <input  type="date" class="form-control" id="id_fecha"  name="id_fecha" style="width: 250px;height: 40px"   value="<?php echo date("Y-m-d");?>">
+                      </div>
+                      <div class="form-group">
+                              <label > Hora : </label>
+                              <input  type="time" class="form-control" id="id_hora"  name="id_hora" style="width: 250px;height: 40px"   value="<?php echo date("H:i");?>">
+                                    
+                            </div>
 
                       <br>
 
@@ -296,6 +299,7 @@
 
                    
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
+                        <input type="hidden" name="id_secuencia" id="id_secuencia" value="1"> 
                              <div class="form-group" align="center">
                               <br>
                                     <button  align="center"  type="submit" onmouseover="this.backgroundColor='blue' "  style="width: 450px;height: 40px ;visibility:hidden " name="guardar" id="guardar"  value="Guardar"> Guardar </button>
@@ -355,7 +359,8 @@ $('#id_centrocosto').on('change',function ()
   var id =$('#id_centrocosto').val();
   var id2=$('#articulo').val();
   var urlraiz=$("#url_raiz_proyecto").val();
-  var miurl =urlraiz+"/ConsultaMaquina/"+id+"/"+id2+"";
+  var miurl =urlraiz+"/ConsultaMaquina/"+id+"";
+ // var miurl =urlraiz+"/ConsultaMaquina02/"+id+"/"+id2+"";
   var nf=new Intl.NumberFormat(); 
   $.ajax({
     url:miurl
@@ -364,31 +369,85 @@ $('#id_centrocosto').on('change',function ()
      
      var content=JSON.parse(data);  
 
+ if((content[0].TIEMPOMOLDE)==0.00){
+     piezaxh=parseInt((content[0].PIEZASXHORAS));
+     total=piezaxh;
+
+     }else{
+     piezaxh=parseInt((content[0].PIEZASXHORAS));
+     tiempomolde=parseInt((content[0].TIEMPOMOLDE));
+     total=piezaxh+tiempomolde;
+      
+     }
+
      
-    $("#piezaxhora").val( content[0].PIEZASXHORAS);
-    $("#color").val( content[0].COLOR);
-    $("#piezaxturno").val((content[0].PIEZASXHORAS)*8);
-    var vcantidadaproducir=document.getElementById('cantidadaproducir').value;
-    var vcantixturno=content[0].PIEZASXHORAS;    //$('#piezaxhora').val();
+
+    $("#idm_tiempocm").val( content[0].TIEMPOMOLDE);
+    $("#idm_cantidadxh").val(total);
+
+
+
+   
+   var vcantidadaproducir=$("#cantidadaproducir").val();
+
+
+    var vcantixturno=total;    //$('#piezaxhora').val();
     r=vcantixturno*8;// piezas por turno
      
     v01= parseFloat(vcantidadaproducir).toFixed(2) ;
     v04=parseFloat(vcantixturno).toFixed(2) ;
+
     v02=parseFloat(r);
-  
-    v03=Math.round(v01/v02);
-   
-    //r2 = vcantidadaproducir/r; //turnos necesarios
-    document.getElementById("piezaxhora").value=v04;
-    document.getElementById("piezaxturno").value=r;
-   document.getElementById("cantidadturnos").value=v03;
-    //document.getElementById("color").value='xx';
-  
     
+    v03=Math.round(v01/v04);
+     v05=Math.round(v03/8);
+   
+   $("#idm_totalhoras").val(v03);  
+ // $("#piezaxturno").val(v03);
+$("#idm_totalturnos").val(v05);
+      
   })
 
     
    
+ });
+
+
+//Cambiar el Tiempo del Molde
+
+$('#idm_tiempocm').on('change',function () 
+{
+
+  
+   //procedemos a ver el valor Tiempo de cambio de Molde 
+   var nuevovalor=$("#idm_tiempocm").val();
+   var totalhoras=$("#idm_totalhoras").val();
+   if(nuevovalor==0){
+    $("#idm_totalhoras").val(totalhoras);
+    var total=totalhoras;
+
+   }else{
+  
+      v01=parseInt(nuevovalor);
+      v02=parseInt(totalhoras);   
+      var total=v01+v02;
+
+
+      $("#idm_totalhoras").val(total);
+   
+   } 
+
+    v01=parseInt(nuevovalor);
+      v02=parseInt(totalhoras);   
+      var total=v01+v02;
+
+
+      $("#idm_totalhoras").val(total);
+
+    v04=total ;
+    v05=Math.round(v04/8);
+    $("#idm_totalturnos").val(v05);
+//fin   
  });
 
 
@@ -398,10 +457,9 @@ $('#id_centrocosto').on('change',function ()
 
 
 
-
-$('#piezaxhora').keyup(function(){
+$('#idm_cantidadxh').keyup(function(){
     
-    var vcantixturno=document.getElementById('piezaxhora').value;    //$('#piezaxhora').val();
+    var vcantixturno=document.getElementById('idm_cantidadxh').value;    //$('#piezaxhora').val();
     var vcantidadaproducir=document.getElementById('cantidadaproducir').value;  //$('#cantidadaproducir').val();
     r=vcantixturno*8;// piezas por turno
 
@@ -411,7 +469,7 @@ $('#piezaxhora').keyup(function(){
 
     //r2 = vcantidadaproducir/r; //turnos necesarios
     
-    document.getElementById("piezaxturno").value=r;
+    document.getElementById("idm_cantidadxh").value=r;
    document.getElementById("cantidadturnos").value=v03;
     
   })
@@ -421,7 +479,7 @@ $('#piezaxhora').keyup(function(){
 
 $('#cantidadaproducir').keyup(function(){
 
-    var vcantixturno=document.getElementById('piezaxhora').value;    //$('#piezaxhora').val();
+    var vcantixturno=document.getElementById('idm_cantidadxh').value;    //$('#piezaxhora').val();
     var vcantidadaproducir=document.getElementById('cantidadaproducir').value;  //$('#cantidadaproducir').val();
     r=vcantixturno*8;// piezas por turno
 
@@ -435,14 +493,14 @@ $('#cantidadaproducir').keyup(function(){
 
     //r2 = vcantidadaproducir/r; //turnos necesarios
 
-    document.getElementById("piezaxturno").value=r;
+    document.getElementById("idm_cantidadxh").value=r;
     document.getElementById("cantidadturnos").value=v03;
 
 });
 
 // Boton de Planificacion
 $('#planificar').click(function(){
-  
+   
 eliminarFilas();
 ValdiarCampos();
 
@@ -455,29 +513,34 @@ ValdiarCampos();
   var vcantidadaproducir=document.getElementById('cantidadaproducir').value;  
   id2= parseFloat(vcantidadaproducir).toFixed(2) ;
   
-  var id=document.getElementById('cantidadturnos').value;
-  var id3=document.getElementById('piezaxturno').value;
-  var id4=document.getElementById('id_fecha').value;
-  var id5=document.getElementById('id_turno').value;
-  var id6=document.getElementById('id_centrocosto').value;
+  var id=$("#idm_totalhoras").val();//total de horas
+  var id3="TERMINADO";// operacion a realizar
+  var id4=document.getElementById('id_fecha').value;//fecha selecionada
+  var id5=document.getElementById('id_hora').value;// hora selecionada
+  var id6=document.getElementById('id_centrocosto').value;//maquina a utilizar
+  var id7=$("#idm_totalturnos").val();
 
   var urlraiz=$("#url_raiz_proyecto").val();
-  var miurl =urlraiz+"/planificar/"+id+"/"+id4+"/"+id5+"/"+id6+"";
+  var miurl =urlraiz+"/planificar/"+id+"/"+id4+"/"+id5+"/"+id6+"/"+id3+"";
+
   
   var d='<tr>'+
    '<th>No</th>'+
-   '<th>CORE</th>'+
-   '<th>TURNO</th>'+
-   '<th>FECHA_HORA_INICIO</th>'+
-   '<th>FECHA_HORA_FIN</th>'+
-   '<th>CANTIDAD A PRODUCIR</th>'+
+   '<th>Centro Costo</th>'+
+   '<th>Fecha</th>'+
+   '<th>Hora Inicio</th>'+
+   '<th>Hora Fin</th>'+
+   '<th>Horas</th>'+
+   '<th>Cantidad</th>'+
+   '<th>Turno</th>'+
+   '<th>Operacion</th>'+
    '</tr>';
  
   $.ajax({
     url:miurl,
     data:dataString,
   }).done(function(data){
-     
+     //console.log(data);
      var valor=data 
     if(valor==1){
 
@@ -502,8 +565,8 @@ ValdiarCampos();
 
           $acumulado=$variable+$acumulado  ;
           
-
-           if($no==id){
+            
+           if($no==id7){
              $x=vcantidadaproducir-$acumulado;
              
              id3=$variable+$x
@@ -515,23 +578,65 @@ ValdiarCampos();
               id3=nf.format($variable);
            }
 
-           var fi=content[i].HORA_INICIO;
-                    
-          
-          d+='<tr>'+
-          '<td>'+$no+'</td>'+
-          '<td>'+content[i].CORE+'</td>'+
-          '<td>'+content[i].TURNO+'</td>'+
-          '<td>'+fi+'</td>'+
-          '<td>'+content[i].HORA_FIN+'</td>'+
-          '<td>'+id3+'</td>'+
+           
+               
+           id3=$("#idm_cantidadxh").val();  
+           id3=id3*content[i].horas;  
+           id3=parseFloat(id3).toFixed(2);
+
+           if(content[i].turno=='1'){
+           d+='<tr>'+
+          '<td bgcolor="#FF0000" >'+$no+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].centrocosto+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].fecha+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].thoraini+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].thorafin+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].horas+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].cantidad+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].turno+'</td>'+
+          '<td bgcolor="#FF0000">'+content[i].operacion+'</td>'+
           '</tr>';
+
+           }  
+          if(content[i].turno=='3'){
+          d+='<tr>'+
+          '<td bgcolor="#00FF00" >'+$no+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].centrocosto+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].fecha+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].thoraini+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].thorafin+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].horas+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].cantidad+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].turno+'</td>'+
+          '<td bgcolor="#00FF00">'+content[i].operacion+'</td>'+
+          '</tr>';
+          }    
+
+          if(content[i].turno=='2'){
+            d+='<tr>'+
+          '<td bgcolor="#FFFF00">'+$no+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].centrocosto+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].fecha+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].thoraini+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].thorafin+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].horas+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].cantidad+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].turno+'</td>'+
+          '<td bgcolor="#FFFF00">'+content[i].operacion+'</td>'+
+          '</tr>';
+          }
+                   
+          
+  
+          
          }
          $("#tabla").append(d);
 
           document.getElementById('guardar').style.visibility='visible';
+       
    
    } 
+   $('#showModal').modal('hide');
   })
   
   

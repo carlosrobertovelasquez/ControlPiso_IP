@@ -49,10 +49,11 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-users'></i> <span>CONSULTA</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
+                     <li><a href="{{url('Ticket')}}">Ticket</a></li>
                      <li><a href="{{url('gantt')}}">Gantt</a></li>
                      <li><a href="{{url('scheduler')}}">Scheduler</a></li>
                     <li><a href="#">Pedidos</a></li>
-                    <li><a href="#">Ordenes de Produccion</a></li>
+                    <li><a href="{{url('ConsultaProduccion')}}">Ordenes de Produccion</a></li>
                 </ul>
             </li>
 
@@ -68,7 +69,7 @@
                 <a href="#"><i class='fa fa-users'></i> <span>ADMINISTRACION</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('listado_usuarios') }}">Listado Usuarios</a></li>
-                    <li><a href="#"></a></li>
+                    <li><a href="{{url('listado_correo')}}">Envio de Correo</a></li>
                 </ul>
             </li>
                 

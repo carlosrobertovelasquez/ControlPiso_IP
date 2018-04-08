@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
+use App\Modelos\ControlPiso\CP_emails;
 
 class UsuariosController extends Controller
 {
@@ -39,6 +40,12 @@ public function listado_usuarios(){
     //presenta un listado de usuarios paginados de 100 en 100
 	$usuarios=User::paginate(100);
 	return view("listados.listado_usuarios")->with("usuarios",$usuarios);
+}
+
+public function listado_correo(){
+   $email=CP_emails::all();
+   return view("ControPiso.Administracion.listado_correo")->with("email",$email);
+
 }
 
 
@@ -269,5 +276,18 @@ public function borrar_rol($idrole){
     return "ok";
 }
 
+   public function verify($code)
+    {
+    $user=User::where('confirmation_code',$code)->first();
+    if(!$user)
+    {
+        return redirect('/login');
+    }  
+
+     $user->confirmed=true;
+     $user->confirmation_code=null;
+     $user->save();
+     return redirect ('/login')->with('notification','Has confirmado correctamente tu correo');   
+    }
 
 }

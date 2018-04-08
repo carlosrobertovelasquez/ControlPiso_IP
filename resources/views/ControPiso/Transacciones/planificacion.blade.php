@@ -171,8 +171,9 @@
 
                                    <button type="button" class="show-modal btn btn-success"   data-id="{{$centrocosto->DESCRIPCION}}" data-title="{{$centrocosto->SECUENCIA}}">
                                     <span class="glyphicon glyphicon-eye-open"></span>Planificar</button>
-
+                                    
                                 </td>
+
                         </tr>
                         @include('ControPiso.Transacciones.agregar')   
                         <?php $modal++?>           
@@ -308,11 +309,13 @@ $('#id_centrocosto').on('change',function ()
   var id2=$('#articulo').val();
   var id3=$('#Mid_opera').val();
   var urlraiz=$("#url_raiz_proyecto").val();
-  var miurl =urlraiz+"/ConsultaMaquina/"+id+"";
+  var miurl =urlraiz+"/ConsultaMaquina/";
 
   var nf=new Intl.NumberFormat(); 
   $.ajax({
-    url:miurl
+    url:miurl,
+    type:'get',
+    data:{"id":id}
   }).done(function(data)
   {   
      
@@ -736,13 +739,15 @@ function AppendMaquinas(art,ope){
   //alert(art+ope);
 
    var urlraiz=$("#url_raiz_proyecto").val();
-  var miurl =urlraiz+"/ListarArticuloOperacion/"+art+"/"+ope+"";
+  var miurl =urlraiz+"/ListarArticuloOperacion/";
 
 
 
 
    $.ajax({
-     url:miurl,   
+     url:miurl,
+     type:'get',
+      data:{"art":art,"ope":ope}    
    }).done(function(data){
       
      var content=JSON.parse(data);

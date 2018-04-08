@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Modelos\Softland\EQUIPO;
+use App\Modelos\Softland\RUBRO_LIQ;
 use App\Modelos\Softland\ARTICULO;
 use App\Modelos\ControlPiso\CP_EQUIPOARTICULO;
 use App\Modelos\Softland\ESTRUC_PROCESO;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\DB;
+//use App\Http\Controllers\Response;
+use Illuminate\Http\Response;
 
 class EquipoController extends Controller
 {
      public function index()
     {
 
-        $Equipo=Equipo::all();
+        $Equipo=RUBRO_LIQ::all();
         $Articulo=Articulo::orderby('ARTICULO')->get();
 
 
@@ -26,7 +28,7 @@ class EquipoController extends Controller
     public function agregar_articulo($id)
     {
 
-        $Equipo=Equipo::findOrFail($id);
+        $Equipo=RUBRO_LIQ::findOrFail($id);
         $Articulo=Articulo::orderby('DESCRIPCION','asc')->get();
 
     return view('ControPiso.Maestros.Equipos.Equipo_articulo', ['Equipo' => $Equipo], ['Articulo' => $Articulo]);
@@ -42,8 +44,10 @@ class EquipoController extends Controller
 
     }
 
-    public function opera_equipo(Request $request,$id){
+    public function opera_equipo(Request $request){
     
+       $id=$_GET['id'];
+
        $equipo=ESTRUC_PROCESO::selectRaw('SECUENCIA,DESCRIPCION')->where('ARTICULO','=',$id)
        ->Groupby('SECUENCIA','DESCRIPCION')->get();
       
@@ -55,7 +59,7 @@ class EquipoController extends Controller
     public function guardar_articulo(Request $request){
 
 
-      $equi=CP_EQUIPOARTICULO:: where('ARTICULO','=',$request->search_text)
+      $equi=CP_EQUIPOARTICULO:: where('ARTICULO','=',$request->id_articulo)
                                 ->where('OPERACION','=',$request->operacion)
                                 ->where('EQUIPO','=',$request->id_equipo)->first();
 
@@ -65,7 +69,7 @@ class EquipoController extends Controller
 
     $equipo=new CP_EQUIPOARTICULO;
       $equipo->equipo=$request->id_equipo;
-      $equipo->articulo=$request->search_text;
+      $equipo->articulo=$request->id_articulo;
       $equipo->piezasxhoras=$request->piezasxhora;
       $equipo->hora_holgurasxdia=$request->horasholgurapordia;
       $equipo->num_cavidades=$request->numcavidades;
@@ -99,19 +103,25 @@ class EquipoController extends Controller
     	 return view('ControPiso.Maestros.Equipos.listar_equipo_articulo', ['equipoarticulo' => $equipoarticulo]);
     }
 
+
     public function autoComplete(Request $request){
 
     $term=$request->term;
-    $items=ARTICULO::where('ARTICULO','LIKE','%'.$term.'%')->take(5)->get();
+    $items=ARTICULO::where('ARTICULO','LIKE','%'.$term.'%')->
+                     orwhere('DESCRIPCION','LIKE','%'.$term.'%')->take(5)->get();
     if(count($items)==0){
         $searchResult[]='No Existe Item';
     }else{
-        foreach ($items as $value) {
-            $searchResult[]=$value->ARTICULO;
+        foreach ($items as $query) {
+           // $searchResult[]=$value->ARTICULO;
+            $searchResult[] = [ 'id' => $query->ARTICULO, 'value' => $query->ARTICULO.' '.$query->DESCRIPCION ];
         }
     }
 
-    return $searchResult;
+
+
+   // return $searchResult;
+    return Response()->json($searchResult);
     /*
 
      return $availableTags = [
@@ -165,8 +175,9 @@ class EquipoController extends Controller
 
   }
 
-  public function ListarArticuloOperacion($id1,$id2){
-    
+  public function ListarArticuloOperacion(Request $request){
+    $id1=$_GET['art'];
+    $id2=$_GET['ope'];
     $articulooperacion=CP_EQUIPOARTICULO::selectRaw('ID,EQUIPO,DESC_EQUIPO,PIEZASXHORAS,TIEMPOMOLDE')-> where('ARTICULO','=',$id1)->where('OPERACION','=',$id2)->get();
     
       return   json_encode ($articulooperacion);

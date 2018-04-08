@@ -20,7 +20,8 @@ class CP_DETALLEPLANIFICACION extends Model
                 'USUARIOCREACION',
                 'FECHACREACION',
                 'ESTADO',
-                'COLOR'
+                'COLOR',
+                'planificacion_id'
       ];
      public $timestamps = false;
 }

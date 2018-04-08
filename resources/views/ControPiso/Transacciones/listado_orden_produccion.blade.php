@@ -44,9 +44,9 @@
                                
                                 <td>
                                   <a href="{{route('planificacion',$OrdenProduccion->ORDEN_PRODUCCION)}}" class="btn btn-primary">  Asignar</a>
-                                  <button type="button" class="btn btn-primary" >
-                                  Ver
-                                  </button>            
+                                 
+                                 <a href="{{route('viajero',$OrdenProduccion->ORDEN_PRODUCCION)}}" class="btn btn-primary">Viajero</a>
+
                                 </td>
                         </tr>
                       @endforeach
