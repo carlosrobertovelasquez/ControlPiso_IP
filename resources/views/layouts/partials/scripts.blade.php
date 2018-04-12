@@ -67,6 +67,11 @@
      "next": "Siguiente", 
      }
       }
+
+     
+
+
+
     });
     
     $('.input-daterange').datepicker({

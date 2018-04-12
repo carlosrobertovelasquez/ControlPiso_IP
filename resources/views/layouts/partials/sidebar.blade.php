@@ -49,6 +49,7 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-users'></i> <span>CONSULTA</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
+                    <li><a href="{{url('ventas')}}">Pedidos</a></li>
                      <li><a href="{{url('Ticket')}}">Ticket</a></li>
                      <li><a href="{{url('gantt')}}">Gantt</a></li>
                      <li><a href="{{url('scheduler')}}">Scheduler</a></li>

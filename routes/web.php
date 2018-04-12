@@ -140,6 +140,10 @@ Route::get('scheduler','SchedulerController@index');
 Route::get('scheduler/data','SchedulerController@get');
 
 
+//pedidos
+
+Route::get('ventas','VentasController@index');
+
 });
 
 
