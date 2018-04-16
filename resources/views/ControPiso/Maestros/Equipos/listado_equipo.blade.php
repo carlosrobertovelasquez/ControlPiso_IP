@@ -23,8 +23,10 @@
               <table id="example1" class="display nowrap"  style="width:95%" >
                 <thead>
                 <tr>
-                  <th>Equipo</th>
+                  <th>Articulo</th>
+                  <th>Version</th>
                   <th>Descripcion</th>
+                  <th>Estado</th>
                   <th>Selecionar</th>
                 </tr>
                 </thead>
@@ -33,18 +35,18 @@
                         $modal=0;
                         ?>
                  {{csrf_field()}}       
-                 @foreach($Equipo as $Equipo)
+                 @foreach($ESTRUC_MANUFACTURA as $ESTRUC_MANUFACTURA)
 				 		<tr>
-                            <td>{{ $Equipo->RUBRO }}</td> 
-                            <td>{{ $Equipo->DESCRIP_RUBRO }}</td> 
+                            <td>{{ $ESTRUC_MANUFACTURA->ARTICULO }}</td> 
+                            <td>{{ $ESTRUC_MANUFACTURA->VERSION }}</td> 
+                            <td>{{ $ESTRUC_MANUFACTURA->DESCRIPCION }}</td> 
+                            <td>{{ $ESTRUC_MANUFACTURA->ESTADO }}</td>
+                              
                             <td>
-                                <a href="{{route('listar_equipo_articulo',$Equipo->RUBRO)}}" class="btn btn-warning"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                                <a href="{{route('listar_equipo_articulo',$ESTRUC_MANUFACTURA->ARTICULO)}}" class="btn btn-warning"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
                                 
                                 
-                                <a href="{{route('agregar_articulo',$Equipo->RUBRO)}}"
-                                           class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                 </a>
+                               
                                        
 
                              </td>                
@@ -59,8 +61,10 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Equipo</th>
+                <th>Articulo</th>
+                  <th>Version</th>
                   <th>Descripcion</th>
+                  <th>Estado</th>
                   <th>Selecionar</th>
                 </tr>
                 </tfoot>

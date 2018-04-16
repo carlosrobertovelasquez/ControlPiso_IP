@@ -112,8 +112,9 @@ Route::get('registro/eliminaremple/{id}',['uses'=>'RegistroController@eliminarem
 Route::get('registro/buscarempleado/', ['uses'=>'RegistroController@buscarempleado','as'=>'registro.buscarempleado']);
 
 
-
+//turno
   Route::get('Turno', ['uses'=>'TurnosController@index','as'=>'Turno.index']);
+  Route::get('Turno/detalle/{id}', ['uses'=>'TurnosController@DetalleTurno','as'=>'Turno.detalle']);
  
 
  Route::resource('cargaEventos', 'CalendarController'); 

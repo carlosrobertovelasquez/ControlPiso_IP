@@ -41,13 +41,10 @@
                             <td>{{ $turnos->HORA_TERMINO }}</td>
                             <td>{{ $turnos->DURACION }}</td> 
                             <td>
-                                <a href="{{route('listar_equipo_articulo',$turnos->TURNO)}}" class="btn btn-warning"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                                <a href="{{route('Turno.detalle',$turnos->TURNO)}}" class="btn btn-warning"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
                                 
                                 
-                                <a href="{{route('agregar_articulo',$turnos->TURNO)}}"
-                                           class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                 </a>
+                                
                                        
 
                              </td>                

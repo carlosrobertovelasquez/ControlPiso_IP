@@ -26,56 +26,61 @@
               <table id="example1" class="display nowrap"  style="width:95%" >
                 <thead>
                 <tr>
-                  <th>Equipo</th>
-                  <th>Descripcion</th>
-                  <th>Articulo</th>
-                  <th>Piezas Por Hora</th>
-                  <th>NUM_CAVI</th>
-                  <th>OPERA</th>
+                  <th>OPERACION</th>
+                  <th>DESCRIPCION</th>
+                  <th>EQUIPO</th>
+                  <th>HORASXCICLO</th>
+                  <th>CANTXCICLO</th>
+                  <th>CANTXHORA</th>
                   <th>TIE MOLDE</th>
                   <th>Selecionar</th>
                 </tr>
                 </thead>
                 <tbody>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                           <?php
+                        $modal=0;
+                        ?>
                    
-                 {{csrf_field()}}       
-                 @foreach($equipoarticulo as $equipoarticulo)
+                     
+                 @foreach($ESTRUC_PROCESO as $ESTRUC_PROCESO)
 				 		<tr>
-                            <td>{{ $equipoarticulo->EQUIPO }}</td> 
-                            <td>{{ $equipoarticulo->DESC_EQUIPO }}</td>
-                            <td>{{ $equipoarticulo->ARTICULO }}</td>
-                            <td>{{ $equipoarticulo->PIEZASXHORAS }}</td>
-                            <td>{{ $equipoarticulo->NUM_CAVIDADES }}</td> 
-                            <td>{{ $equipoarticulo->OPERACION }}</td>
-                            <td>{{ $equipoarticulo->TIEMPOMOLDE }}</td>
+                            <td>{{ $ESTRUC_PROCESO->OPERACION }}</td> 
+                            <td>{{ $ESTRUC_PROCESO->DESCRIPCION }}</td>
+                            <td>{{ $ESTRUC_PROCESO->EQUIPO }}</td>
+                            <td>{{number_format( $ESTRUC_PROCESO->HORAS_STD_MOE,2) }}</td>
+                            <td>{{number_format( $ESTRUC_PROCESO->CANT_PRODUCIDA_PT,2) }}</td> 
+                            <td>{{number_format( $ESTRUC_PROCESO->CANTIDADXHORA,2) }}</td>
+                            <td>{{number_format( $ESTRUC_PROCESO->CP_TIEMPOCAMBIOMOLDE,2) }}</td> 
                             <td>
-                             
-                                
-                                <a href="{{route('listar_equipo_articulo2',$equipoarticulo->ID)}}"
-                                           class="btn btn-success" " >
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                 </a>
-                                       
-
+                            <button type="button" 
+                            class="show-modal btn btn-success"   
+                            data-id="{{$ESTRUC_PROCESO->RowPointer}}" 
+                            data-title="{{$ESTRUC_PROCESO->ARTICULO}}">
+                            <span class="glyphicon glyphicon-eye-open"></span></button>
+  
                              </td>                
           
                   </tr>
+                  @include('ControPiso.Maestros.Equipos.edit')   
+                        <?php $modal++?>  
 				 		@endforeach
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Equipo</th>
-                  <th>Descripcion</th>
-                  <th>Articulo</th>
-                  <th>Piezas Por Hora</th>
-                  <th>NUM_CAVI</th>
-                  <th>OPERA</th>
+                <th>OPERACION</th>
+                  <th>DESCRIPCION</th>
+                  <th>EQUIPO</th>
+                  <th>HORASXCICLO</th>
+                  <th>CANTXCICLO</th>
+                  <th>CANTXHORA</th>
                   <th>TIE MOLDE</th>
                   <th>Selecionar</th>
                 </tr>
                 </tfoot>
               </table>
             </div>
+            @include('ControPiso.Maestros.Equipos.edit')
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -84,5 +89,20 @@
       </div>
       <!-- /.row -->
   
+
+@endsection
+
+@section('script2')
+<script>
+
+ 
+ $(document).on('click','.show-modal',function(){
+
+$('#showModal').modal('show');
+ });
+ 
+
+
+</script>
 
 @endsection

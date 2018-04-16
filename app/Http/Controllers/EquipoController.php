@@ -7,6 +7,7 @@ use App\Modelos\Softland\RUBRO_LIQ;
 use App\Modelos\Softland\ARTICULO;
 use App\Modelos\ControlPiso\CP_EQUIPOARTICULO;
 use App\Modelos\Softland\ESTRUC_PROCESO;
+use App\Modelos\Softland\ESTRUC_MANUFACTURA;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\DB;
 //use App\Http\Controllers\Response;
@@ -17,12 +18,12 @@ class EquipoController extends Controller
      public function index()
     {
 
-        $Equipo=RUBRO_LIQ::all();
-        $Articulo=Articulo::orderby('ARTICULO')->get();
+        $ESTRUC_MANUFACTURA=ESTRUC_MANUFACTURA::where('ESTADO','=','A')->get();
+      
+      
 
 
-
-        return view('ControPiso.Maestros.Equipos.listado_equipo', ['Equipo' => $Equipo], ['Articulo' => $Articulo]);
+        return view('ControPiso.Maestros.Equipos.listado_equipo', ['ESTRUC_MANUFACTURA' => $ESTRUC_MANUFACTURA]);
     }
 
     public function agregar_articulo($id)
@@ -38,9 +39,19 @@ class EquipoController extends Controller
 
     public function listar_equipo_articulo2($id){
 
-          $equipoarticulo=CP_EQUIPOARTICULO::where('ID','=',$id)->get();
+         
+        
+
+      $ESTRUC_PROCESO=DB::Connection()->select("SELECT ARTICULO,OPERACION,DESCRIPCION,EQUIPO,HORAS_STD_MOE ,CANT_PRODUCIDA_PT,(CANT_PRODUCIDA_PT/HORAS_STD_MOE) AS CANTIDADXHORA
+      FROM 
+      IBERPLAS.ESTRUC_PROCESO  
+      WHERE 
+      ARTICULO='$id' AND 
+       REPORTA_PROD='N' AND
+      VERSION IN (SELECT VERSION FROM IBERPLAS.ESTRUC_MANUFACTURA WHERE ESTADO='A' AND ARTICULO='$id')");
+
           
-         return view('ControPiso.Maestros.Equipos.edit')->with('equipoarticulo',$equipoarticulo);
+         return view('ControPiso.Maestros.Equipos.edit')->with('ESTRUC_PROCESO',$ESTRUC_PROCESO);
 
     }
 
@@ -98,9 +109,16 @@ class EquipoController extends Controller
 
     public function listar_equipo_articulo($id){
 
-    	$equipoarticulo=CP_EQUIPOARTICULO::where( 'EQUIPO',$id)->get();
+      $ESTRUC_PROCESO=DB::Connection()->select("SELECT ARTICULO,RowPointer, OPERACION,DESCRIPCION,EQUIPO,HORAS_STD_MOE ,CANT_PRODUCIDA_PT,(CANT_PRODUCIDA_PT/HORAS_STD_MOE) AS CANTIDADXHORA,CP_TIEMPOCAMBIOMOLDE
+      FROM 
+      IBERPLAS.ESTRUC_PROCESO  
+      WHERE 
+      ARTICULO='$id' AND 
+       REPORTA_PROD='N' AND
+      VERSION IN (SELECT VERSION FROM IBERPLAS.ESTRUC_MANUFACTURA WHERE ESTADO='A' AND ARTICULO='$id')");
 
-    	 return view('ControPiso.Maestros.Equipos.listar_equipo_articulo', ['equipoarticulo' => $equipoarticulo]);
+     
+    	 return view('ControPiso.Maestros.Equipos.listar_equipo_articulo', ['ESTRUC_PROCESO' => $ESTRUC_PROCESO]);
     }
 
 
