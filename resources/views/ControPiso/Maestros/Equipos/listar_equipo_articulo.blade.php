@@ -98,6 +98,11 @@
  
  $(document).on('click','.show-modal',function(){
 
+  $('.modal-title').text('Show');
+  $('#id_show').val($(this).data('id'));
+  $('#title_show').val($(this).data('title'));
+  $('#des_show').val($(this).data('des'));
+  $('#estado_show').val($(this).data('estado'));
 $('#showModal').modal('show');
  });
  
