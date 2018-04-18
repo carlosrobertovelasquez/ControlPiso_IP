@@ -85,12 +85,12 @@
 	                        </div>
 				            <div class="form-group">
 			                    <label >Operacion </label>
-			                    <input type="text" id="Mid_opera" name="Mid_opera" class="form-control"   readonly="readonly">
+			                    <input type="text" id="Mid_opera" name="Mid_opera" class="form-control"   >
 	                        </div>
                                  <input type="hidden"  id="id_secuencia" name="id_secuencia"  />      
 							<div class="form-group">
 			                    <label>Cantidad de unidades por Hora</label>
-			                    <input type="Number" id="idm_cantidadxh" name="idm_cantidadxh" class="form-control" >
+			                    <input type="Number" id="idm_cantidadxh" name="idm_cantidadxh" class="form-control"  >
 	                        </div>
 
 	                        <div class="form-group">

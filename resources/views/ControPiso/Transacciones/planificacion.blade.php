@@ -190,7 +190,8 @@
 
                @include('ControPiso.Transacciones.show')
                 
-                    
+
+
               
                  
 
@@ -315,27 +316,27 @@ $('#id_centrocosto').on('change',function ()
   $.ajax({
     url:miurl,
     type:'get',
-    data:{"id":id}
+    data:{"id":id,"id2":id2,"id3":id3}
   }).done(function(data)
   {   
      
     
      var content=JSON.parse(data);  
      
-     if((content[0].TIEMPOMOLDE)==0.00){
-     piezaxh=parseInt((content[0].PIEZASXHORAS));
+     if((content[0].CP_TIEMPOCAMBIOMOLDE)==0.00){
+     piezaxh=parseInt((content[0].HORASXHORA));
      total=piezaxh;
 
      }else{
-     piezaxh=parseInt((content[0].PIEZASXHORAS));
-     tiempomolde=parseInt((content[0].TIEMPOMOLDE));
+     piezaxh=parseInt((content[0].HORASXHORA));
+     tiempomolde=parseInt((content[0].CP_TIEMPOCAMBIOMOLDE));
      total=piezaxh+tiempomolde;
       
      }
 
      
 
-    $("#idm_tiempocm").val( content[0].TIEMPOMOLDE);
+    $("#idm_tiempocm").val( content[0].CP_TIEMPOCAMBIOMOLDE);
     $("#idm_cantidadxh").val(total);
 
 
@@ -516,7 +517,7 @@ ValdiarCampos();
   var id7=$("#idm_totalturnos").val();
 
   var urlraiz=$("#url_raiz_proyecto").val();
-  var miurl =urlraiz+"/planificar/"+id+"/"+id4+"/"+id5+"/"+id6+"/"+id3+"";
+  var miurl =urlraiz+"/planificar/"+id+"/"+id4+"/"+id5+"/"+id6+"";
 
   
   var d='<tr>'+
@@ -758,20 +759,21 @@ function AppendMaquinas(art,ope){
     
     $.each(content,function(i,item){
 
-     $('#id_centrocosto').append('<option value='+content[i].ID+'>'+content[i].DESC_EQUIPO+'</option>' );
+     $('#id_centrocosto').append('<option value='+content[i].RUBRO+'>'+content[i].RUBRO+"-"+content[i].DESCRIP_RUBRO +'</option>' );
      
-     if((content[i].TIEMPOMOLDE)==0.00){
-     piezaxh=parseInt((content[i].PIEZASXHORAS));
+     if((content[i].CP_TIEMPOCAMBIOMOLDE)==0.0){
+     
+     piezaxh=parseInt((content[i].HORASXHORA));
      total=piezaxh;
 
      }else{
-     piezaxh=parseInt((content[i].PIEZASXHORAS));
-     tiempomolde=parseInt((content[i].TIEMPOMOLDE));
+     piezaxh=parseInt((content[i].HORASXHORA));
+     tiempomolde=parseInt((content[i].CP_TIEMPOCAMBIOMOLDE));
      total=piezaxh+tiempomolde;
       
      }
 
-     $("#idm_tiempocm").val( content[i].TIEMPOMOLDE);
+     $("#idm_tiempocm").val( content[i].CP_TIEMPOCAMBIOMOLDE);
     $("#idm_cantidadxh").val(total);
 
     var vcantidadaproducir=$("#id_cantidad").val();

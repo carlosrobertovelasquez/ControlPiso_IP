@@ -26,6 +26,7 @@
               <table id="example1" class="display nowrap"  style="width:95%" >
                 <thead>
                 <tr>
+                <th>ARTICULO</th> 
                   <th>OPERACION</th>
                   <th>DESCRIPCION</th>
                   <th>EQUIPO</th>
@@ -45,12 +46,13 @@
                      
                  @foreach($ESTRUC_PROCESO as $ESTRUC_PROCESO)
 				 		<tr>
+                            <td>{{ $ESTRUC_PROCESO->ARTICULO }}</td>
                             <td>{{ $ESTRUC_PROCESO->OPERACION }}</td> 
                             <td>{{ $ESTRUC_PROCESO->DESCRIPCION }}</td>
-                            <td>{{ $ESTRUC_PROCESO->EQUIPO }}</td>
+                            <td>{{ $ESTRUC_PROCESO->RUBRO }}</td>
                             <td>{{number_format( $ESTRUC_PROCESO->HORAS_STD_MOE,2) }}</td>
                             <td>{{number_format( $ESTRUC_PROCESO->CANT_PRODUCIDA_PT,2) }}</td> 
-                            <td>{{number_format( $ESTRUC_PROCESO->CANTIDADXHORA,2) }}</td>
+                            <td>{{number_format( $ESTRUC_PROCESO->HORASXHORA,2) }}</td>
                             <td>{{number_format( $ESTRUC_PROCESO->CP_TIEMPOCAMBIOMOLDE,2) }}</td> 
                             <td>
                             <button type="button" 

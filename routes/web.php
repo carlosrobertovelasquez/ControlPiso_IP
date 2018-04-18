@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('ConsultaProduccion',['uses'=>'OrdenProduccionController@ConsultaProduccion', 'as'=>'ConsultaProduccion']);  
   //planificador
  Route::get('Planificacion/{id}', ['uses'=>'OrdenProduccionController@planificacion','as'=>'planificacion']);
-Route::get('planificar/{id}/{id4}/{id5}/{id6}/{id3}', ['uses'=>'OrdenProduccionController@planificar','as'=>'planificar']);
+Route::get('planificar/{id}/{id4}/{id5}/{id6}', ['uses'=>'OrdenProduccionController@planificar','as'=>'planificar']);
 Route::get('guardar_planificacion', ['uses'=>'OrdenProduccionController@guardar_planificacion','as'=>'guardar_planificacion']);
 
  Route::get('ConsultaPedidos/{id}',['uses'=>'OrdenProduccionController@ConsultaPedidos', 'as'=>'ConsultaPedidos']);
@@ -145,6 +145,9 @@ Route::get('scheduler/data','SchedulerController@get');
 
 Route::get('ventas','VentasController@index');
 
+
+//CONTROLA CALIDAD
+Route::get('ficha','FichaTecnicaController@index');
 });
 
 

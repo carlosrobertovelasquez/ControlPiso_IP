@@ -137,7 +137,9 @@ class OrdenProduccionController extends Controller
               $ordenproduccion=CP_TCargaOrdenProduccion::where('ORDEN_PRODUCCION', $id)->first();;
               $articulordproduccion=$ordenproduccion->ARTICULO;
               $pedido=PEDIDO::where('ESTADO','=','A')->orderby('PEDIDO','asc')->get();
-              $centrocosto=ESTRUC_PROCESO::selectRaw('SECUENCIA,DESCRIPCION,OPERACION')->where('ARTICULO','=',$articulordproduccion)
+              $centrocosto=ESTRUC_PROCESO::selectRaw('SECUENCIA,DESCRIPCION,OPERACION')
+                ->where('ARTICULO','=',$articulordproduccion)
+                ->where('REPORTA_PROD','=','N')
                 ->Groupby('SECUENCIA','DESCRIPCION','OPERACION')->get();
               return view('ControPiso.Transacciones.planificacion')
               ->with('ordenproduccion',$ordenproduccion)
@@ -180,13 +182,36 @@ class OrdenProduccionController extends Controller
 
     public function ConsultaMaquina(Request $request){
     
-    //$id=maquinaria,$id2=articulo
+    //$id=centrocosto,$id2=articulo,$id3=descripcion operacion
       $id=$_GET['id'];
-      $centrocosto=CP_EQUIPOARTICULO::
-      where('ID','=',$id)->
-      get();
-     
+      $id2=$_GET['id2'];
+      $id3=$_GET['id3'];
 
+     
+      //$centrocosto=CP_EQUIPOARTICULO::
+     // where('ID','=',$id)->
+     // get();
+      
+      $centrocosto=DB::Connection()->select("SELECT 
+      RUBRO.ARTICULO,RUBRO.OPERACION,PROCESO.DESCRIPCION, 
+      RUBRO.RUBRO,
+      CASE  PROCESO.CP_TIEMPOCAMBIOMOLDE WHEN NULL THEN PROCESO.CP_TIEMPOCAMBIOMOLDE ELSE 0.0  END as CP_TIEMPOCAMBIOMOLDE ,
+      (PROCESO.CANT_PRODUCIDA_PT/PROCESO.HORAS_STD_MOE) AS HORASXHORA
+            FROM 
+            IBERPLAS.ESTRUC_PROC_RUBRO RUBRO,
+            IBERPLAS.ESTRUC_PROCESO PROCESO
+            WHERE 
+            PROCESO.ARTICULO=RUBRO.ARTICULO AND
+            PROCESO.VERSION IN(SELECT VERSION FROM IBERPLAS.ESTRUC_MANUFACTURA WHERE ESTADO='A' AND ARTICULO='$id2')AND    
+            RUBRO.ARTICULO='$id2' AND 
+            PROCESO.ARTICULO='$id2' AND
+            RUBRO.OPERACION=PROCESO.OPERACION and
+            PROCESO.DESCRIPCION='$id3' AND
+            PROCESO.EQUIPO='$id' AND
+            RUBRO.VERSION IN (SELECT VERSION FROM IBERPLAS.ESTRUC_MANUFACTURA WHERE ESTADO='A' AND ARTICULO='$id2')
+      ");
+
+       dd($centrocosto);
       return json_encode($centrocosto);
 
     }
@@ -204,14 +229,18 @@ class OrdenProduccionController extends Controller
     }
 
 
-    public function planificar($id,$id4,$id5,$id6,$id3,Request $request){
+    public function planificar($id,$id4,$id5,$id6,Request $request){
         
-
+    $id3=$request->Mid_opera;
+    
     $normal =$request->normal;
 
     $secuencia=$request->id_secuencia;
+     $secuencia2=$request->id_secuencia;
     $orden=$request->norden;
     $cantidadxhora=$request->idm_cantidadxh;
+    $cantidadxhora2=$request->idm_cantidadxh;
+  
     
     $hora=date('H',strtotime($id5) );
     $min=date('i',strtotime($id5) );
@@ -225,7 +254,7 @@ class OrdenProduccionController extends Controller
         
 
 
-
+   
 
        // consultar si existe registros en la tabla de transacciones para obtener el ultimo correlativo segun maquina y operacion
          
@@ -233,7 +262,6 @@ class OrdenProduccionController extends Controller
 
         $core=DB::Connection()->select("select ID from IBERPLAS.CP_CALENDARIO_PLANIFICADOR_detalle
                                       where fecha='$nueva2' and DATEPART(HOUR,hora)='$hora'");
-
 
 
 
@@ -248,14 +276,14 @@ class OrdenProduccionController extends Controller
         
           
 
-         $equipo=CP_EQUIPOARTICULO:: where('ID','=',$id6)->get();
+        // $equipo=CP_EQUIPOARTICULO:: where('ID','=',$id6)->get();
 
        
-         foreach ($equipo as $value) {
-           $equipo=$value->EQUIPO;
-         }
+         //foreach ($equipo as $value) {
+          // $equipo=$value->EQUIPO;
+         //}
         
-
+         $equipo=$id6;
  
 
        //revisar si hay disponibilaid este fecha
@@ -266,22 +294,22 @@ class OrdenProduccionController extends Controller
                                           select calendario_id from IBERPLAS.CP_DETALLEPLANIFICACION
                                           where centrocosto='$equipo' and fecha='$nueva2' and DATEPART(HOUR,hora)>='$hora')");
 
-      
-       
+     
+         
         if(count($disponi)>0){
          
          $inicio=CP_DETALLEPLANIFICACION::where('centrocosto','=',$equipo)->max('calendario_id');    
          $inicioturno=$inicio+1;
-          
+       
           if (is_null($normal)){
-
+               
                $arr=array($request->lunes,$request->martes,$request->miercoles,$request->jueves,$request->viernes,$request->sabado,$request->domingo,);
-               $turnosasigados=$this->calcularTurnos($id,$inicioturno,$arr,$id3,$id6,$id4,$secuencia,$orden,$cantidadxhora);
+               $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
 
           }else{
 
            $arr=array('N');
-           $turnosasigados=$this->calcularTurnos($id,$inicioturno,$arr,$id3,$id6,$id4,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
           }
 
        
@@ -292,19 +320,22 @@ class OrdenProduccionController extends Controller
         } else
         
         {
+
+          
          
           $inicioturno=$valorinicial;
 
           
           if (is_null($normal)){
-
+           
           $arr=array($request->lunes,$request->martes,$request->miercoles,$request->jueves,$request->viernes,$request->sabado,$request->domingo,);
-           $turnosasigados=$this->calcularTurnos($id,$inicioturno,$arr,$id3,$id6,$id4,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
 
           }else{
 
            $arr=array('N');
-           $turnosasigados=$this->calcularTurnos($id,$inicioturno,$arr,$id3,$id6,$id4,$secuencia,$orden,$cantidadxhora);
+        
+           $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
           }
 
        
@@ -317,27 +348,31 @@ class OrdenProduccionController extends Controller
     
 
 
-    public function calcularTurnos($id,$inicioturno,$arr,$id3,$id6,$id4,$secuencia,$orden,$cantidadxhora){
+    public function calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora){
+        
 
-
+     
+             
          CP_TEMP_PLANIFICACION::where('USUARIOCREACION','=',\Auth::user()->name )
          ->where('operacion','=',$id3)->delete();
          
          CP_TEMP_PLANIFICACION_ENCA:: where('usuario','=',\auth::user()->name)
          ->where('operacion','=',$id3)->delete();
 
-         $centrocosto=CP_EQUIPOARTICULO::where ('ID','=',$id6)->get();
+         $equipo=$id6;
+         
          
 
-         foreach ($centrocosto as $centrocosto) {
+      //   foreach ($centrocosto as $centrocosto) {
            
-           $equipo=$centrocosto->EQUIPO;
-         }
+        //   $equipo=$centrocosto->EQUIPO;
+         //}
 
-
+         
 
          $tempo=CP_TEMP_PLANIFICACION::where('centrocosto','=',$equipo)->max('calendario_id');
 
+         
          if($tempo>0){
              if(count($arr)==1){
                 $turnos2=CP_CALENDARIO_PLANIFICADOR_DETALLE::whereNull('ESTADO')
@@ -407,8 +442,8 @@ class OrdenProduccionController extends Controller
              } else{
               
 
-
-  
+            
+    
    
                 $plantemp=new CP_TEMP_PLANIFICACION;
       $plantemp->hora=$turnos->hora;
@@ -417,10 +452,10 @@ class OrdenProduccionController extends Controller
       $plantemp->fecha=$turnos->fecha;
       $plantemp->operacion=$id3;
       $plantemp->centrocosto=$equipo;
-      $plantemp->secuencia=$secuencia;
+      $plantemp->secuencia=$secuencia2;
       $plantemp->calendario_id=$turnos->ID;
       $plantemp->orden_prod=$orden;
-      $plantemp->cantidadxhora=$cantidadxhora;
+      $plantemp->cantidadxhora=$cantidadxhora2;
       $plantemp->USUARIOCREACION=\Auth::user()->name;
         $plantemp->save();
 
