@@ -224,8 +224,8 @@
          <div class="col-md-6">
           <div class="form-group">
                  <div class="form-group">
-                          <label > No.DE PIEZAS POR CICLO : </label>
-                          <input  type="number" class="form-control" id="piezasxhora"  name="piezasxhora" readonly="readonly"  value="{{$equipo->PIEZASXHORAS}}">      
+                          <label> No.DE PIEZAS POR CICLO : </label>
+                          <input  type="number" class="form-control" id="piezasxhora"  name="piezasxhora" readonly="readonly"  value="{{$encabezado->cantidad}}">      
                          </div>
                 <!-- /.input group -->
               </div>
@@ -373,11 +373,12 @@ var id= document.getElementById("norden").value;
 var id2= document.getElementById("id_turno").value;
 var id3= document.getElementById("id_operacion").value; 
 var urlraiz=$("#url_raiz_proyecto").val();
-var miurl =urlraiz+"/registro/totalhoras/"+id+"/"+id2+"/"+id3+"";
+var miurl =urlraiz+"/registro/totalhoras";
 
 $.ajax({
   type:'get',
   url:miurl,
+  data:{id:id,id2:id2,id3:id3},
   success:function(resul){
     
     $('#total_horas').val(resul);
@@ -391,11 +392,12 @@ var id= document.getElementById("norden").value;
 var id2= document.getElementById("id_turno").value;
 var id3= document.getElementById("id_operacion").value; 
 var urlraiz=$("#url_raiz_proyecto").val();
-var miurl =urlraiz+"/registro/tiempoPerdido/"+id+"/"+id2+"/"+id3+"";
+var miurl =urlraiz+"/registro/tiempoPerdido";
 
 $.ajax({
   type:'get',
   url:miurl,
+  data:{id:id,id2:id2,id3:id3},
   success:function(resul){
 
     $('#horasPerdidas').val(resul);
@@ -409,11 +411,12 @@ var id= document.getElementById("norden").value;
 var id2= document.getElementById("id_turno").value;
 var id3= document.getElementById("id_operacion").value; 
 var urlraiz=$("#url_raiz_proyecto").val();
-var miurl =urlraiz+"/registro/horasTrabajadas/"+id+"/"+id2+"/"+id3+"";
+var miurl =urlraiz+"/registro/horasTrabajadas";
 
 $.ajax({
   type:'get',
   url:miurl,
+  data:{id:id,id2:id2,id3:id3},
   success:function(resul){
 
     $('#horasTrabajadas').val(resul);
@@ -428,11 +431,12 @@ var id= document.getElementById("norden").value;
 var id2= document.getElementById("id_turno").value;
 var id3= document.getElementById("id_operacion").value; 
 var urlraiz=$("#url_raiz_proyecto").val();
-var miurl =urlraiz+"/registro/metaxTurno/"+id+"/"+id2+"/"+id3+"";
+var miurl =urlraiz+"/registro/metaxTurno";
 
 $.ajax({
   type:'get',
   url:miurl,
+  data:{id:id,id2:id2,id3:id3},
   success:function(resul){
     
     $('#meta').val(resul);
@@ -446,11 +450,12 @@ var id= document.getElementById("norden").value;
 var id2= document.getElementById("id_turno").value;
 var id3= document.getElementById("id_operacion").value; 
 var urlraiz=$("#url_raiz_proyecto").val();
-var miurl =urlraiz+"/registro/horasplanificadas/"+id+"/"+id2+"/"+id3+"";
+var miurl =urlraiz+"/registro/horasplanificadas";
 
 $.ajax({
   type:'get',
   url:miurl,
+  data:{id:id,id2:id2,id3:id3},
   success:function(resul){
     $('#horasPlanificadas').val(resul);
   }
@@ -466,11 +471,12 @@ var id= document.getElementById("norden").value;
 var id2= document.getElementById("id_turno").value;
 var id3= document.getElementById("id_operacion").value; 
 var urlraiz=$("#url_raiz_proyecto").val();
-var miurl =urlraiz+"/registro/listarhoras/"+id+"/"+id2+"/"+id3+"";
+var miurl =urlraiz+"/registro/listarhoras";
 
 $.ajax({
   type:'get',
   url:miurl,
+  data:{id:id,id2:id2,id3:id3},
   success:function(data){
     $('#lista_horas').empty().html(data);
   }
@@ -484,11 +490,12 @@ var id= document.getElementById("norden").value;
 var id2= document.getElementById("id_turno").value;
 var id3= document.getElementById("id_operacion").value; 
 var urlraiz=$("#url_raiz_proyecto").val();
-var miurl =urlraiz+"/registro/listaremple/"+id+"/"+id2+"/"+id3+"";
+var miurl =urlraiz+"/registro/listaremple";
 
 $.ajax({
   type:'get',
   url:miurl,
+  data:{id:id,id2:id2,id3:id3},
   success:function(data){
     $('#lista_empleados').empty().html(data);
   }

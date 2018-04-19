@@ -169,7 +169,7 @@
                                           
                                  
 
-                                   <button type="button" class="show-modal btn btn-success"   data-id="{{$centrocosto->DESCRIPCION}}" data-title="{{$centrocosto->SECUENCIA}}">
+                                   <button type="button" class="show-modal btn btn-success"   data-id="{{$centrocosto->OPERACION}}" data-title="{{$centrocosto->SECUENCIA}}"  data-id2="{{$centrocosto->DESCRIPCION}}" >
                                     <span class="glyphicon glyphicon-eye-open"></span>Planificar</button>
                                     
                                 </td>
@@ -699,13 +699,14 @@ $(document).on('click','.show-modal',function(e){
 var art=document.getElementById("articulo").value;
   var cant=document.getElementById("id_cantidadaproducir").value;
   var ope=$(this).data('id');
+  var ope2=$(this).data('id2');
 
   var sec=$(this).data('title');
 
 
 
  AppendMaquinas(art,ope); 
-$('#Mid_opera').val(ope);
+$('#Mid_opera').val(ope2);
 $('#id_articulo').val(art);
 $('#id_cantidad').val(cant);
 $('#id_secuencia').val(sec);

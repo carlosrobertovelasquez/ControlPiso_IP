@@ -95,13 +95,13 @@ Route::get('registro',['uses'=>'RegistroController@index', 'as'=>'registro.index
 Route::get('registro/mo/{id}/{id2}',['uses'=>'RegistroController@mo', 'as'=>'registro.mo']);
 Route::get('registro/ma/{id}/{id2}',['uses'=>'RegistroController@ma', 'as'=>'registro.ma']);
 Route::get('registro/impresion/{id}/{id2}',['uses'=>'RegistroController@impresion', 'as'=>'registro.impresion']);
-Route::get('registro/listarhoras/{id}/{id2}/{id3}',['uses'=>'RegistroController@listarhoras', 'as'=>'registro.listarhoras']);
-Route::get('registro/listaremple/{id}/{id2}/{id3}',['uses'=>'RegistroController@listaremple', 'as'=>'registro.listaremple']);
-Route::get('registro/totalhoras/{id}/{id2}/{id3}',['uses'=>'RegistroController@totalhoras', 'as'=>'registro.totalhoras']);
-Route::get('registro/tiempoPerdido/{id}/{id2}/{id3}',['uses'=>'RegistroController@tiempoPerdido', 'as'=>'registro.tiempoPerdido']);
-Route::get('registro/horasTrabajadas/{id}/{id2}/{id3}',['uses'=>'RegistroController@horasTrabajadas', 'as'=>'registro.horasTrabajadas']);
-Route::get('registro/metaxTurno/{id}/{id2}/{id3}',['uses'=>'RegistroController@metaxTurno', 'as'=>'registro.metaxTurno']);
-Route::get('registro/horasplanificadas/{id}/{id2}/{id3}',['uses'=>'RegistroController@horasplanificadas', 'as'=>'registro.horasplanificadas']);
+Route::get('registro/listarhoras',['uses'=>'RegistroController@listarhoras', 'as'=>'registro.listarhoras']);
+Route::get('registro/listaremple',['uses'=>'RegistroController@listaremple', 'as'=>'registro.listaremple']);
+Route::get('registro/totalhoras',['uses'=>'RegistroController@totalhoras', 'as'=>'registro.totalhoras']);
+Route::get('registro/tiempoPerdido',['uses'=>'RegistroController@tiempoPerdido', 'as'=>'registro.tiempoPerdido']);
+Route::get('registro/horasTrabajadas',['uses'=>'RegistroController@horasTrabajadas', 'as'=>'registro.horasTrabajadas']);
+Route::get('registro/metaxTurno',['uses'=>'RegistroController@metaxTurno', 'as'=>'registro.metaxTurno']);
+Route::get('registro/horasplanificadas',['uses'=>'RegistroController@horasplanificadas', 'as'=>'registro.horasplanificadas']);
 Route::get('registro/aprobar/{id2}',['uses'=>'RegistroController@aprobar', 'as'=>'registro.aprobar']);
 
 Route::get('registro/agregar/',['uses'=>'RegistroController@agregar', 'as'=>'registro.agregar']);

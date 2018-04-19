@@ -139,7 +139,7 @@ class OrdenProduccionController extends Controller
               $pedido=PEDIDO::where('ESTADO','=','A')->orderby('PEDIDO','asc')->get();
               $centrocosto=ESTRUC_PROCESO::selectRaw('SECUENCIA,DESCRIPCION,OPERACION')
                 ->where('ARTICULO','=',$articulordproduccion)
-                ->where('REPORTA_PROD','=','N')
+                //->where('REPORTA_PROD','=','N')
                 ->Groupby('SECUENCIA','DESCRIPCION','OPERACION')->get();
               return view('ControPiso.Transacciones.planificacion')
               ->with('ordenproduccion',$ordenproduccion)
@@ -450,6 +450,8 @@ class OrdenProduccionController extends Controller
       $plantemp->orden=$turnos->orden;
       $plantemp->turno=$turnos->turno;
       $plantemp->fecha=$turnos->fecha;
+      $plantemp->fechaCalendario=date("Y-d-m H:i:s",strtotime( $turnos->fechaCalendario));
+    
       $plantemp->operacion=$id3;
       $plantemp->centrocosto=$equipo;
       $plantemp->secuencia=$secuencia2;
@@ -475,7 +477,7 @@ class OrdenProduccionController extends Controller
      $turnosasigados=DB::Connection()->select("select min(calendario_id) as Horaini,MAX(calendario_id) as HoraFin,count(orden) as horas,sum(cantidadxhora) as cantidad,turno,fecha,operacion,centrocosto,secuencia  
 from IBERPLAS.CP_TEMP_PLANIFICACION
 where  
-USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia order by  secuencia,operacion, fecha,turno");
+USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia order by  secuencia,operacion,fecha,turno");
         
           CP_TEMP_PLANIFICACION_ENCA:: where('usuario','=',\auth::user()->name)
          ->delete();
@@ -491,6 +493,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
           $encatemp->cantidad=$turnos->cantidad;
           $encatemp->turno=$turnos->turno;
           $encatemp->fecha=$turnos->fecha;
+         // $encatemp->fechaCalendario=date("Y-d-m H:i:s",strtotime( $turnos->fechaCalendario));        
           $encatemp->operacion=$turnos->operacion;
           $encatemp->centrocosto=$turnos->centrocosto;
           $encatemp->secuencia=$turnos->secuencia;

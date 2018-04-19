@@ -33,18 +33,25 @@ class RegistroController extends Controller
     public function mo($id,$id2)
     {
  
+       
 
         $globales = CP_globales::max('produccdetallada');
 
           if($globales=="S"){
 
                 $encabezado=CP_planificacion::where('id','=',$id)->get()->first();
+               
                 $encabezado2=CP_planificacion::where('id','=',$id)->get();
+               
                 $detalle=CP_ENCABEZADOPLANIFICACION::where('planificacion_id','=',$id)->get();
+               
                 $operacion=OP_OPERACION::where('ORDEN_PRODUCCION','=',$id2)->get();
+             
                 $clave_mo=CP_CLAVE_MO::all();
+            
                 $registrohoras=CP_REGISTROHORAS::all();
 
+            
                
                 
                 foreach ($encabezado2 as $value) {
@@ -82,8 +89,11 @@ class RegistroController extends Controller
       }
     }
 
-    public function listarhoras($id,$id2,$id3){
+    public function listarhoras(){
 
+        $id=$_GET['id'];
+      $id2=$_GET['id2'];
+      $id3=$_GET['id3'];
      $registrohoras=CP_REGISTROHORAS::
      where('ORDENPRODUCCION','=',$id)
      ->where('TURNO','=',$id2)
@@ -96,8 +106,10 @@ class RegistroController extends Controller
       ->with('registrohoras',$registrohoras); 
     }
 
-public function listaremple($id,$id2,$id3){
-
+public function listaremple(){
+    $id=$_GET['id'];
+    $id2=$_GET['id2'];
+    $id3=$_GET['id3'];
      $registroempleados=CP_REGISTROEMPLEADOS::
      where('ORDENPRODUCCION','=',$id)
      ->where('TURNO','=',$id2)
@@ -110,9 +122,11 @@ public function listaremple($id,$id2,$id3){
 
  
 
-public function totalhoras($id,$id2,$id3){
+public function totalhoras(){
 
-    
+    $id=$_GET['id'];
+    $id2=$_GET['id2'];
+    $id3=$_GET['id3'];
      $horastrabajadas=DB::Connection()->select ("select  
 SUM((DATEPART(HOUR,tiempo))*60+DATEPART(MINUTE,tiempo)) as total
 from IBERPLAS.CP_REGISTROHORAS
@@ -152,8 +166,10 @@ TURNO='$id2' ");
     //  ->with('horastrabajadas',$horastrabajadas); 
     }
 
-public function tiempoPerdido($id,$id2,$id3){
-
+public function tiempoPerdido(){
+    $id=$_GET['id'];
+    $id2=$_GET['id2'];
+    $id3=$_GET['id3'];
     
      $horasPerdidas=DB::Connection()->select ( "select  
 SUM((DATEPART(HOUR,tiempo))*60+DATEPART(MINUTE,tiempo)) as total
@@ -188,8 +204,10 @@ OPERA='RESTA' ");
 return response()->json($horastotal); 
 }
 
-public function metaxTurno($id,$id2,$id3){
-
+public function metaxTurno(){
+    $id=$_GET['id'];
+    $id2=$_GET['id2'];
+    $id3=$_GET['id3'];
     
    $cantidad=CP_ENCABEZADOPLANIFICACION::where ('id','=',$id2)->get();
 
@@ -203,8 +221,10 @@ return response::json($cantidad2);
 }
 
 
-public function horasplanificadas($id,$id2,$id3){
-
+public function horasplanificadas(){
+    $id=$_GET['id'];
+    $id2=$_GET['id2'];
+    $id3=$_GET['id3'];
     
    $cantidad3=CP_ENCABEZADOPLANIFICACION::where ('id','=',$id2)->get();
 
@@ -219,8 +239,11 @@ return response::json($horas);
 
 
 
-public function horasTrabajadas($id,$id2,$id3){
+public function horasTrabajadas(){
 
+    $id=$_GET['id'];
+    $id2=$_GET['id2'];
+    $id3=$_GET['id3'];
 $horasPerdidas=DB::Connection()->select ( "select  
 SUM((DATEPART(HOUR,tiempo))*60+DATEPART(MINUTE,tiempo)) as total
 from IBERPLAS.CP_REGISTROHORAS
