@@ -17,12 +17,14 @@ class Produccion extends Mailable
      *
      * @return void
      */
-    public $CP_PLANIFICACION;
+    
     public $cp_planificacion2;
+    public $ordenproduccion2;
 
-    public function __construct(CP_PLANIFICACION $CP_PLANIFICACION)
+    public function __construct($cp_planificacion2,$ordenproduccion2)
     {
-       $this->CP_PLANIFICACION=$CP_PLANIFICACION;
+       $this->cp_planificacion2=$cp_planificacion2;
+       $this->ordenprodcuccion2=$ordenproduccion2;
 
     }
 
@@ -33,6 +35,8 @@ class Produccion extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.OrdenProducion');
+      
+        return $this->subject( 'Orden de produccion:' ,$this->ordenproduccion2)->view('emails.OrdenProducion')
+        ->with('detalle',$this->cp_planificacion2);
     }
 }

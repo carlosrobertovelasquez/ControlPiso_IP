@@ -36,8 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">  
                       @foreach($OrdenProduccion as $OrdenProduccion)
                         <tr>
                                 <td >{{ $OrdenProduccion->id}}</td>

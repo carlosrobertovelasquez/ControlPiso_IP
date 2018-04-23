@@ -746,22 +746,18 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
             $CP_PLANIFICACION->FECHACREACION=$date;
             $CP_PLANIFICACION->save();
 
-            $cp_planificacion2=CP_PLANIFICACION::where('estado','A')->get();
-            $emails=CP_emails::where('email01','=','S')->select('email')->get(); 
-            Mail::to($emails)->send(new Produccion($CP_PLANIFICACION,$cp_planificacion2));
-             
             
-           
-               
-         
-       
-
-
-
-
            }
-
-              //ESTADOS P=PLANIIFICACO,A=EN PROCESO,B=FINALIZADA,C=CERRADA,D=LIQUIDADA
+            //mandar mail de orden de produccion Planificado
+           $ordenproduccion2=$request->norden;
+          
+           $cp_planificacion2=CP_PLANIFICACION::where('ordenproduccion','=',$request->norden)->get();
+           $emails=CP_emails::where('email01','=','S')->select('email')->get();  
+           Mail::to($emails)->send(new Produccion($cp_planificacion2,$ordenproduccion2));
+             
+           
+           
+           //ESTADOS P=PLANIIFICACO,A=EN PROCESO,B=FINALIZADA,C=CERRADA,D=LIQUIDADA
 
 
               $iddetalle=DB::Connection()->select("select operacion,FECHACREACION 
