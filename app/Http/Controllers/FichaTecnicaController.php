@@ -40,6 +40,12 @@ class FichaTecnicaController extends Controller
       $ft_fibra_alambre=FT_FIBRA_ALAMBRE::where('ficha_id','=',$id)->first();
       $ft_dimension_cepillo=FT_DIMENSION_CEPILLO:: where('ficha_id','=',$id)->first();
       $ft_bolillo=FT_BOLILLO::where('ficha_id','=',$id)->first();
+      $ft_corrugado=FT_CORRUGADO::where('ficha_id','=',$id)->first();
+      $ft_gancho=FT_GANCHO::where('ficha_id','=',$id)->first();
+      $ft_resorte=FT_RESORTE::where('ficha_id','=',$id)->first();
+
+      
+      
       
         return view('ControlCalidad.Ficha_Tecnica')
         ->with('ft_ficha',$ft_ficha)
@@ -47,6 +53,9 @@ class FichaTecnicaController extends Controller
         ->with('ft_soporte',$ft_soporte)
         ->with('ft_fibra_alambre',$ft_fibra_alambre)
         ->with('ft_dimension_cepillo',$ft_dimension_cepillo)
-        ->with('ft_bolillo',$ft_bolillo);
+        ->with('ft_bolillo',$ft_bolillo)
+        ->with('ft_corrugado',$ft_corrugado)
+        ->with('ft_gancho',$ft_gancho)
+        ->with('ft_resorte',$ft_resorte);
     }
 }
