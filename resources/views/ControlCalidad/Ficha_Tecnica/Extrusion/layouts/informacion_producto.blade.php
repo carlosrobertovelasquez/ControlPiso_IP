@@ -22,14 +22,8 @@
 
                 <div class="form-group">
                     <div class="form-group">
-                          <label > CODIGO DUN : </label>
+                          <label > FECHA : </label>
                           <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"  value="{{$ft_ficha->CODIGO_DUN}}" readonly="readonly">      
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="form-group">
-                          <img src="{{$ft_ficha->IMAGEN_CODIGODUN}}" width="250"> 
                     </div>
                 </div>
 
@@ -50,13 +44,7 @@
                           <label > CODIGO BARRA : </label>
                           <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"  value="{{$ft_ficha->CODIGO_BARRA}}" readonly="readonly">      
                     </div>
-                </div>     
-
-                <div class="form-group">
-                    <div class="form-group">
-                          <img src="{{$ft_ficha->IMAGEN_CODIGODUN}}" width="250"> 
-                    </div>
-                </div>           
+                </div>              
              </div>     
  
 

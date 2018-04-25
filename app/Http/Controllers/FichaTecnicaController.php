@@ -42,6 +42,16 @@ class FichaTecnicaController extends Controller
     }
 
     public function Extrusion(){
+        $ficha=DB::Connection()->select("SELECT FI.id,FI.REVISION,FI.ARTICULO,AR.DESCRIPCION,FI.FAMILIA ,FI.CLIENTE,FI.PAIS
+        FROM
+        IBERPLAS.FT_FICHA FI,
+        IBERPLAS.ARTICULO AR
+        WHERE 
+        FI.ARTICULO=AR.ARTICULO AND LINEA='EXTRUSION'");
+
+       
+
+    	return view('ControlCalidad.Ficha_Tecnica.Extrusion.index', ['ficha' => $ficha]);
 
     }
 
@@ -51,11 +61,11 @@ class FichaTecnicaController extends Controller
         IBERPLAS.FT_FICHA FI,
         IBERPLAS.ARTICULO AR
         WHERE 
-        FI.ARTICULO=AR.ARTICULO AND LINEA='BOLILLOS'");
+        FI.ARTICULO=AR.ARTICULO AND LINEA='BOLILLO'");
 
        
 
-    	return view('ControlCalidad.Ficha_Tecnica.Bolillos.index', ['ficha' => $ficha]);
+    	return view('ControlCalidad.Ficha_Tecnica.Bolillo.index', ['ficha' => $ficha]);
     }
 
     public function Pala(){
@@ -104,7 +114,7 @@ class FichaTecnicaController extends Controller
         
         
         
-          return view('ControlCalidad.Ficha_Tecnica.Insertado.Ficha_Tecnica')
+          return view('ControlCalidad.Ficha_Tecnica.Bolillo.Ficha_Tecnica')
           ->with('ft_ficha',$ft_ficha)
           ->with('ft_insertado',$ft_insertado)
           ->with('ft_soporte',$ft_soporte)
@@ -115,4 +125,34 @@ class FichaTecnicaController extends Controller
           ->with('ft_gancho',$ft_gancho)
           ->with('ft_resorte',$ft_resorte);
       }
+
+      public function FichaTecnicaExtrusion(Request $request,$id){
+
+        $ft_ficha=FT_FICHA::where('id','=',$id)->first();
+        $ft_insertado=FT_INSERTADO::where('ficha_id','=',$id)->first();
+        $ft_soporte=FT_SOPORTE::where('ficha_id','=',$id)->first();
+        $ft_fibra_alambre=FT_FIBRA_ALAMBRE::where('ficha_id','=',$id)->first();
+        $ft_dimension_cepillo=FT_DIMENSION_CEPILLO:: where('ficha_id','=',$id)->first();
+        $ft_bolillo=FT_BOLILLO::where('ficha_id','=',$id)->first();
+        $ft_corrugado=FT_CORRUGADO::where('ficha_id','=',$id)->first();
+        $ft_gancho=FT_GANCHO::where('ficha_id','=',$id)->first();
+        $ft_resorte=FT_RESORTE::where('ficha_id','=',$id)->first();
+  
+        
+        
+        
+          return view('ControlCalidad.Ficha_Tecnica.Extrusion.Ficha_Tecnica')
+          ->with('ft_ficha',$ft_ficha)
+          ->with('ft_insertado',$ft_insertado)
+          ->with('ft_soporte',$ft_soporte)
+          ->with('ft_fibra_alambre',$ft_fibra_alambre)
+          ->with('ft_dimension_cepillo',$ft_dimension_cepillo)
+          ->with('ft_bolillo',$ft_bolillo)
+          ->with('ft_corrugado',$ft_corrugado)
+          ->with('ft_gancho',$ft_gancho)
+          ->with('ft_resorte',$ft_resorte);
+      }
+
+
+      
 }

@@ -14,9 +14,8 @@
   <form  id="form_registrohoras" role="search" action="#" method="GET" >
           <input type="hidden" name="_token" value="{{csrf_token()}}">
          
-          @include('ControlCalidad.Ficha_Tecnica.insertado.layouts.informacion_producto')
-          @include('ControlCalidad.Ficha_Tecnica.insertado.layouts.bolillo')
-          @include('ControlCalidad.Ficha_Tecnica.insertado.layouts.vineta')
+         
+        
 
    
     
@@ -35,12 +34,27 @@
     
   
 
-    @if(is_null($ft_gancho))
+    @if(is_null($ft_ficha))
             <p>.</p>
         @else
  
-    @include('ControlCalidad.Ficha_Tecnica.insertado.layouts.alambre')
+        @include('ControlCalidad.Ficha_Tecnica.Bolillo.layouts.informacion_producto')
     @endif
+
+    @if(is_null($ft_bolillo))
+            <p>.</p>
+        @else
+ 
+        @include('ControlCalidad.Ficha_Tecnica.Bolillo.layouts.bolillo')
+    @endif
+    @if(is_null($ft_corrugado))
+            <p>.</p>
+        @else
+ 
+        @include('ControlCalidad.Ficha_Tecnica.Bolillo.layouts.corrugado')
+    @endif
+
+
     
     
 </div>     

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Fichas Tecnica
+    Fichas Tecnica EXTRUSION
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica Bolillos
+   Ficha Tecnica EXTRUSION
 @endsection
 
 
@@ -55,11 +55,11 @@
 							<td>{{$ficha->PAIS}}</td>  
                             <td>
                               
-							   <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+							   <a href="{{route('Ficha_TecnicaExtrusion',[$ficha->id])}}" 
 							   class="btn btn-primary">Ver</a>
-                 <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+                 <a href="{{route('Ficha_TecnicaExtrusion',[$ficha->id])}}" 
 							   class="btn btn-primary">Editar</a>
-                 <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+                 <a href="{{route('Ficha_TecnicaExtrusion',[$ficha->id])}}" 
 							   class="btn btn-primary">Copiar</a>
                              </td>                
 

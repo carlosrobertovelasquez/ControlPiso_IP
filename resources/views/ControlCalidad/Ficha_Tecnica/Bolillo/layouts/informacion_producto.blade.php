@@ -22,7 +22,7 @@
 
                 <div class="form-group">
                     <div class="form-group">
-                          <label > CODIGO DUN : </label>
+                          <label > FECHA : </label>
                           <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"  value="{{$ft_ficha->CODIGO_DUN}}" readonly="readonly">      
                     </div>
                 </div>
