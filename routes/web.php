@@ -147,8 +147,9 @@ Route::get('ventas','VentasController@index');
 
 
 //CONTROLA CALIDAD
-Route::get('ficha','FichaTecnicaController@index');
-Route::get('ficha_tecnica/{id}',['uses'=>'FichaTecnicaController@FichaTecnica','as'=>'Ficha_Tecnica']);
+Route::get('insertado','FichaTecnicaController@insertado');
+Route::get('bolillos','FichaTecnicaController@bolillo');
+Route::get('ficha_tecnicaInsertado/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInsertado','as'=>'Ficha_TecnicaInsertado']);
 });
 
 

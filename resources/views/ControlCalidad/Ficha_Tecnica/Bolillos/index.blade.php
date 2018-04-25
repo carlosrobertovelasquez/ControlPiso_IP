@@ -4,7 +4,7 @@
     Fichas Tecnica
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica
+   Ficha Tecnica Bolillos
 @endsection
 
 
@@ -55,9 +55,12 @@
 							<td>{{$ficha->PAIS}}</td>  
                             <td>
                               
-							   <a href="{{route('Ficha_Tecnica',[$ficha->id])}}" 
-							   class="btn btn-primary">Ver Ficha</a>
-
+							   <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+							   class="btn btn-primary">Ver</a>
+                 <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+							   class="btn btn-primary">Editar</a>
+                 <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+							   class="btn btn-primary">Copiar</a>
                              </td>                
 
                </tr>

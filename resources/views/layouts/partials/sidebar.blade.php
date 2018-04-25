@@ -30,7 +30,9 @@
                 <ul class="treeview-menu">
                     <li><a href={{url('Equipo')}}>Centro Costos</a></li>
                     <li><a href={{url('Turno')}}>Turnos</a></li>
-                    <li><a href="{{url('ficha')}}">Ficha Tecnica</a></li>
+
+                    <li><a href="{{url('insertado')}}">Ficha Tecnica (Insertado)</a></li>
+                    <li><a href="{{url('bolillos')}}">Ficha Tecnica  (Bolillos)</a></li>
                      <li><a href="{{url('clave')}}">Clave</a></li>
                 </ul>
             </li>
