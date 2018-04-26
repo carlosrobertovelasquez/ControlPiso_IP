@@ -11,6 +11,7 @@ use App\Modelos\ControlCalidad\FT_BOLILLO;
 use App\Modelos\ControlCalidad\FT_CORRUGADO;
 use App\Modelos\ControlCalidad\FT_GANCHO;
 use App\Modelos\ControlCalidad\FT_RESORTE;
+use App\Modelos\ControlCalidad\FT_ESPECIFICACION;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -38,6 +39,14 @@ class FichaTecnicaController extends Controller
     }
 
     public function Inyeccion(){
+        $ficha=DB::Connection()->select("SELECT FI.id,FI.REVISION,FI.ARTICULO,AR.DESCRIPCION,FI.FAMILIA ,FI.CLIENTE,FI.PAIS
+        FROM
+        IBERPLAS.FT_FICHA FI,
+        IBERPLAS.ARTICULO AR
+        WHERE 
+        FI.ARTICULO=AR.ARTICULO AND LINEA='INYECCION'");
+        return view('ControlCalidad.Ficha_Tecnica.Inyeccion.index', ['ficha' => $ficha]);
+
 
     }
 
@@ -137,6 +146,9 @@ class FichaTecnicaController extends Controller
         $ft_corrugado=FT_CORRUGADO::where('ficha_id','=',$id)->first();
         $ft_gancho=FT_GANCHO::where('ficha_id','=',$id)->first();
         $ft_resorte=FT_RESORTE::where('ficha_id','=',$id)->first();
+        $ft_especificacion=FT_ESPECIFICACION::where('ficha_id','=',$id)->first();
+
+      
   
         
         
@@ -150,7 +162,8 @@ class FichaTecnicaController extends Controller
           ->with('ft_bolillo',$ft_bolillo)
           ->with('ft_corrugado',$ft_corrugado)
           ->with('ft_gancho',$ft_gancho)
-          ->with('ft_resorte',$ft_resorte);
+          ->with('ft_resorte',$ft_resorte)
+          ->with('ft_especificacion',$ft_especificacion);
       }
 
 

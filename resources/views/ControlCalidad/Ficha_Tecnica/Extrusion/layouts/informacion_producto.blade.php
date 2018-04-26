@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <div class="form-group">
                           <label > FECHA : </label>
-                          <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"  value="{{$ft_ficha->CODIGO_DUN}}" readonly="readonly">      
+                          <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"  value="{{$ft_ficha->FECHA}}" readonly="readonly">      
                     </div>
                 </div>
 
@@ -41,8 +41,8 @@
                 
                 <div class="form-group">
                     <div class="form-group">
-                          <label > CODIGO BARRA : </label>
-                          <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"  value="{{$ft_ficha->CODIGO_BARRA}}" readonly="readonly">      
+                          <label > MAQUINA : </label>
+                          <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"  value="{{$ft_especificacion->MAQUINA1}}" readonly="readonly">      
                     </div>
                 </div>              
              </div>     

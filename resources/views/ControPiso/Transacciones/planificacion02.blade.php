@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="form-group">
-                          <label >Direccion Cliente </label>
+                          <label >Direccion Clientesss </label>
                           <input type="text" class="form-control" id="nombrecliente" disabled  >
                         </div>
 
@@ -114,8 +114,17 @@
                           <label >Fecha Ofrecida por Ventas </label>
                           <input  type="text" class="form-control" id="fecharequerida" disabled>
                       </div>                
+                      <div class="form-group">
+                      <label>Selecione Cliente Ficha Tecnica </label>
 
-                 
+                      <select id="id_ficha" name="id_ficha" class="form-control select2" style="width: 100%;">
+                        <option value="0">SELECIONES UN FICHA:</option>
+                          <option value="000000">SIN FICHA TECNICA</option>
+                        @foreach($ft_ficha as $ft_ficha)
+                        <option value="{{ $ft_ficha->id }}">{{ $ft_ficha->CLIENTE }}--{{ $ft_ficha->PAIS }} </option>
+                        @endforeach
+                    </select>
+                    </div>
 
 
                   

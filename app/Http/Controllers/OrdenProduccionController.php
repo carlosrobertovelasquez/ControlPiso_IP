@@ -19,6 +19,7 @@ use App\Modelos\Softland\ESTRUC_PROCESO;
 use App\Modelos\ControlPiso\CP_globales;
 use App\Modelos\ControlPiso\CP_emails;
 use App\Modelos\Softland\EQUIPO;
+use App\Modelos\ControlCalidad\FT_FICHA;
 use Illuminate\Support\Facades\DB;
 use App\Mail\Produccion;
 Use Carbon\Carbon;
@@ -141,10 +142,12 @@ class OrdenProduccionController extends Controller
                 ->where('ARTICULO','=',$articulordproduccion)
                 //->where('REPORTA_PROD','=','N')
                 ->Groupby('SECUENCIA','DESCRIPCION','OPERACION')->get();
+              $ft_ficha=FT_FICHA::where('ARTICULO','=',$articulordproduccion)->get();
               return view('ControPiso.Transacciones.planificacion')
               ->with('ordenproduccion',$ordenproduccion)
               ->with('pedido',$pedido)
-              ->with('centrocosto',$centrocosto);
+              ->with('centrocosto',$centrocosto)
+              ->with('ft_ficha',$ft_ficha);
           }else{
 
               $ordenproduccion=CP_TCargaOrdenProduccion::where('ORDEN_PRODUCCION', $id)->first();;
@@ -152,11 +155,13 @@ class OrdenProduccionController extends Controller
               $pedido=PEDIDO::where('ESTADO','=','A')->orderby('PEDIDO','asc')->get();
              $centrocosto=CP_EQUIPOARTICULO::where('ARTICULO','=',$articulordproduccion)->
              where('operacion','=','TERMINADO')->get();
+             $ft_ficha=FT_FICHA::where('ARTICULO','=',$articulordproduccion)->get();
 
               return view('ControPiso.Transacciones.planificacion02')
               ->with('ordenproduccion',$ordenproduccion)
               ->with('pedido',$pedido)
-              ->with('centrocosto',$centrocosto);
+              ->with('centrocosto',$centrocosto)
+              ->with('ft_ficha',$ft_ficha);
 
 
           }

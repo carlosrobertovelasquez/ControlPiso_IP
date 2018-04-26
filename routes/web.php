@@ -150,9 +150,11 @@ Route::get('ventas','VentasController@index');
 Route::get('insertado','FichaTecnicaController@insertado');
 Route::get('bolillos','FichaTecnicaController@bolillo');
 Route::get('extrusion','FichaTecnicaController@extrusion');
+Route::get('inyeccion','FichaTecnicaController@inyeccion');
 Route::get('ficha_tecnicaInsertado/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInsertado','as'=>'Ficha_TecnicaInsertado']);
 Route::get('ficha_tecnicaBolillo/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaBolillo','as'=>'Ficha_TecnicaBolillo']);
 Route::get('ficha_tecnicaExtrusion/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaExtrusion','as'=>'Ficha_TecnicaExtrusion']);
+Route::get('ficha_tecnicaInyeccion/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInyeccion','as'=>'Ficha_TecnicaInyeccion']);
 });
 
 

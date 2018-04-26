@@ -4,7 +4,7 @@
     Fichas Tecnica
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica
+   Ficha Tecnica Extrusion
 @endsection
 
 
@@ -38,21 +38,16 @@
             <p>.</p>
         @else
  
-        @include('ControlCalidad.Ficha_Tecnica.Bolillo.layouts.informacion_producto')
+        @include('ControlCalidad.Ficha_Tecnica.Extrusion.layouts.informacion_producto')
     @endif
 
-    @if(is_null($ft_bolillo))
+    @if(is_null($ft_especificacion))
             <p>.</p>
         @else
  
-        @include('ControlCalidad.Ficha_Tecnica.Bolillo.layouts.bolillo')
+        @include('ControlCalidad.Ficha_Tecnica.Extrusion.layouts.especificacion')
     @endif
-    @if(is_null($ft_corrugado))
-            <p>.</p>
-        @else
- 
-        @include('ControlCalidad.Ficha_Tecnica.Bolillo.layouts.corrugado')
-    @endif
+  
 
 
     
