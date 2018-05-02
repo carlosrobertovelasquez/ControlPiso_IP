@@ -10,6 +10,8 @@
 @section('main-content')
 
 <section class="content">
+<form  id="form_consumo" role="search" action="#" method="GET" >
+          <input type="hidden" name="_token" value="{{csrf_token()}}">
 
   <div class="box box-default">
       <div class="box-header with-border">
@@ -56,7 +58,10 @@
                                 </td>
                               
                                 <td>
-                                 <a href="#" class="btn btn-primary">Registar</a>
+                                <a href="{{route('registro.agregarconsumo',[$consumo->ORDEN_PRODUCCION,$consumo->ARTICULO])}}" class="btn btn-primary">Registar</a>
+
+                                 
+                                 
                                </td>
                         </tr>
                       @endforeach
@@ -70,26 +75,61 @@
   </div>
   <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Datos Generales</h3>
+        <h3 class="box-title">Registro de Materiales</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
            
           </div>
       </div>
-      <div class="box-body">
+     
            <div id="lista_materiales"></div>
-      </div>
+           
+     
   </div>
     
   </div>
- 
+  </form>
  </section> 
   
 
 
 @section('script2')
-<<script>
+<script>
+function crearconsumo(){
+    var dataString=$('#form_registrohoras').serialize();
+    var urlraiz=$("#url_raiz_proyecto").val();
+     var miurl =urlraiz+"/registro/agregarconsumo/";
+    
+    
+  $.ajax({
+     url:miurl,
+    data:dataString,
+  }).done(function(data){
+    listarconsumo();  
+
+
+  });
+
+  }
+
+  function listarconsumo(){
+var id= document.getElementById("norden").value;
+var id2= document.getElementById("id_turno").value;
+var id3= document.getElementById("id_operacion").value; 
+var urlraiz=$("#url_raiz_proyecto").val();
+var miurl =urlraiz+"/registro/listarcomsuno";
+
+$.ajax({
+  type:'get',
+  url:miurl,
+  data:{id:id,id2:id2,id3:id3},
+  success:function(data){
+    $('#lista_empleados').empty().html(data);
+  }
+ });
+
+}
 
 </script>
 @endsection

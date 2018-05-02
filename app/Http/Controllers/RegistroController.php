@@ -337,6 +337,10 @@ foreach ($horastrabajadas as $value) {
 
     }
 
+    public function agregarconsumo(request $request){
+
+    }
+    
     public function agregaremple(Request $request){
 
        $date = carbon::now();
@@ -360,6 +364,7 @@ foreach ($horastrabajadas as $value) {
      $registroemple->EMPLEADO=$request->id_empleado;
      $registroemple->NOMBRE=$request->nombre;
      $registroemple->ROL=$request->id_rol;
+     $registroemple->PARTICIPACION=$request->participacion;
      $registroemple->USUARIOCREACION=\Auth::user()->name;
      $registroemple->FECHACREACION=$date;
      $registroemple->save();
@@ -411,6 +416,7 @@ foreach ($horastrabajadas as $value) {
 
 
       $planificar=CP_PLANIFICACION::where('id',$idpla)->update(['estado'=>'B']);
+      $planificar=CP_PLANIFICACION::where('id',$idpla)->update(['CONFIRMADA'=>'S']);
       
        return redirect()->action('RegistroController@index');
 

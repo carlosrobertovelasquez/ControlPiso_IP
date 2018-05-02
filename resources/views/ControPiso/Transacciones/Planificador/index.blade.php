@@ -14,7 +14,7 @@
                 <li class="active">CUADRO DE CONTROL</li>
             </ol>
              <script type="text/javascript">
-                         setTimeout("document.location=document.location",55000);
+                     <!-- setTimeout("document.location=document.location",55000); -->
            </script>
         </section>
 
@@ -122,7 +122,7 @@
                         <div>
                            
                             <a href="{{route('viajero',$OrdenProduccion->ordenproduccion)}}" class="btn btn-raised btn-primary">Viajero</a>
-                               <a href="#" class="btn btn-raised btn-primary">Ficha Tec</a>
+                            <a href="{{route('Ficha_Tecnica',$OrdenProduccion->FICHA_TECNICA)}}"" class="btn btn-raised btn-primary">Ficha Tec</a>
 
                             @if($OrdenProduccion->estado=='P')
                                      <a href="{{route('planificar.estadoP',$OrdenProduccion->id)}}" class="btn btn-raised btn-warning">Planificado</a>

@@ -122,7 +122,6 @@
 
                           <select id="id_ficha" name="id_ficha" class="form-control select2" style="width: 100%;">
                                    <option value="0">SELECIONES UN CLIENTE:</option>
-                                    <option value="000000">SIN FICHA</option>
                                    @foreach($ft_ficha as $ft_ficha)
                                    <option value="{{ $ft_ficha->id }}">{{ $ft_ficha->CLIENTE }}--{{ $ft_ficha->PAIS }} </option>
                                    @endforeach
@@ -513,10 +512,13 @@ $('#planificar').click(function(){
 eliminarFilas();
 ValdiarCampos();
 
+
+
   
   var dataString=$('#form_planificacion').serialize();
 
 
+ var id8=document.getElementById('id_ficha').value;
 
   
   var vcantidadaproducir=document.getElementById('cantidadaproducir').value;  
@@ -530,7 +532,7 @@ ValdiarCampos();
   var id7=$("#idm_totalturnos").val();
 
   var urlraiz=$("#url_raiz_proyecto").val();
-  var miurl =urlraiz+"/planificar/"+id+"/"+id4+"/"+id5+"/"+id6+"";
+  var miurl =urlraiz+"/planificar/"+id+"/"+id4+"/"+id5+"/"+id6+"/"+id8+"";
 
   
   var d='<tr>'+
@@ -666,8 +668,28 @@ function eliminarFilas(){
 function ValdiarCampos()
 {
   var pedido=$('#id_pedido').val();
+  var ficha=$('#id_ficha').val();
  if(pedido=="0" ){
   alert(' Tiene que Selecionar un  pedido');
+
+  return false;
+ }
+ if(ficha=="0" ){
+  alert(' Tiene que Selecionar un  cliente');
+
+  return false;
+ }
+
+ 
+}
+
+function ValdiarCampos2()
+{
+
+  var ficha=$('#id_ficha').val();
+
+ if(ficha=="0" ){
+  alert(' Tiene que Selecionar un  cliente');
 
   return false;
  }

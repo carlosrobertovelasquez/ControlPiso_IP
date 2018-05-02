@@ -12,7 +12,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                         
                       
                       @foreach($cp_consumo as $cp_consumo)
                         <tr id="fila">

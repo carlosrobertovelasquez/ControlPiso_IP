@@ -5,6 +5,7 @@
                       <th>Codigo</th>
                       <th>Nombre</th>
                       <th>Rol</th>
+                      <th>Participacion</th>
                       <th>Selecion</th>
                     </tr>
                   </thead>
@@ -16,6 +17,8 @@
                           <td>{{$registroempleados->EMPLEADO}}</td>
                           <td>{{$registroempleados->NOMBRE}}</td>
                           <td>{{$registroempleados->ROL}}</td>
+                          <td>{{$registroempleados->PARTICIPACION}}</td>
+
                            <td>         
                            {!!Form::open(['route'=>['registro.eliminar',$registroempleados->ID],'method'=>'GET'])!!}             
                             <a href="#"  class="btn-delete" onclick="eliminaremple({{$registroempleados->ID}})">

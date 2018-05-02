@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('ConsultaProduccion',['uses'=>'OrdenProduccionController@ConsultaProduccion', 'as'=>'ConsultaProduccion']);  
   //planificador
  Route::get('Planificacion/{id}', ['uses'=>'OrdenProduccionController@planificacion','as'=>'planificacion']);
-Route::get('planificar/{id}/{id4}/{id5}/{id6}', ['uses'=>'OrdenProduccionController@planificar','as'=>'planificar']);
+Route::get('planificar/{id}/{id4}/{id5}/{id6}/{id8}', ['uses'=>'OrdenProduccionController@planificar','as'=>'planificar']);
 Route::get('guardar_planificacion', ['uses'=>'OrdenProduccionController@guardar_planificacion','as'=>'guardar_planificacion']);
 
  Route::get('ConsultaPedidos/{id}',['uses'=>'OrdenProduccionController@ConsultaPedidos', 'as'=>'ConsultaPedidos']);
@@ -110,7 +110,8 @@ Route::get('registro/agregarproduccion/',['uses'=>'RegistroController@agregarpro
 Route::get('registro/eliminar/{id}',['uses'=>'RegistroController@eliminar', 'as'=>'registro.eliminar']);
 Route::get('registro/eliminaremple/{id}',['uses'=>'RegistroController@eliminaremple', 'as'=>'registro.eliminaremple']);
 Route::get('registro/buscarempleado/', ['uses'=>'RegistroController@buscarempleado','as'=>'registro.buscarempleado']);
-
+Route::get('registro/agregarconsumo/',['uses'=>'RegistroController@agregarconsumo', 'as'=>'registro.agregarconsumo']);
+Route::get('registro/listarconsumo',['uses'=>'RegistroController@listarconsumo', 'as'=>'registro.listarconsumo']);
 
 //turno
   Route::get('Turno', ['uses'=>'TurnosController@index','as'=>'Turno.index']);
@@ -151,6 +152,7 @@ Route::get('insertado','FichaTecnicaController@insertado');
 Route::get('bolillos','FichaTecnicaController@bolillo');
 Route::get('extrusion','FichaTecnicaController@extrusion');
 Route::get('inyeccion','FichaTecnicaController@inyeccion');
+Route::get('ficha/{id}',['uses'=>'FichaTecnicaController@FichaTecnica','as'=>'Ficha_Tecnica']);
 Route::get('ficha_tecnicaInsertado/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInsertado','as'=>'Ficha_TecnicaInsertado']);
 Route::get('ficha_tecnicaBolillo/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaBolillo','as'=>'Ficha_TecnicaBolillo']);
 Route::get('ficha_tecnicaExtrusion/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaExtrusion','as'=>'Ficha_TecnicaExtrusion']);

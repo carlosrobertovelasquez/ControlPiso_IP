@@ -203,6 +203,14 @@
                <input type="hidden" name="id_empleado" id="id_empleado" value="" />
                 <input type="hidden" name="nombre" id="nombre" value="" />
 
+                <div class="col-xs-3">
+                  <input type="number" id="participacion" name="participacion" 
+                  class="form-control select2" placeholder="Participacion" >
+                  
+                  </select>
+              </div>
+
+
               <div class="col-xs-2">
                   <button type="" class="form-control" onclick="crearemple()" >Adicionar</button> 
               </div>
@@ -332,6 +340,7 @@ $('#produccion').on('change',function ()
    $("#total").val(produccion);
   
    if(produccion>0){
+     
     document.getElementById("aprobar").style.display='inline';
    // aprobar.style.display='inline';
    }else{

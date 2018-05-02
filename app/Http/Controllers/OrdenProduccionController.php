@@ -234,7 +234,7 @@ class OrdenProduccionController extends Controller
     }
 
 
-    public function planificar($id,$id4,$id5,$id6,Request $request){
+    public function planificar($id,$id4,$id5,$id6,$id8,Request $request){
         
     $id3=$request->Mid_opera;
     
@@ -245,6 +245,9 @@ class OrdenProduccionController extends Controller
     $orden=$request->norden;
     $cantidadxhora=$request->idm_cantidadxh;
     $cantidadxhora2=$request->idm_cantidadxh;
+    $ficha_tenica=$id8;
+
+
   
     
     $hora=date('H',strtotime($id5) );
@@ -309,12 +312,12 @@ class OrdenProduccionController extends Controller
           if (is_null($normal)){
                
                $arr=array($request->lunes,$request->martes,$request->miercoles,$request->jueves,$request->viernes,$request->sabado,$request->domingo,);
-               $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
+               $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
 
           }else{
 
            $arr=array('N');
-           $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
           }
 
        
@@ -334,13 +337,13 @@ class OrdenProduccionController extends Controller
           if (is_null($normal)){
            
           $arr=array($request->lunes,$request->martes,$request->miercoles,$request->jueves,$request->viernes,$request->sabado,$request->domingo,);
-           $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
 
           }else{
 
            $arr=array('N');
         
-           $turnosasigados=$this->calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
           }
 
        
@@ -353,7 +356,7 @@ class OrdenProduccionController extends Controller
     
 
 
-    public function calcularTurnos($cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora){
+    public function calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora){
         
 
      
@@ -463,6 +466,7 @@ class OrdenProduccionController extends Controller
       $plantemp->calendario_id=$turnos->ID;
       $plantemp->orden_prod=$orden;
       $plantemp->cantidadxhora=$cantidadxhora2;
+      $plantemp->FICHA_TECNICA=$id8;
       $plantemp->USUARIOCREACION=\Auth::user()->name;
         $plantemp->save();
 
@@ -502,6 +506,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
           $encatemp->operacion=$turnos->operacion;
           $encatemp->centrocosto=$turnos->centrocosto;
           $encatemp->secuencia=$turnos->secuencia;
+          $encatemp->FICHA_TECNICA=$id8;
           $encatemp->USUARIO=\Auth::user()->name;
           $encatemp->save();
           $conta=$conta+1;
@@ -624,6 +629,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                 $planificacion->centrocosto=$value->centrocosto;
                 $planificacion->secuencia=$value->secuencia;
                 $planificacion->estado='P';
+                 $planificacion->FICHA_TECNICA=$value->FICHA_TECNICA;
                 $planificacion->USUARIOCREACION=\Auth::user()->name;
                 $planificacion->FECHACREACION=$date;
                 $planificacion->save();
@@ -697,6 +703,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                  $detall->operacion=$value->operacion;
                  $detall->centrocosto=$value->centrocosto;
                  $detall->secuencia=$value->secuencia;
+                 $detall->FICHA_TECNICA=$value->FICHA_TECNICA;
                  $detall->cantidadxhora=$value->cantidadxhora;
                  $detall->USUARIOCREACION=\Auth::user()->name;
                  $detall->FECHACREACION=$date;
@@ -714,10 +721,10 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                
 
           $plan=DB::Connection()->select("select operacion ,ordenproduccion,articulo,MIN(horaini) as fechamin ,MAX(horafin) as fechamax,
-            SUM(cantidad) as cantidad,sum(horas) as horas,centrocosto ,pedido
+            SUM(cantidad) as cantidad,sum(horas) as horas,centrocosto ,pedido,FICHA_TECNICA
             from IBERPLAS.CP_ENCABEZADOPLANIFICACION
             where ordenproduccion='$request->norden'
-            group by operacion,ordenproduccion,articulo,secuencia,centrocosto,pedido
+            group by operacion,ordenproduccion,articulo,secuencia,centrocosto,pedido,FICHA_TECNICA
             order by secuencia");
 
            foreach ($plan as $value) {
@@ -746,7 +753,8 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
             $CP_PLANIFICACION->pedido=$value->pedido;
             $CP_PLANIFICACION->estado='P';
             $CP_PLANIFICACION->horas=$value->horas;
-            $CP_PLANIFICACION->porcentaje=0.0;
+            $CP_PLANIFICACION->porcentaje=0;
+            $CP_PLANIFICACION->FICHA_TECNICA=$value->FICHA_TECNICA;
             $CP_PLANIFICACION->USUARIOCREACION=\Auth::user()->name;
             $CP_PLANIFICACION->FECHACREACION=$date;
             $CP_PLANIFICACION->save();
@@ -756,6 +764,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
             //mandar mail de orden de produccion Planificado
            $ordenproduccion2=$request->norden;
           
+          //para no enviar correo
            $cp_planificacion2=CP_PLANIFICACION::where('ordenproduccion','=',$request->norden)->get();
            $emails=CP_emails::where('email01','=','S')->select('email')->get();  
            Mail::to($emails)->send(new Produccion($cp_planificacion2,$ordenproduccion2));

@@ -51,9 +51,21 @@
                                
                                
                                 <td>
-                                 <a href="{{route('registro.mo',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Mano Obra</a>
-                                <a href="{{route('registro.ma',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Materiales</a>
-                                <a href="{{route('registro.impresion',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Imprimir</a>             
+                                 <a href="{{route('registro.mo',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">M.O.</a>
+                                <a href="{{route('registro.ma',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">MAT.</a>
+
+                                @if(is_null($OrdenProduccion->CONFIRMADA))
+                                     <a href="{{route('registro.impresion',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Confirmada</a> 
+                                    @else
+                                    <a href="{{route('registro.impresion',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Aprobar</a>
+            
+                                @endif
+
+
+                                
+                                
+                                           
+                                
                                 </td>
                         </tr>
                       @endforeach

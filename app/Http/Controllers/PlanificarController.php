@@ -40,14 +40,16 @@ class PlanificarController extends Controller
    }
 
 
+  
+
   public function estadoP($id){
 
     $fechaSistema = Carbon::now()->format('m-d-Y H:i:s');
     
        $planificar=CP_PLANIFICACION::where('id',$id)->update(['estado'=>'A']);
       
-         $emails=CP_emails::where('email01','=','S')->select('email')->get();
-            Mail::to($emails)->send(new ComprasMail());
+        // $emails=CP_emails::where('email01','=','S')->select('email')->get();
+        //    Mail::to($emails)->send(new ComprasMail());
         
        
        return redirect()->route('planificador.index');
