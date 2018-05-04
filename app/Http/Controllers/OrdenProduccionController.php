@@ -272,7 +272,7 @@ class OrdenProduccionController extends Controller
                                       where fecha='$nueva2' and DATEPART(HOUR,hora)='$hora'");
 
 
-
+        
        
 
         foreach ($core as $core) {
@@ -303,7 +303,8 @@ class OrdenProduccionController extends Controller
                                           where centrocosto='$equipo' and fecha='$nueva2' and DATEPART(HOUR,hora)>='$hora')");
 
      
-         
+       
+
         if(count($disponi)>0){
          
          $inicio=CP_DETALLEPLANIFICACION::where('centrocosto','=',$equipo)->max('calendario_id');    
@@ -359,7 +360,7 @@ class OrdenProduccionController extends Controller
     public function calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora){
         
 
-     
+        
              
          CP_TEMP_PLANIFICACION::where('USUARIOCREACION','=',\Auth::user()->name )
          ->where('operacion','=',$id3)->delete();
@@ -379,7 +380,7 @@ class OrdenProduccionController extends Controller
          
 
          $tempo=CP_TEMP_PLANIFICACION::where('centrocosto','=',$equipo)->max('calendario_id');
-
+         
          
          if($tempo>0){
              if(count($arr)==1){
@@ -400,6 +401,7 @@ class OrdenProduccionController extends Controller
 
                 }
          }else{
+             
               if(count($arr)==1){
                $turnos2=CP_CALENDARIO_PLANIFICADOR_DETALLE::whereNull('ESTADO')
                 ->where('ID','>=',$inicioturno)
@@ -770,7 +772,29 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
            Mail::to($emails)->send(new Produccion($cp_planificacion2,$ordenproduccion2));
              
            
+
+           $gannt=DB::Connection()->
+           select("select ordenproduccion as text,min(fechamin) fechamin, SUM(horas) as horas 
+           from IBERPLAS.CP_PLANIFICACION
+           where ordenproduccion='$ordenproduccion2'
+           group by ordenproduccion" );
+
+
+          foreach ($gannt as $value) {
+           $fecha=date("Y-d-m H:i:s",strtotime($value->fechamin));
+            $task=new cp_tasks;
+            $task->text=$value->text;
+            $task->duration=$value->horas;
+            $task->progress=0.25;
+            $task->start_date=$fecha;
+            $task->save(); 
+          }
            
+
+
+
+
+
            //ESTADOS P=PLANIIFICACO,A=EN PROCESO,B=FINALIZADA,C=CERRADA,D=LIQUIDADA
 
 
@@ -803,19 +827,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
 
 
 
-                       $gannt=DB::Connection()->select("select (ordenproduccion+'-'+centrocosto) as text,horas,fechamin,centrocosto from IBERPLAS.CP_PLANIFICACION where id='$id'" );
-
-
-                      foreach ($gannt as $value) {
-                       $fecha=date("Y-d-m H:i:s",strtotime($value->fechamin));
-                        $task=new cp_tasks;
-                        $task->text=$value->text;
-                        $task->duration=$value->horas;
-                        $task->progress=25;
-                        $task->start_date=$fecha;
-                        $task->centrocosto=$value->centrocosto;
-                        $task->save(); 
-                      }
+                      
 
                       $gannt2=DB::Connection()->select("select fechamin,fechamax,(ordenproduccion) as text from IBERPLAS.CP_PLANIFICACION where id='$id'" );
                       foreach ($gannt2 as $value) {
