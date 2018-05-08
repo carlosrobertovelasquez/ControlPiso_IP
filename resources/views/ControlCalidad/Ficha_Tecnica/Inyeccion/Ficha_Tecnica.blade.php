@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Fichas Tecnica EXTRUSION
+    Fichas Tecnica INYECCION
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica EXTRUSION
+   Ficha Tecnica INYECCION
 @endsection
 
 
@@ -38,16 +38,21 @@
             <p>.</p>
         @else
  
-        @include('ControlCalidad.Ficha_Tecnica.Extrusion.layouts.informacion_producto')
+        @include('ControlCalidad.Ficha_Tecnica.Inyeccion.layouts.informacion_producto')
     @endif
 
-    @if(is_null($ft_especificacion))
+    @if(is_null($ft_bolillo))
             <p>.</p>
         @else
  
-        @include('ControlCalidad.Ficha_Tecnica.Extrusion.layouts.especificacion')
+        @include('ControlCalidad.Ficha_Tecnica.Inyeccion.layouts.bolillo')
     @endif
-  
+    @if(is_null($ft_corrugado))
+            <p>.</p>
+        @else
+ 
+        @include('ControlCalidad.Ficha_Tecnica.Inyeccion.layouts.corrugado')
+    @endif
 
 
     

@@ -79,7 +79,8 @@ Route::get('viajero/{id}',['uses'=>'OrdenProduccionController@viajero', 'as'=>'v
 
 //Maestros/Claves
  Route::get('clave',['uses'=>'ClaveController@index', 'as'=>'clave.index']);
- 
+ Route::get('ConsultarClave',['uses'=>'ClaveController@ConsultarClave', 'as'=>'ConsultarClave']);
+ Route::get('AgregarClave',['uses'=>'ClaveController@AgregarClave', 'as'=>'AgregarClave']);
 
 //Transacciones/planificador
  Route::get('planificador',['uses'=>'PlanificarController@index', 'as'=>'planificador.index']);
@@ -97,6 +98,7 @@ Route::get('registro/ma/{id}/{id2}',['uses'=>'RegistroController@ma', 'as'=>'reg
 Route::get('registro/impresion/{id}/{id2}',['uses'=>'RegistroController@impresion', 'as'=>'registro.impresion']);
 Route::get('registro/listarhoras',['uses'=>'RegistroController@listarhoras', 'as'=>'registro.listarhoras']);
 Route::get('registro/listaremple',['uses'=>'RegistroController@listaremple', 'as'=>'registro.listaremple']);
+Route::get('registro/listarproduccion',['uses'=>'RegistroController@listarproduccion', 'as'=>'registro.listarproduccion']);
 Route::get('registro/totalhoras',['uses'=>'RegistroController@totalhoras', 'as'=>'registro.totalhoras']);
 Route::get('registro/tiempoPerdido',['uses'=>'RegistroController@tiempoPerdido', 'as'=>'registro.tiempoPerdido']);
 Route::get('registro/horasTrabajadas',['uses'=>'RegistroController@horasTrabajadas', 'as'=>'registro.horasTrabajadas']);
@@ -110,7 +112,8 @@ Route::get('registro/agregarproduccion/',['uses'=>'RegistroController@agregarpro
 Route::get('registro/eliminar/{id}',['uses'=>'RegistroController@eliminar', 'as'=>'registro.eliminar']);
 Route::get('registro/eliminaremple/{id}',['uses'=>'RegistroController@eliminaremple', 'as'=>'registro.eliminaremple']);
 Route::get('registro/buscarempleado/', ['uses'=>'RegistroController@buscarempleado','as'=>'registro.buscarempleado']);
-Route::get('registro/agregarconsumo/',['uses'=>'RegistroController@agregarconsumo', 'as'=>'registro.agregarconsumo']);
+Route::get('registro/agregarconsumo/{id1}/{id2}/{id3}',['uses'=>'RegistroController@agregarconsumo', 'as'=>'registro.agregarconsumo']);
+Route::get('registro/eliminarconsumo/{id1}',['uses'=>'RegistroController@eliminarconsumo', 'as'=>'registro.eliminarconsumo']);
 Route::get('registro/listarconsumo',['uses'=>'RegistroController@listarconsumo', 'as'=>'registro.listarconsumo']);
 
 //turno
@@ -152,11 +155,18 @@ Route::get('insertado','FichaTecnicaController@insertado');
 Route::get('bolillos','FichaTecnicaController@bolillo');
 Route::get('extrusion','FichaTecnicaController@extrusion');
 Route::get('inyeccion','FichaTecnicaController@inyeccion');
+Route::get('pala','FichaTecnicaController@pala');
 Route::get('ficha/{id}',['uses'=>'FichaTecnicaController@FichaTecnica','as'=>'Ficha_Tecnica']);
 Route::get('ficha_tecnicaInsertado/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInsertado','as'=>'Ficha_TecnicaInsertado']);
+Route::get('ficha_tecnicaInsertadoEdit/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInsertadoEdit','as'=>'Ficha_TecnicaInsertadoEdit']);
 Route::get('ficha_tecnicaBolillo/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaBolillo','as'=>'Ficha_TecnicaBolillo']);
+Route::get('ficha_tecnicaBolilloEdit/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaBolilloEdit','as'=>'Ficha_TecnicaBolilloEdit']);
 Route::get('ficha_tecnicaExtrusion/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaExtrusion','as'=>'Ficha_TecnicaExtrusion']);
+Route::get('ficha_tecnicaExtrusionEdit/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaExtrusionEdit','as'=>'Ficha_TecnicaExtrusionEdit']);
 Route::get('ficha_tecnicaInyeccion/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInyeccion','as'=>'Ficha_TecnicaInyeccion']);
+Route::get('ficha_tecnicaInyeccionEdit/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaInyeccionEdit','as'=>'Ficha_TecnicaInyeccionEdit']);
+Route::get('ficha_tecnicaPala/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaPala','as'=>'Ficha_TecnicaPala']);
+Route::get('ficha_tecnicaPalaEdit/{id}',['uses'=>'FichaTecnicaController@FichaTecnicaPalaEdit','as'=>'Ficha_TecnicaPalaEdit']);
 });
 
 

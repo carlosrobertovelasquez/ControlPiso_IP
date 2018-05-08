@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Fichas Tecnica EXTRUSION
+    Fichas Tecnica PALA
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica EXTRUSION
+   Ficha Tecnica PALA
 @endsection
 
 
@@ -15,39 +15,27 @@
           <input type="hidden" name="_token" value="{{csrf_token()}}">
          
          
-        
 
-   
-    
-
-   
-    
-     
-
-    
-
-     
-
-      
-
-     
-    
-  
 
     @if(is_null($ft_ficha))
             <p>.</p>
         @else
  
-        @include('ControlCalidad.Ficha_Tecnica.Extrusion.layouts.informacion_producto')
+        @include('ControlCalidad.Ficha_Tecnica.Pala.layouts.informacion_producto')
     @endif
 
-    @if(is_null($ft_especificacion))
+    @if(is_null($ft_bolillo))
             <p>.</p>
         @else
  
-        @include('ControlCalidad.Ficha_Tecnica.Extrusion.layouts.especificacion')
+        @include('ControlCalidad.Ficha_Tecnica.Pala.layouts.bolillo')
     @endif
-  
+    @if(is_null($ft_corrugado))
+            <p>.</p>
+        @else
+ 
+        @include('ControlCalidad.Ficha_Tecnica.Pala.layouts.corrugado')
+    @endif
 
 
     

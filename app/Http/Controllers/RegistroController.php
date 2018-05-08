@@ -119,8 +119,21 @@ public function listaremple(){
       return view('ControPiso.Transacciones.Registro.lista_empleados')  
       ->with('registroempleados',$registroempleados); 
     }
+    public function listarproduccion(){
+        $id=$_GET['id'];
+        $id2=$_GET['id2'];
+        $id3=$_GET['id3'];
+         $listarproduccion=CP_REGISTROPRODUCCION::
+         where('ORDENPRODUCCION','=',$id)
+         ->where('TURNO','=',$id2)
+         ->where('OPERACION','=',$id3)->first() ;
+        
+        // dd($listarproduccion);
+    
+         return response()->json($listarproduccion);
+        }
 
- 
+    
 
 public function totalhoras(){
 
@@ -319,6 +332,7 @@ foreach ($horastrabajadas as $value) {
      }
 
      
+
      $registrohoras=new CP_REGISTROHORAS;
  
      $registrohoras->ORDENPRODUCCION=$request->norden;
@@ -337,7 +351,20 @@ foreach ($horastrabajadas as $value) {
 
     }
 
-    public function agregarconsumo(request $request){
+    public function agregarconsumo(Request $request,$id1,$id2,$id3){
+        $date = carbon::now();
+        $date = $date->format('d-m-Y H:i:s');
+       
+        $agregarconsumo=new CP_CONSUMO;
+
+      $agregarconsumo->planificacion_id=$id3;
+      $agregarconsumo->orden_produccion=$id1;
+      $agregarconsumo->articulo=$id2;
+      $agregarconsumo->cantidad=0.0;
+      $agregarconsumo->USUARIOCREACION=\Auth::user()->name;
+     $agregarconsumo->FECHACREACION=$date;
+     $agregarconsumo->save();
+     return redirect()->action('RegistroController@index');
 
     }
     
@@ -371,6 +398,7 @@ foreach ($horastrabajadas as $value) {
 
     }
 
+   
   public function agregarproduccion(Request $request){
 
        $date = carbon::now();
@@ -383,6 +411,7 @@ foreach ($horastrabajadas as $value) {
          
          $opera1=$opera->OPERACION;
      }
+
 
     
      $registroproduccion=new CP_REGISTROPRODUCCION;
@@ -427,7 +456,9 @@ foreach ($horastrabajadas as $value) {
 
   }
 
-
+    public function eliminarconsumo($id1){
+        $horas=CP_consumo::where('ID','=',$id1)->delete();
+    }
     public function eliminar(Request $request,$id){
 
      
@@ -435,9 +466,7 @@ foreach ($horastrabajadas as $value) {
       
         $horas=CP_REGISTROHORAS::where('ID','=',$id)->delete();
        // return response()->json(['message'=> $horas->CLAVE.'Fue eliminado Corretamente']);
-      
-
-    }
+      }
 
     public function eliminaremple(Request $request,$id){
 
@@ -446,9 +475,7 @@ foreach ($horastrabajadas as $value) {
       
         $horas=CP_REGISTROEMPLEADOS::where('ID','=',$id)->delete();
        // return response()->json(['message'=> $horas->CLAVE.'Fue eliminado Corretamente']);
-      
-
-    }
+      }
 
  
     public function buscarempleado(Request $request){
@@ -465,30 +492,26 @@ foreach ($horastrabajadas as $value) {
      foreach ($data as $data) {
          $result[]=['id'=>$data->EMPLEADO, 'nombre'=>$data->NOMBRE,'value'=>$data->EMPLEADO.' '.$data->NOMBRE];
      }
-
-
      }
-
      return response()->json($result);
-
-
-
-
-    
-
     }
     public function ma($id,$id2)
     {
 
       
-       $operacion=CP_PLANIFICACION::where('id','=',$id)->get();
+       $operacion=CP_PLANIFICACION::where('id','=',$id)->first();
 
       $cp_consumo=CP_consumo::where('planificacion_id','=',$id)->get(); 
+      
+      
 
-       foreach ($operacion as $value) {
+
+       
          
-         $opera=$value->operacion;
-       }
+         $opera=$operacion->operacion;
+         $id=$operacion->id;
+         $orden=$operacion->ordenproduccion;
+      
 
 
        
@@ -501,19 +524,19 @@ foreach ($horastrabajadas as $value) {
              $opera3=$value->OPERACION;
       }
 
-     
+      
        
        $consumo=DB::connection()->select("select cons.OPERACION,cons.ORDEN_PRODUCCION,cons.ARTICULO,art.DESCRIPCION,cons.CANTIDAD_ESTANDAR,art.UNIDAD_ALMACEN from 
-IBERPLAS.OP_OPER_CONSUMO cons,
-IBERPLAS.ARTICULO art 
-where 
-cons.ARTICULO=art.ARTICULO and
-cons.ORDEN_PRODUCCION='$id2' and cons.OPERACION='$opera3' ");
-
-      
-    	 return view('ControPiso.Transacciones.Registro.ma')
+            IBERPLAS.OP_OPER_CONSUMO cons,
+                IBERPLAS.ARTICULO art 
+                where 
+                cons.ARTICULO=art.ARTICULO and
+                cons.ORDEN_PRODUCCION='$id2' and cons.OPERACION='$opera3' ");
+    	        return view('ControPiso.Transacciones.Registro.ma')
        ->with('consumo',$consumo)
-        ->with('cp_consumo',$cp_consumo);;
+        ->with('cp_consumo',$cp_consumo)
+        ->with('id',$id)
+        ->with('orden',$orden);
     }
 
     public function impresion($id,$id2)
@@ -522,4 +545,5 @@ cons.ORDEN_PRODUCCION='$id2' and cons.OPERACION='$opera3' ");
     	 return view('ControPiso.Transacciones.Registro.impresion');
     }
     
+   
 }

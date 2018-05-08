@@ -16,26 +16,13 @@
                           <input  type="text" class="form-control" id="id_fecha"  name="id_fecha"    value="{{$ft_ficha->FECHA}}" readonly="readonly" >      
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="form-group">
-                          <img src="{{$ft_ficha->IMAGEN_CODIGODUN}}" width="250"> 
-                    </div>
-                </div>
             </div>
              <div class="col-md-6">
              	<div class="form-group">
                         <label>REVISION : </label>
                         <input id="id_articulo" name="id_articulo" type="text" class="form-control" value="{{$ft_ficha->REVISION}}" readonly="readonly" >
                 </div>               
-                <div class="form-group">
-                    <div class="form-group">
-                          <img src="{{$ft_ficha->IMAGEN_CODIGODUN}}" width="250"> 
-                    </div>
-                </div>
-
              </div>
-
-
-              	 	</div>
+  	 	</div>
 
   	 </div>

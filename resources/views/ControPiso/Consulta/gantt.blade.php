@@ -6,28 +6,42 @@
  
     <script src="dhtmlxGantt/codebase/dhtmlxgantt.js"></script>
     <link href="dhtmlxGantt/codebase/dhtmlxgantt.css" rel="stylesheet">
+    <script src="dhtmlxGantt/codebase/ext/dhtmlxgantt_fullscreen.js"></script>
+    <script src="dhtmlxGantt/codebase/locale/locale_es.js" charset="utf-8"></script>
+    <script src="dhtmlxGantt/codebase/ext/dhtmlxgantt_tooltip.js"></script>
 
 
-   <style type="text/css">
-    
-</style>
+    <style type="text/css">
+        html, body{
+            height:100%;
+            padding:0px;
+            margin:0px;
+            overflow: hidden;
+        }
+
+    </style>
 </head>
 <body>
 
 
-<div class="box-body">
- <div class="col-xs-2">
-                    <select   id="id_clave" name="id_clave" class="form-control select2" style="width:25%;">
-                                       <option value="0">SELECIONES CENTRO COSTO:</option>
-                                 
-                                      
-                    </select>
-                </div>   
-</div>            
+<input id="fullscreen_button" type="button" value="Fullscreen"/>          
 
-<div id="gantt_here" style='width:1400px; height:600px;'></div>
+<div id="gantt_here" style='width:100%; height:95%;'></div>
 
 <script type="text/javascript">
+
+var button = document.getElementById("fullscreen_button");
+    button.addEventListener("click", function(){
+        if (!gantt.getState().fullscreen) {
+            // expanding the gantt to full screen
+            gantt.expand();
+        }
+        else {
+            // collapsing the gantt to the normal mode
+            gantt.collapse();
+        }
+    }, false);
+
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 gantt.config.sort = true;
 gantt.config.work_time = true;
@@ -91,6 +105,9 @@ gantt.config.work_time = true;
     }    
 
 
+    gantt.templates.tooltip_text = function(start,end,task){
+    return "<b>Task:</b> "+task.text+"<br/><b>Duration:</b> " + task.duration;
+};
 
 
 
@@ -99,8 +116,7 @@ gantt.config.work_time = true;
 
 
 
-
-
+gantt.config.tooltip_hide_timeout = 5000;
     gantt.init("gantt_here");
     gantt.load("gantt/data");
 

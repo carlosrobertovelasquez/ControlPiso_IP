@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Fichas Tecnica
+    Fichas Tecnica INSERTADO
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica
+   Ficha Tecnica INSERTADO
 @endsection
 
 

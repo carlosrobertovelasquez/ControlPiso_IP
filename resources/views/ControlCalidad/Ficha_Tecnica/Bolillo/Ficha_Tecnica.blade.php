@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Fichas Tecnica
+    Fichas Tecnica BOLILLO
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica
+   Ficha Tecnica BOLILLO
 @endsection
 
 

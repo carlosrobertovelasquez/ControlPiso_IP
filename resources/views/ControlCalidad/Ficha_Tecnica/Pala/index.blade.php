@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Fichas Tecnica
+    Fichas Tecnica PALA
 @endsection
 @section('contentheader_title')
-   Ficha Tecnica Insertado
+   Ficha Tecnica PALA
 @endsection
 
 
@@ -55,11 +55,11 @@
 							<td>{{$ficha->PAIS}}</td>  
                             <td>
                               
-							   <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+							   <a href="{{route('Ficha_TecnicaPala',[$ficha->id])}}" 
 							   class="btn btn-primary">Ver</a>
-                 <a href="{{route('Ficha_TecnicaInsertadoEdit',[$ficha->id])}}" 
+                 <a href="{{route('Ficha_TecnicaPalaEdit',[$ficha->id])}}" 
 							   class="btn btn-primary">Editar</a>
-                 <a href="{{route('Ficha_TecnicaInsertado',[$ficha->id])}}" 
+                 <a href="{{route('Ficha_TecnicaInyeccion',[$ficha->id])}}" 
 							   class="btn btn-primary">Copiar</a>
                              </td>                
 

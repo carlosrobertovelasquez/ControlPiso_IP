@@ -32,10 +32,11 @@
                     <li><a href={{url('Turno')}}>Turnos</a></li>
                     <li><a href="">Ficha Tecnica </a>
                      <ul class="treeview-menu">
-                        <li><a href="{{url('insertado')}}">Insertado</a></li>
-                        <li><a href="{{url('bolillos')}}">Bolillos</a></li>
-                        <li><a href="{{url('extrusion')}}">Extrusion</a></li>
-                        <li><a href="{{url('inyeccion')}}">Inyeccion</a></li>
+                        <li><a href="{{url('insertado')}}">INSERTADO</a></li>
+                        <li><a href="{{url('bolillos')}}">BOLILLOS</a></li>
+                        <li><a href="{{url('extrusion')}}">EXTRUSION</a></li>
+                        <li><a href="{{url('inyeccion')}}">INYECCION</a></li>
+                        <li><a href="{{url('pala')}}">PALA</a></li>
                      </ul>
                     </li>
 

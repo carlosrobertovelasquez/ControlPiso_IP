@@ -171,7 +171,7 @@
       </div>
 
     <div class="box box-default">
-  	 	<div class="box-header with-border">
+  	<div class="box-header with-border">
   	 		<h3 class="box-title">Registro Empleados</h3>
 
           <div class="box-tools pull-right">
@@ -307,6 +307,7 @@
   horasplanificadas();
   metaxTurno();
   listaempleados();
+ 
  
 
      var urlraiz=$("#url_raiz_proyecto").val();
@@ -511,7 +512,23 @@ $.ajax({
  });
 
 }
- 
+function listarproduccion(){
+var id= document.getElementById("norden").value;
+var id2= document.getElementById("id_turno").value;
+var id3= document.getElementById("id_operacion").value; 
+var urlraiz=$("#url_raiz_proyecto").val();
+var miurl =urlraiz+"/registro/listarproduccion";
+
+$.ajax({
+  type:'get',
+  url:miurl,
+  data:{id:id,id2:id2,id3:id3},
+  success:function(data){
+    alert(data);
+  }
+ });
+
+} 
 
 function actualizar(){
   listhoras();
@@ -521,6 +538,7 @@ function actualizar(){
   horasplanificadas();
    metaxTurno();
   listaempleados();
+  listarproduccion();
   document.getElementById("btnadicionar").disabled=false;
     document.getElementById("comentarios").disabled=false;
     document.getElementById("id_clave").disabled=false;

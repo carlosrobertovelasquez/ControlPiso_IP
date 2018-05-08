@@ -9,6 +9,7 @@
 
 
 @section('main-content')
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
   <div class="row">
          <div class="col-xs-12">
@@ -54,14 +55,10 @@
                                data-id="{{$claves->ID}}" 
                                data-title="{{$claves->CLAVE}}"
                                data-des="{{$claves->DESCRIPCION}}"
-                               data-estado="{{$claves->ESTADO}}"
-                               <span class="glyphicon glyphicon-eye-open"></span>Show</button>
-                               <button class="delete-modal btn btn-danger" 
-                               data-id="{{$claves->ID}}" 
-                               data-title="{{$claves->CLAVE}}"
-                               data-des="{{$claves->DESCRIPCION}}"
-                               data-estado="{{$claves->ESTADO}}"
-                               <span class="glyphicon glyphicon-trash"></span>Eliminar</button>        
+                               data-estado="{{$claves->ACTIVA}}"
+                               data-operacion="{{$claves->OPERACION}}"
+                               <span class="glyphicon glyphicon-eye-open"></span>Editar</button>
+                                     
 
                              </td>                
 
@@ -88,130 +85,10 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
-  
-<div class="modal fade" id="showModal" role="dialog" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span>&times;</span>
-				</button>
-				<h4>CLAVES</h4>
-			</div>
-			<div class="modal-body">
-				<div class="box-body">
-				    <div class="row">
-				    	<div class="col-md-6">
-	                        <div class="form-group">
-						 		<label>ID </label>
-						 		<input id="id_show" type="text" class="form-control"  	readonly="readonly" >
-	                        </div>
-				            <div class="form-group">
-			                    <label>DESCRIPCION </label>
-			                    <input type="text" id="des_show" name="cantidadaproducir" class="form-control"  readonly="readonly">
-	                        </div>
+      @include('ControPiso.Maestros.Claves.edit')
+      @include('ControPiso.Maestros.Claves.crear')
 
-							<div class="form-group">
-			                    <label>EQUIPO </label>
-			                    <input type="text" id="cantidadaproducir" name="cantidadaproducir" class="form-control"  readonly="readonly">
-			                    
-	                        </div>
 
-	                        <div class="form-group">
-			                    <label>OPERACION  </label>
-			                    <input type="text" id="operacion" name="operacion" class="form-control" readonly="readonly" >
-	                        </div>
-	                        
-	                       
-                         
-	                    </div>
-
-	                    <div class="col-md-6">
-	                        <div class="form-group">
-						 		<label>CLAVE </label>
-						 		<input id="title_show" name="norden" type="text" class="form-control"  	readonly="readonly" >
-	                        </div>
-				            <div class="form-group">
-			                    <label >ESTADO </label>
-			                    <input type="text" id="estado_show" name="id_opera" class="form-control"   readonly="readonly">
-	                        </div>
-
-							<div class="form-group">
-			                    <label>HORAS POR CICLO</label>
-			                    <input type="text" id="cantidadaproducir" name="cantidadaproducir" class="form-control" readonly="readonly" >
-	                        </div>
-
-	                        
-	                       
-	                       
-	                    </div>    
-                    </div>
-                </div>   
-			</div>
-			
-			<div class="modal-footer">
-				<input type="submit" class="btn btn-primary" value="Planificar">
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="addModal" role="dialog" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span>&times;</span>
-				</button>
-				<h4> AGREGAR CLAVES</h4>
-			</div>
-			<div class="modal-body">
-				<div class="box-body">
-				    <div class="row">
-				    	<div class="col-md-6">
-	                        <div class="form-group">
-						 		<label>CLAVE </label>
-						 		<input id="id_show" type="text" class="form-control"  	>
-	                        </div>
-				            <div class="form-group">
-			                    <label>OPERACION </label>
-			                    <select>
-                            <option value="SUMA">SUMA</option>
-                            <option value="RESTA">RESTA</option>
-                          </select>
-	                        </div>
-
-						
-
-	                       
-	                        
-	                       
-                         
-	                    </div>
-
-	                    <div class="col-md-6">
-	                       
-				            <div class="form-group">
-			                    <label >DESCIPCION </label>
-			                    <input type="text" id="estado_show" name="id_opera" class="form-control"   >
-	                        </div>
-
-						
-
-	                        
-	                       
-	                       
-	                    </div>    
-                    </div>
-                </div>   
-			</div>
-			
-			<div class="modal-footer">
-				<input type="submit" class="btn btn-primary" value="GUARDAR">
-			</div>
-		</div>
-	</div>
-</div>
 
 
 @endsection
@@ -226,6 +103,7 @@
   $('#title_show').val($(this).data('title'));
   $('#des_show').val($(this).data('des'));
   $('#estado_show').val($(this).data('estado'));
+  $('#operacion_show').val($(this).data('operacion'));
 $('#showModal').modal('show');
  });
  
@@ -234,6 +112,31 @@ $('#showModal').modal('show');
     $('.modal-title').text('Add');
     $('#addModal').modal('show');
  });
+
+ $('#id_clave').on('change',function () 
+{
+  var id_clave=document.getElementById('id_clave').value;
+  validar(id_clave);
+});
+
+function validar(id_clave){
+  
+  var urlraiz=$("#url_raiz_proyecto").val();
+  var miurl =urlraiz+"/ConsultarClave/";
+   $.ajax({
+     url:miurl,
+     type:'get',
+      data:{"id_clave":id_clave} ,
+      success: function(data) {
+        if(data=='1'){
+          alert('Ya existe Esta Clave')
+         
+        };
+      } , 
+   });
+
+  
+};
 
 
 </script>
