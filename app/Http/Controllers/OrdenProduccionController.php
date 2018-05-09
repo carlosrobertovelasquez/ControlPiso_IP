@@ -774,10 +774,17 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
            
 
            $gannt=DB::Connection()->
-           select("select ordenproduccion as text,min(fechamin) fechamin, SUM(horas) as horas 
-           from IBERPLAS.CP_PLANIFICACION
-           where ordenproduccion='$ordenproduccion2'
-           group by ordenproduccion" );
+           select("select ('ORDEN='+PLA.ordenproduccion+'-'+'ARTICULO='+ART.ARTICULO+'-'+ART.DESCRIPCION) as text,min(PLA.fechamin) fechamin, SUM(PLA.horas) as horas 
+           from 
+           IBERPLAS.CP_PLANIFICACION PLA,
+           IBERPLAS.ARTICULO ART
+           where
+           PLA.articulo=ART.ARTICULO AND 
+           ordenproduccion='$ordenproduccion2'
+           group by 
+           PLA.ordenproduccion,
+           ART.ARTICULO,
+           ART.DESCRIPCION" );
 
 
           foreach ($gannt as $value) {

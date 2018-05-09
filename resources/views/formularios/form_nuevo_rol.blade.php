@@ -1,4 +1,4 @@
-@role('administrador')
+
 <section  >
 <div class="col-md-12">
 
@@ -8,7 +8,8 @@
                 <h3 class="box-title"><strong>Nuevo Rol</strong></h3>
             </div><!-- /.box-header -->
                
-            <hr style="border-color:white;" />
+			<hr style="border-color:white;" />
+			
  
             <div class="box-body">
               
@@ -96,8 +97,6 @@
 
 </section>
 
-@else
-<br/><div class='rechazado'><label style="color:#FA206A">"No tiene Permiso para esta seccion"</label></div>
-@endrole
+
 
 

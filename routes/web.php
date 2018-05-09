@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('editar_acceso', 'UsuariosController@editar_acceso');
   
 
-    Route::post('crear_rol', 'UsuariosController@crear_rol')->middleware('permissionshinobi:crear_rol');
+    Route::post('crear_rol', 'UsuariosController@crear_rol');
     Route::post('crear_permiso', 'UsuariosController@crear_permiso');
     Route::post('asignar_permiso', 'UsuariosController@asignar_permiso');
     Route::get('quitar_permiso/{idrol}/{idper}', 'UsuariosController@quitar_permiso');

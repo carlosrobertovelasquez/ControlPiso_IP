@@ -122,6 +122,7 @@
 
                           <select id="id_ficha" name="id_ficha" class="form-control select2" style="width: 100%;">
                                    <option value="0">SELECIONES UN CLIENTE:</option>
+                                   <option value="00">SIN FICHA</option>
                                    @foreach($ft_ficha as $ft_ficha)
                                    <option value="{{ $ft_ficha->id }}">{{ $ft_ficha->CLIENTE }}--{{ $ft_ficha->PAIS }} </option>
                                    @endforeach
