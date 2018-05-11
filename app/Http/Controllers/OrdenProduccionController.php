@@ -590,11 +590,11 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
 
         
               $date = carbon::now();
-             $date = $date->format('d-m-Y H:i:s');
+             $date = $date->format('Y-m-d H:i:s');
 
              
               $fechaplanificada=$request->id_fecha;
-              $fechaplanificada=date("d-m-Y", strtotime($fechaplanificada)) ;
+              $fechaplanificada=date("Y-d-m", strtotime($fechaplanificada)) ;
 
                $maximo=CP_PLANIFICACION::max('id');
 
@@ -605,25 +605,25 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
              $encatem=CP_TEMP_PLANIFICACION_ENCA::all();
              
              foreach ($encatem as $value) {
-               
+             
                $fechai=$value->fhoraini;
                $fechaf=$value->fhorafin;
                $fecha=$value->fecha;
 
-               $fechai=date("Y-d-m H:i:s",strtotime($fechai));
-               $fechaf=date("Y-d-m H:i:s",strtotime($fechaf));
-               $fecha01=date("Y-m-d ",strtotime($fecha));
+               $fechai=date("d-m-Y H:i:s",strtotime($fechai));
+               $fechaf=date("d-m-Y H:i:s",strtotime($fechaf));
+               $fecha01=date("d-m-Y ",strtotime($fecha));
                
                $planificacion=new CP_ENCABEZADOPLANIFICACION  ;  
                 $planificacion->ordenproduccion=$request->norden;
                 $planificacion->pedido=$request->id_pedido;
                 $planificacion->articulo=$request->articulo;
                 $planificacion->horaini=$value->horaini;
-                $planificacion->horafin=$value->horafin;
-                $planificacion->thoraini=$value->thoraini;
-                $planificacion->thorafin=$value->thorafin;
+               $planificacion->horafin=$value->horafin;
+               $planificacion->thoraini=$value->thoraini;
+               $planificacion->thorafin=$value->thorafin;
                 $planificacion->fhoraini=$fechai;
-                $planificacion->fhorafin=$fechaf;
+               $planificacion->fhorafin=$fechaf;
                 $planificacion->horas=$value->horas;
                 $planificacion->cantidad=$value->cantidad;
                 $planificacion->turno=$value->turno;
@@ -662,7 +662,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
              
 
             // Grabamos el detalle de planificacion
-                  $nueva=date('d-m-Y', strtotime($request->id_fecha));
+                  $nueva=date('Y-m-d', strtotime($request->id_fecha));
 
 
                  $orden_cantidad=CP_TCargaOrdenProduccion::where('ORDEN_PRODUCCION','=',$request->norden)->get();
@@ -684,13 +684,6 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
           
                
                $detalleplanificacion=new CP_DETALLEPLANIFICACION;
-               
-               
-
-                
-
-             
-            
                     
                $tempdetalle=CP_TEMP_PLANIFICACION::all();
 
@@ -737,11 +730,11 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
              
 
              foreach ($fecha1 as $fecha1) {
-               $fechai=date("Y-d-m H:i:s",strtotime($fecha1->fechahora));   
+               $fechai=date("d-m-Y H:i:s",strtotime($fecha1->fechahora));   
              }
 
              foreach ($fecha2 as $fecha2) {
-              $fechaf=date("Y-d-m H:i:s",strtotime($fecha2->fechahora)); 
+              $fechaf=date("d-m-Y H:i:s",strtotime($fecha2->fechahora)); 
              }
             
            // dd($fechai);
@@ -750,7 +743,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
             $CP_PLANIFICACION->ordenproduccion=$value->ordenproduccion;
             $CP_PLANIFICACION->articulo=$value->articulo;
             $CP_PLANIFICACION->fechamin=$fechai;
-            $CP_PLANIFICACION->fechamax=$fechaf;
+           $CP_PLANIFICACION->fechamax=$fechaf;
             $CP_PLANIFICACION->cantidad=$value->cantidad;
             $CP_PLANIFICACION->centrocosto=$value->centrocosto;
             $CP_PLANIFICACION->pedido=$value->pedido;
@@ -790,7 +783,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
 
 
           foreach ($gannt as $value) {
-           $fecha=date("Y-d-m H:i:s",strtotime($value->fechamin));
+           $fecha=date("d-m-Y H:i:s",strtotime($value->fechamin));
             $task=new cp_tasks;
             $task->text=$value->text;
             $task->duration=$value->horas;
@@ -841,8 +834,8 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
 
                       $gannt2=DB::Connection()->select("select fechamin,fechamax,(ordenproduccion) as text from IBERPLAS.CP_PLANIFICACION where id='$id'" );
                       foreach ($gannt2 as $value) {
-                       $fechai=date("Y-d-m H:i:s",strtotime($value->fechamin));
-                        $fechaf=date("Y-d-m H:i:s",strtotime($value->fechamax));
+                       $fechai=date("d-m-Y H:i:s",strtotime($value->fechamin));
+                        $fechaf=date("d-m-Y H:i:s",strtotime($value->fechamax));
                         $task=new CP_events;
                         $task->start_date=$fechai;
                         $task->end_date=$fechaf;
