@@ -2,25 +2,44 @@
 
 @section('main-content')
 
-  
+
          <!-- Content Header (Page header) -->
-        <section class="content-header">
+        
+         <section class="content-header">
             <h1>
                 PANTALLA DE CONTROL
                 <small>ORDEN DE PRODUCCION</small>
             </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">CUADRO DE CONTROL</li>
-            </ol>
+
+          <form class="navbar-form" role="search"  action="{{route('planificador.index',[$anio])}}">  
+           <div class="row">
+            <div class="col-xs-6">
+                    <label style="text-align:center" > Selecionar Sector :</label>
+                    <select   id="id" name="id" class="form-control select2" style="width: 100%;">
+                            <?php  echo '<option value="'.$anio.'" >'.$anio.'</option>';   ?>
+                            <option value="">TODOS</option>
+                        @foreach($TipoEquipo as $TipoEquipo)
+                        <option value="{{ $TipoEquipo->TIPO_EQUIPO }}">{{ $TipoEquipo->TIPO_EQUIPO }} </option>
+                        @endforeach
+                         </select>
+                        
+                </div>
+
+                 <div>
+                        <input name="buscar"  value="Buscar" class="btn btn-info active" type="submit"/>
+                    </div> 
+           </div>
+          </form>     
+                
              <script type="text/javascript">
-                     <!-- setTimeout("document.location=document.location",55000); -->
+                     setTimeout("document.location=document.location",55000); 
            </script>
+         
         </section>
 
         <!-- Main content -->
         
-
+        
 
         <section class="content">
             <!-- Small boxes (Stat box) -->
@@ -128,7 +147,7 @@
                                      <a href="{{route('planificar.estadoP',$OrdenProduccion->id)}}" class="btn btn-raised btn-warning">Planificado</a>
                                    
                             @elseif($OrdenProduccion->estado=='A')
-                                <a href="{{route('planificar.estadoA',$OrdenProduccion->id)}}" class="btn btn-raised btn-danger">En Produccion</a>
+                                <a href="{{route('planificar.estadoA',$OrdenProduccion->id)}}" class="btn btn-raised btn-danger">En Produ.</a>
 
                                 
 

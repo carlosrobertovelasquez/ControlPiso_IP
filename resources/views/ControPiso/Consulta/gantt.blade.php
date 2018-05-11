@@ -23,24 +23,36 @@
 </head>
 <body>
 
+        
+            <div class="container">
+                    <form class="navbar-form" role="search"  action="{{route('planificador.index',[$anio])}}">  
+                            <div class="row">
+                             <div class="col-xs-12">
+                                     <label style="text-align:center" > Selecionar Sector :</label>
+                                     <select   id="id" name="id" class="form-control select2" style="width: 100%;">
+                                             <?php  echo '<option value="'.$anio.'" >'.$anio.'</option>';   ?>
+                                             <option value="">TODOS</option>
+                                         @foreach($TipoEquipo as $TipoEquipo)
+                                         <option value="{{ $TipoEquipo->TIPO_EQUIPO }}">{{ $TipoEquipo->TIPO_EQUIPO }} </option>
+                                         @endforeach
+                                          </select>
+                                         
+                                 </div>
+                 
+                                  <div>
+                                         <input name="buscar"  value="Buscar" class="btn btn-info active" type="submit"/>
+                                     </div> 
+                            </div>
+                           </form>
+            </div>
+            
 
-<input id="fullscreen_button" type="button" value="Fullscreen"/>          
+
 
 <div id="gantt_here" style='width:100%; height:95%;'></div>
 
 <script type="text/javascript">
 
-var button = document.getElementById("fullscreen_button");
-    button.addEventListener("click", function(){
-        if (!gantt.getState().fullscreen) {
-            // expanding the gantt to full screen
-            gantt.expand();
-        }
-        else {
-            // collapsing the gantt to the normal mode
-            gantt.collapse();
-        }
-    }, false);
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 gantt.config.sort = true;
@@ -106,7 +118,7 @@ gantt.config.work_time = true;
 
 
     gantt.templates.tooltip_text = function(start,end,task){
-    return "<b>Task:</b> "+task.text+"<br/><b>Duration:</b> " + task.duration;
+    return "<b>Detalle:</b> "+task.text+"<br/><b>Duration:</b> " + task.duration;
 };
 
 

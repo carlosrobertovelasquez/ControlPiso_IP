@@ -10,4 +10,6 @@ class EQUIPO extends Model
     protected $id='EQUIPO';
     protected $primaryKey="EQUIPO";
     protected $keyType="string";
+
+    
 }

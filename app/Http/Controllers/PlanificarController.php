@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Modelos\Softland\CP_TCargaOrdenProduccion;
 use App\Modelos\Softland\PEDIDO;
+use App\Modelos\Softland\EQUIPO;
 use App\Modelos\ControlPiso\CP_EQUIPOARTICULO;
 use App\Modelos\ControlPiso\CP_CALENDARIO_PLANIFICADOR;
 use App\Modelos\ControlPiso\CP_ENCABEZADOPLANIFICACION;
@@ -26,7 +27,18 @@ class PlanificarController extends Controller
     {
     	Carbon::setlocale('es');
     }	
-   public function index(){
+   public function index(Request $request){
+    
+    if($request->id==null){
+      $anio='TODOS';
+      $TipoEquipo=DB::Connection()->select("SELECT TIPO_EQUIPO,DESCRIPCION FROM IBERPLAS.TIPO_EQUIPO 
+      WHERE TIPO_EQUIPO IN (SELECT  
+      EQ.TIPO_EQUIPO
+      FROM 
+      IBERPLAS.EQUIPO EQ,
+      IBERPLAS.CP_PLANIFICACION PL
+      WHERE EQ.EQUIPO=PL.centrocosto) ");
+
          $OrdenProduccion=CP_PLANIFICACION::wherein('estado' , ['P','A','B'])->get();
          //->whereIn('ESTADO', ['P', 'A', 'B','C'])->get();
      
@@ -34,11 +46,40 @@ class PlanificarController extends Controller
           
 
         return view('ControPiso.Transacciones.Planificador.index')
-               ->with('OrdenProduccion',$OrdenProduccion);
+               ->with('OrdenProduccion',$OrdenProduccion)
+               ->with('TipoEquipo',$TipoEquipo)
+               ->with('anio',$anio);
+    }else{
+     
+       $id=$request->id;
+       $TipoEquipo=DB::Connection()->select("SELECT TIPO_EQUIPO,DESCRIPCION FROM IBERPLAS.TIPO_EQUIPO 
+       WHERE TIPO_EQUIPO IN (SELECT  
+       EQ.TIPO_EQUIPO
+       FROM 
+       IBERPLAS.EQUIPO EQ,
+       IBERPLAS.CP_PLANIFICACION PL
+       WHERE EQ.EQUIPO=PL.centrocosto) ");
+        $OrdenProduccion=DB::Connection()->select("SELECT * FROM IBERPLAS.CP_PLANIFICACION 
+        WHERE centrocosto IN (SELECT  
+        EQ.EQUIPO
+        FROM 
+        IBERPLAS.EQUIPO EQ,
+        IBERPLAS.CP_PLANIFICACION PL
+        WHERE EQ.EQUIPO=PL.centrocosto and eq.TIPO_EQUIPO='$id')");
 
+        $anio=$id;
 
-   }
+   
+return view('ControPiso.Transacciones.Planificador.index')
+->with('OrdenProduccion',$OrdenProduccion)
+->with('TipoEquipo',$TipoEquipo)
+->with('anio',$anio);
+      
 
+   
+  
+    } 
+  }
 
   
 

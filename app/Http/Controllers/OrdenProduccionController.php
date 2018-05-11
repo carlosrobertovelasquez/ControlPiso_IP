@@ -19,6 +19,7 @@ use App\Modelos\Softland\ESTRUC_PROCESO;
 use App\Modelos\ControlPiso\CP_globales;
 use App\Modelos\ControlPiso\CP_emails;
 use App\Modelos\Softland\EQUIPO;
+use App\Modelos\Softland\TIPO_EQUIPO;
 use App\Modelos\ControlCalidad\FT_FICHA;
 use Illuminate\Support\Facades\DB;
 use App\Mail\Produccion;
@@ -767,14 +768,14 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
            $ordenproduccion2=$request->norden;
           
           //para no enviar correo
-           $cp_planificacion2=CP_PLANIFICACION::where('ordenproduccion','=',$request->norden)->get();
-           $emails=CP_emails::where('email01','=','S')->select('email')->get();  
-           Mail::to($emails)->send(new Produccion($cp_planificacion2,$ordenproduccion2));
+         //  $cp_planificacion2=CP_PLANIFICACION::where('ordenproduccion','=',$request->norden)->get();
+          // $emails=CP_emails::where('email01','=','S')->select('email')->get();  
+           //Mail::to($emails)->send(new Produccion($cp_planificacion2,$ordenproduccion2));
              
            
 
            $gannt=DB::Connection()->
-           select("select ('ORDEN='+PLA.ordenproduccion+'-'+'ARTICULO='+ART.ARTICULO+'-'+ART.DESCRIPCION) as text,min(PLA.fechamin) fechamin, SUM(PLA.horas) as horas 
+           select("select ('ORDEN='+PLA.ordenproduccion+'-'+'ARTICULO='+ART.ARTICULO+'-'+ART.DESCRIPCION) as text,min(PLA.fechamin) fechamin, SUM(PLA.horas) as horas ,PLA.centrocosto as centrocosto
            from 
            IBERPLAS.CP_PLANIFICACION PLA,
            IBERPLAS.ARTICULO ART
@@ -784,7 +785,8 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
            group by 
            PLA.ordenproduccion,
            ART.ARTICULO,
-           ART.DESCRIPCION" );
+           ART.DESCRIPCION,
+           PLA.centrocosto" );
 
 
           foreach ($gannt as $value) {
@@ -794,6 +796,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
             $task->duration=$value->horas;
             $task->progress=0.25;
             $task->start_date=$fecha;
+            $task->centrocosto=$value->centrocosto;
             $task->save(); 
           }
            
@@ -872,9 +875,22 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
   }
 
   public function Ticket(){
-      $OrdenProduccion=CP_PLANIFICACION::all();
+    $TipoEquipo=DB::Connection()->select("SELECT TIPO_EQUIPO,DESCRIPCION FROM IBERPLAS.TIPO_EQUIPO 
+    WHERE TIPO_EQUIPO IN (SELECT  
+    EQ.TIPO_EQUIPO
+    FROM 
+    IBERPLAS.EQUIPO EQ,
+    IBERPLAS.CP_PLANIFICACION PL
+    WHERE EQ.EQUIPO=PL.centrocosto) ");
+
+   
+
+
+    
+    $OrdenProduccion=CP_PLANIFICACION::all();
         return view('ControPiso.Consulta.Ticket')
-               ->with('OrdenProduccion',$OrdenProduccion);
+               ->with('OrdenProduccion',$OrdenProduccion)
+               ->with('TipoEquipo',$TipoEquipo);
   }
 
   public function consultaticket($id)
