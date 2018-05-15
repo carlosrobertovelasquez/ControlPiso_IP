@@ -204,7 +204,7 @@
                 <input type="hidden" name="nombre" id="nombre" value="" />
 
                 <div class="col-xs-3">
-                  <input type="number" id="participacion" name="participacion" 
+                  <input type="number" id="participacion" name="participacion" min="10" max="100" required="required" 
                   class="form-control select2" placeholder="Participacion" >
                   
                   </select>
@@ -539,7 +539,7 @@ function actualizar(){
   horasplanificadas();
    metaxTurno();
   listaempleados();
-  listarproduccion();
+  //listarproduccion();
   document.getElementById("btnadicionar").disabled=false;
     document.getElementById("comentarios").disabled=false;
     document.getElementById("id_clave").disabled=false;

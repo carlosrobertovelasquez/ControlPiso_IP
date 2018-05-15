@@ -23,7 +23,7 @@
                       <div class="form-group">
              
                 </div>
-              <table id="example1" class="display nowrap"  style="width:95%" >
+              <table id="example1" class="display compact"  style="width:100%" >
                 <thead>
                 <tr>
                   <th>Id</th>
@@ -56,11 +56,11 @@
                             <td>
                               
 							   <a href="{{route('Ficha_TecnicaExtrusion',[$ficha->id])}}" 
-							   class="btn btn-primary">Ver</a>
+							   class="btn btn-primary" title="Ver" ><span class="glyphicon glyphicon-search" ></span></a>
                  <a href="{{route('Ficha_TecnicaExtrusion',[$ficha->id])}}" 
-							   class="btn btn-primary">Editar</a>
+							   class="btn btn-primary" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a>
                  <a href="{{route('Ficha_TecnicaExtrusion',[$ficha->id])}}" 
-							   class="btn btn-primary">Copiar</a>
+							   class="btn btn-primary" title="Copiar"><span class="glyphicon glyphicon-file" ></span></a>
                              </td>                
 
                </tr>

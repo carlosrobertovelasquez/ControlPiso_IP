@@ -7,7 +7,7 @@
 
 @section('main-content')
 
-
+  @include('flash::message')
   <div class="row">
       <div class="col-xs-12">
          
@@ -17,7 +17,7 @@
           
             <!-- /.box-header -->
                 <div class="table-responsive" >
-                  <table id="example1" class="display nowrap"    >
+                  <table id="example1" class="display compact"    >
                     <thead>
                         <tr>
                           <th>Ord.Prod</th>
@@ -43,9 +43,9 @@
                                
                                
                                 <td>
-                                  <a href="{{route('planificacion',$OrdenProduccion->ORDEN_PRODUCCION)}}" class="btn btn-primary">  Asignar</a>
-                                 
-                                 <a href="{{route('viajero',$OrdenProduccion->ORDEN_PRODUCCION)}}" class="btn btn-primary">Viajero</a>
+                                  <a href="{{route('planificacion',$OrdenProduccion->ORDEN_PRODUCCION)}}" class="btn btn-primary" title="Asigar"><span class="glyphicon glyphicon-thumbs-up" ></span></a>
+                                 <a href="{{route('viajero',$OrdenProduccion->ORDEN_PRODUCCION)}}" class="btn btn-primary" title="Viajero"><span class="glyphicon glyphicon-road" ></span></a></a>
+                                 <a href="{{route('EliminarProduccion',$OrdenProduccion->ID)}}"  onclick="return confirm('Esta seguro de Eliminar La Orden de Produccion ')" class="btn btn-danger" title="Eliminar Orden"><span class="glyphicon glyphicon-remove" ></span></a></a>
 
                                 </td>
                         </tr>

@@ -65,8 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
  Route::get('editarArticuloCentrocosto/{id}', ['uses'=>'EquipoController@editarArticuloCentrocosto','as'=>'editarArticuloCentrocosto']);
  Route::get('ListarArticuloOperacion', ['uses'=>'EquipoController@ListarArticuloOperacion','as'=>'ListarArticuloOperacion']);
 
-  Route::get('Produccion','OrdenProduccionController@index');
+  Route::get('Produccion',['uses'=>'OrdenProduccionController@index','as'=>'Produccion.index'] );
 Route::get('ConsultaProduccion',['uses'=>'OrdenProduccionController@ConsultaProduccion', 'as'=>'ConsultaProduccion']);  
+Route::get('EliminarProduccion/{id}',['uses'=>'OrdenProduccionController@EliminarProduccion', 'as'=>'EliminarProduccion']);  
   //planificador
  Route::get('Planificacion/{id}', ['uses'=>'OrdenProduccionController@planificacion','as'=>'planificacion']);
 Route::get('planificar/{id}/{id4}/{id5}/{id6}/{id8}', ['uses'=>'OrdenProduccionController@planificar','as'=>'planificar']);
@@ -131,8 +132,9 @@ Route::post('eliminaEvento','CalendarController@delete');
 
 Route::get('invoice','InvoiceController@index');
 Route::get('invoice/add','InvoiceController@add');
-Route::get('Ticket' ,'OrdenProduccionController@Ticket');
+Route::get('Ticket' ,['uses'=>'OrdenProduccionController@Ticket','as'=>'Ticket']);
 Route::get('ConsultarTicket/{id}',['uses'=>'OrdenproduccionController@consultaticket','as'=>'ConsultarTicket']);
+Route::get('EliminarTicket/{id}/{id2}',['uses'=>'OrdenproduccionController@eliminarticket','as'=>'EliminarTicket']);
 
 //Gantt
 //

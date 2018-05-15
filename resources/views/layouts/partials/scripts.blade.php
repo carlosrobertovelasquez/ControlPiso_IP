@@ -45,7 +45,8 @@
 <script>
    $(function () {
     $('#example1').DataTable({
-        dom:'Bfrtip',
+       
+        "lengthMenu":[[10,25,50,-1],[10,25,50,"All"]],
         buttons:[
              {
             extend: 'csv',

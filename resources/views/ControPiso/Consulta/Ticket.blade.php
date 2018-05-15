@@ -10,7 +10,7 @@
 
 @section('main-content')
 
-
+ @include('flash::message')
   <div class="row">
    
 
@@ -25,7 +25,7 @@
           
             <!-- /.box-header -->
                 <div class="table-responsive" >
-                  <table id="example1" class="display nowrap"    >
+                  <table id="example1" class="display compact"    >
                     <thead>
                         <tr>
                           <th>ID</th>
@@ -57,8 +57,13 @@
                                
                                
                                 <td>
-                                 <a href="{{route('ConsultarTicket',[$OrdenProduccion->id])}}" class="btn btn-primary">Consultar</a>
-                                                               <a href="{{route('registro.impresion',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary">Imprimir</a>             
+                                 <a href="{{route('ConsultarTicket',[$OrdenProduccion->id])}}" class="btn btn-primary" title="Consultar"><span class="glyphicon glyphicon-info-sign" ></span></a></a>
+                                 <a href="{{route('registro.impresion',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}" class="btn btn-primary"  title="Imprimir"><span class="glyphicon glyphicon-print" ></span></a>
+                                 <a href="#" class="btn btn-success" title="Editar"><span class="glyphicon glyphicon-pencil" ></span></a></a>
+                                 <a href="{{route('EliminarTicket',[$OrdenProduccion->id,$OrdenProduccion->ordenproduccion])}}"
+                                   onclick="return confirm('Esta seguro de Eliminar el Ticker borrar todo su Historial')" class="btn btn-danger" title="Eliminar"><span class="glyphicon glyphicon-remove" ></span></a></a>
+
+
                                 </td>
                         </tr>
                       @endforeach

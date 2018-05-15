@@ -27,7 +27,7 @@
             @endforeach
 
               <div class="box-title">
-           <a href="{{url('Produccion')}}" class="btn btn-primary">Regresar</a>
+           <a href="{{url('planificador')}}" class="btn btn-primary">Regresar</a>
             </div>
 
             <!-- /.box-header -->

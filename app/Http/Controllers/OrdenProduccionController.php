@@ -42,12 +42,23 @@ class OrdenProduccionController extends Controller
 
     public function index()
     {
-       
+      
+      
         $OrdenProduccion=CP_TCargaOrdenProduccion::whereColumn('CANTIDAD_ARTICULO','>','CANTIDAD_PRODUCCI')->get();
         return view('ControPiso.Transacciones.listado_orden_produccion')
                ->with('OrdenProduccion',$OrdenProduccion);
         //
            
+    }
+
+    public function EliminarProduccion($id){
+      
+        $orden=CP_TCargaOrdenProduccion::where('id','=',$id);
+        $orden->delete();
+
+        flash("Se ha eliminado la orden Produccion  de forma existosa",'danger')->important();
+     
+        return redirect()->route('Produccion.index');
     }
 
 
@@ -217,7 +228,7 @@ class OrdenProduccionController extends Controller
             RUBRO.VERSION IN (SELECT VERSION FROM IBERPLAS.ESTRUC_MANUFACTURA WHERE ESTADO='A' AND ARTICULO='$id2')
       ");
 
-       dd($centrocosto);
+      // dd($centrocosto);
       return json_encode($centrocosto);
 
     }
@@ -236,11 +247,12 @@ class OrdenProduccionController extends Controller
 
 
     public function planificar($id,$id4,$id5,$id6,$id8,Request $request){
-        
+      
+    $cantidadproducir=$request->id_cantidadaproducir;
     $id3=$request->Mid_opera;
     
     $normal =$request->normal;
-
+    
     $secuencia=$request->id_secuencia;
      $secuencia2=$request->id_secuencia;
     $orden=$request->norden;
@@ -314,12 +326,12 @@ class OrdenProduccionController extends Controller
           if (is_null($normal)){
                
                $arr=array($request->lunes,$request->martes,$request->miercoles,$request->jueves,$request->viernes,$request->sabado,$request->domingo,);
-               $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
+               $turnosasigados=$this->calcularTurnos($cantidadproducir,$id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
 
           }else{
 
            $arr=array('N');
-           $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($cantidadproducir,$id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora);
           }
 
        
@@ -339,13 +351,13 @@ class OrdenProduccionController extends Controller
           if (is_null($normal)){
            
           $arr=array($request->lunes,$request->martes,$request->miercoles,$request->jueves,$request->viernes,$request->sabado,$request->domingo,);
-           $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($cantidadproducir,$id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
 
           }else{
 
            $arr=array('N');
         
-           $turnosasigados=$this->calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
+           $turnosasigados=$this->calcularTurnos($cantidadproducir,$id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$id5,$secuencia,$orden,$cantidadxhora);
           }
 
        
@@ -358,7 +370,7 @@ class OrdenProduccionController extends Controller
     
 
 
-    public function calcularTurnos($id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora){
+    public function calcularTurnos($cantidadproducir,$id8,$cantidadxhora2,$secuencia2,$id6,$id,$inicioturno,$arr,$id3,$id4,$secuencia,$orden,$cantidadxhora){
         
 
         
@@ -439,39 +451,47 @@ class OrdenProduccionController extends Controller
          
           $conta=0;              
           $vcantidad=0;
+          $cantidad2=0;
           
-
+        
          foreach ($turnos2 as $turnos) {
   
+            
 
              $conta=$conta+1;
+
              if($conta==$id+1){
-                
+              
+                 
                break;
-
-
+             
+             
              } else{
               
+              if($conta==$id){
+                $vcantidad=$cantidadproducir-$cantidad2;
+              }else{
+                $vcantidad=$cantidadxhora2;
+                $cantidad2=$vcantidad+$cantidad2;
+              }
 
-            
-    
-   
+             
                 $plantemp=new CP_TEMP_PLANIFICACION;
-      $plantemp->hora=$turnos->hora;
-      $plantemp->orden=$turnos->orden;
-      $plantemp->turno=$turnos->turno;
-      $plantemp->fecha=$turnos->fecha;
-      $plantemp->fechaCalendario=date("Y-d-m H:i:s",strtotime( $turnos->fechaCalendario));
-    
-      $plantemp->operacion=$id3;
-      $plantemp->centrocosto=$equipo;
-      $plantemp->secuencia=$secuencia2;
-      $plantemp->calendario_id=$turnos->ID;
-      $plantemp->orden_prod=$orden;
-      $plantemp->cantidadxhora=$cantidadxhora2;
-      $plantemp->FICHA_TECNICA=$id8;
-      $plantemp->USUARIOCREACION=\Auth::user()->name;
-        $plantemp->save();
+                $plantemp->hora=$turnos->hora;
+                $plantemp->orden=$turnos->orden;
+                $plantemp->turno=$turnos->turno;
+                $plantemp->fecha=$turnos->fecha;
+                $plantemp->fechaCalendario=date("Y-d-m H:i:s",strtotime( $turnos->fechaCalendario));
+              
+                $plantemp->operacion=$id3;
+                $plantemp->centrocosto=$equipo;
+                $plantemp->secuencia=$secuencia2;
+                $plantemp->calendario_id=$turnos->ID;
+                $plantemp->orden_prod=$orden;
+                $plantemp->cantidadxhora=$vcantidad;
+                $plantemp->FICHA_TECNICA=$id8;
+                $plantemp->USUARIOCREACION=\Auth::user()->name;
+                  $plantemp->save();
 
 
 
@@ -486,10 +506,10 @@ class OrdenProduccionController extends Controller
 
      $usuario=\Auth::user()->name;
 
-     $turnosasigados=DB::Connection()->select("select min(calendario_id) as Horaini,MAX(calendario_id) as HoraFin,count(orden) as horas,sum(cantidadxhora) as cantidad,turno,fecha,operacion,centrocosto,secuencia  
+     $turnosasigados=DB::Connection()->select("select min(calendario_id) as Horaini,MAX(calendario_id) as HoraFin,count(orden) as horas,sum(cantidadxhora) as cantidad,turno,fecha,operacion,centrocosto,secuencia,ficha_tecnica 
 from IBERPLAS.CP_TEMP_PLANIFICACION
 where  
-USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia order by  secuencia,operacion,fecha,turno");
+USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia,ficha_tecnica order by  secuencia,operacion,fecha,turno");
         
           CP_TEMP_PLANIFICACION_ENCA:: where('usuario','=',\auth::user()->name)
          ->delete();
@@ -505,7 +525,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
           $encatemp->cantidad=$turnos->cantidad;
           $encatemp->turno=$turnos->turno;
           $encatemp->fecha=$turnos->fecha;
-         // $encatemp->fechaCalendario=date("Y-d-m H:i:s",strtotime( $turnos->fechaCalendario));        
+        //  $encatemp->fechaCalendario=date("Y-d-m H:i:s",strtotime( $turnos->fechaCalendario));        
           $encatemp->operacion=$turnos->operacion;
           $encatemp->centrocosto=$turnos->centrocosto;
           $encatemp->secuencia=$turnos->secuencia;
@@ -590,7 +610,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
 
         
               $date = carbon::now();
-             $date = $date->format('Y-m-d H:i:s');
+             $date = $date->format('Y-d-m H:i:s');
 
              
               $fechaplanificada=$request->id_fecha;
@@ -610,9 +630,9 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                $fechaf=$value->fhorafin;
                $fecha=$value->fecha;
 
-               $fechai=date("d-m-Y H:i:s",strtotime($fechai));
-               $fechaf=date("d-m-Y H:i:s",strtotime($fechaf));
-               $fecha01=date("d-m-Y ",strtotime($fecha));
+               $fechai=date("Y-d-m H:i:s",strtotime($fechai));
+               $fechaf=date("Y-d-m H:i:s",strtotime($fechaf));
+               $fecha01=date("Y-m-d",strtotime($fecha));
                
                $planificacion=new CP_ENCABEZADOPLANIFICACION  ;  
                 $planificacion->ordenproduccion=$request->norden;
@@ -622,8 +642,8 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                $planificacion->horafin=$value->horafin;
                $planificacion->thoraini=$value->thoraini;
                $planificacion->thorafin=$value->thorafin;
-                $planificacion->fhoraini=$fechai;
-               $planificacion->fhorafin=$fechaf;
+              $planificacion->fhoraini=$fechai;
+              $planificacion->fhorafin=$fechaf;
                 $planificacion->horas=$value->horas;
                 $planificacion->cantidad=$value->cantidad;
                 $planificacion->turno=$value->turno;
@@ -632,7 +652,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                 $planificacion->centrocosto=$value->centrocosto;
                 $planificacion->secuencia=$value->secuencia;
                 $planificacion->estado='P';
-                 $planificacion->FICHA_TECNICA=$value->FICHA_TECNICA;
+                 $planificacion->ficha_tecnica=$value->ficha_tecnica;
                 $planificacion->USUARIOCREACION=\Auth::user()->name;
                 $planificacion->FECHACREACION=$date;
                 $planificacion->save();
@@ -692,6 +712,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                 $detall=new CP_DETALLEPLANIFICACION;
                  $detall->calendario_id=$value->calendario_id;
                  $detall->orden_prod=$value->orden_prod;
+                 $detall->ordenproduccion=$request->norden;
                  $detall->hora=$value->hora;
                  $detall->orden=$value->orden;
                  $detall->turno=$value->turno;
@@ -790,6 +811,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
             $task->progress=0.25;
             $task->start_date=$fecha;
             $task->centrocosto=$value->centrocosto;
+            $task->ordenproduccion=$ordenproduccion2;
             $task->save(); 
           }
            
@@ -832,7 +854,7 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
 
                       
 
-                      $gannt2=DB::Connection()->select("select fechamin,fechamax,(ordenproduccion) as text from IBERPLAS.CP_PLANIFICACION where id='$id'" );
+                      $gannt2=DB::Connection()->select("select fechamin,fechamax,(ordenproduccion) as text,centrocosto,ordenproduccion from IBERPLAS.CP_PLANIFICACION where id='$id'" );
                       foreach ($gannt2 as $value) {
                        $fechai=date("d-m-Y H:i:s",strtotime($value->fechamin));
                         $fechaf=date("d-m-Y H:i:s",strtotime($value->fechamax));
@@ -840,7 +862,9 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
                         $task->start_date=$fechai;
                         $task->end_date=$fechaf;
                         $task->text=$value->text;
-                        $task->type_id=1;
+                        $task->type_id='1';
+                        $task->centrocosto=$value->centrocosto;
+                        $task->ordenproduccion=$value->ordenproduccion;
                         $task->save(); 
                       }
 
@@ -896,6 +920,28 @@ USUARIOCREACION='$usuario' group by turno,fecha,operacion,centrocosto,secuencia 
            ->with('cp_planificacion',$cp_planificacion)
            ->with('cp_encabezadoplanificacion',$CP_ENCABEZADOPLANIFICACION)
            ->with('cp_detalleplanificacion',$CP_DETALLEPLANIFICACION);
+  }
+
+  public function eliminarTicket($id,$id1){
+     
+   $planificacion=CP_PLANIFICACION::where('ordenproduccion','=',$id1);
+   $enca=CP_ENCABEZADOPLANIFICACION::where('ordenproduccion','=',$id1);
+   $detalle=CP_DETALLEPLANIFICACION::where('ordenproduccion','=',$id1);
+   
+   $planificacion->delete();
+   $enca->delete();
+   $detalle->delete();
+   $tasks=CP_tasks::where('ordenproduccion','=',$id1);
+   $events=CP_events::where('ordenproduccion','=',$id1);
+   $tasks->delete();
+   $events->delete();
+   CP_TCargaOrdenProduccion::where('ORDEN_PRODUCCION','=',$id1)->update(['CANTIDAD_PRODUCCI'=>0]);
+   
+
+
+   
+   flash("Se ha eliminado la orden Produccion : ".$id1." de forma existosa",'danger')->important();
+   return redirect()->route('Ticket');
   }
 
   public function viajero($id){
